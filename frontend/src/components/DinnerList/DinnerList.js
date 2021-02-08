@@ -1,11 +1,11 @@
 import React from "react";
 import DinnerBox from "../DinnerBox/DinnerBox";
-import { Table } from "reactstrap";
+import Table from "react-bootstrap/Table";
 
 function DinnerList(props) {
   return (
     <div>
-      <Table striped bordered hover class="table table-dark table-striped">
+      <Table striped bordered hover variant="dark">
         <thead>
           <tr>
             <th>Location</th>
