@@ -1,9 +1,10 @@
 import React from "react";
 
-function DinnerBox(input) {
+function DinnerBox(props) {
   return (
     <div className="dinnerBox">
-      <p>{input.go.items[0].name}</p>
+      <p>{props.loc}</p>
+      <p>{props.course}</p>
     </div>
   );
 }
