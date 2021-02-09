@@ -6,4 +6,4 @@ from .models import Dinner
 class DinnerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Dinner
-        fields = ['food', 'location']
+        fields = ['title', 'beskrivelse', 'food', 'location', 'host', 'capacity']
