@@ -1,5 +1,5 @@
 import "./App.css";
-import "./components/DinnerBox/DinnerBox";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import DinnerOverview from "./pages/DinnerOverview";
 
 function App() {
