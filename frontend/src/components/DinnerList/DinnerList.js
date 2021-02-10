@@ -1,55 +1,58 @@
 import React from "react";
-import DinnerBox from "../DinnerBox/DinnerBox";
-import "./DinnerList.css";
-import { Table } from "@material-ui/core";
-import { Button } from "@material-ui/core";
-// fields = ['title', 'beskrivelse', 'food', 'location', 'host', 'capacity']
+import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
+import axios from "axios";
 
-function handleClick(message) {
-  console.log("Joined " + message);
+export default class DinnerList extends React.Component {
+  state = {
+    events: [],
+  };
+
+  componentDidMount() {
+    axios.get("https://dinnerpool.herokuapp.com/dinners/").then((res) => {
+      this.setState({ events: res.data });
+      console.log("hola");
+    });
+  }
+  render() {
+    return (
+      <div>
+        <Container maxWidth="md">
+          {/* End hero unit */}
+          <Grid container spacing={4}>
+            {this.state.events.length > 0 &&
+              // use event id as key instead
+              this.state.events.map((card, i) => (
+                <Grid item key={i} xs={12} sm={6} md={4}>
+                  <Card>
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {card.title}
+                      </Typography>
+                      <Typography>{card.location}</Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button
+                        size="small"
+                        color="primary"
+                        onClick={() => {
+                          console.log("Clicked " + card.title);
+                        }}
+                      >
+                        See more
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
+          </Grid>
+        </Container>
+      </div>
+    );
+  }
 }
-
-function DinnerList(props) {
-  return (
-    <div>
-      <Table>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Beskrivelse</th>
-            <th>Food</th>
-            <th>Location</th>
-            <th>Host</th>
-            <th>Capacity</th>
-            <th>Join</th>
-          </tr>
-        </thead>
-        <tbody>
-          {props.overview.overview.map((i) => (
-            <tr>
-              <td>{i.title}</td>
-              <td>{i.description}</td>
-              <td>{i.location}</td>
-              <td>{i.course}</td>
-              <td>{i.host}</td>
-              <td>{i.capacity}</td>
-              <td>
-                {" "}
-                <Button
-                  onClick={() => {
-                    handleClick(i.title);
-                    console.log("Hey");
-                  }}
-                >
-                  Join
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    </div>
-  );
-}
-
-export default DinnerList;

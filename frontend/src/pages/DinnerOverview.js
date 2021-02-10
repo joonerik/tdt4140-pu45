@@ -1,9 +1,6 @@
 import React from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -11,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
+import DinnerList from "../components/DinnerList/DinnerList";
 
 function Copyright() {
   return (
@@ -109,34 +107,7 @@ export default function DinnerOverview(props) {
             </div>
           </Container>
         </div>
-        <Container className={classes.cardGrid} maxWidth="md">
-          {/* End hero unit */}
-          <Grid container spacing={4}>
-            {props.overview.overview.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card className={classes.card}>
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {card.title}
-                    </Typography>
-                    <Typography>{card.location}</Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button
-                      size="small"
-                      color="primary"
-                      onClick={() => {
-                        console.log("Clicked " + card.title);
-                      }}
-                    >
-                      See more
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
+        <DinnerList />
       </main>
       {/* Footer */}
       <footer className={classes.footer}>
