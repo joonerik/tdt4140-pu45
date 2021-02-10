@@ -5,8 +5,24 @@ import DinnerList from "./components/DinnerList/DinnerList";
 
 const test = {
   overview: [
-    { id: 1, location: "Møllenberg", course: "Pizza" },
-    { id: 2, location: "Nardo", course: "Taco" },
+    {
+      id: 1,
+      title: "tittel1",
+      description: "enjoy",
+      location: "Møllenberg",
+      course: "Pizza",
+      host: "Andrea",
+      capacity: 5,
+    },
+    {
+      id: 2,
+      title: "tittel2",
+      description: "hehe",
+      location: "Berg",
+      course: "Taco",
+      host: "Donny",
+      capacity: 5,
+    },
   ],
 };
 function App() {
