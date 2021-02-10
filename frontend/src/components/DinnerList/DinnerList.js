@@ -1,8 +1,8 @@
 import React from "react";
 import DinnerBox from "../DinnerBox/DinnerBox";
-import Table from "react-bootstrap/Table";
-import Button from "react-bootstrap/Button";
 import "./DinnerList.css";
+import { Table } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 // fields = ['title', 'beskrivelse', 'food', 'location', 'host', 'capacity']
 
 function handleClick(message) {
@@ -11,8 +11,8 @@ function handleClick(message) {
 
 function DinnerList(props) {
   return (
-    <div class="d-flex justify-content-center align-items-center">
-      <Table className="table" striped bordered hover variant="dark">
+    <div>
+      <Table>
         <thead>
           <tr>
             <th>Title</th>
@@ -38,6 +38,7 @@ function DinnerList(props) {
                 <Button
                   onClick={() => {
                     handleClick(i.title);
+                    console.log("Hey");
                   }}
                 >
                   Join
