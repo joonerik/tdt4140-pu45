@@ -2,6 +2,7 @@ import "./App.css";
 import "./components/DinnerBox/DinnerBox";
 import DinnerBox from "./components/DinnerBox/DinnerBox";
 import DinnerList from "./components/DinnerList/DinnerList";
+import DinnerOverview from "./pages/DinnerOverview";
 
 const test = {
   overview: [
@@ -28,8 +29,8 @@ const test = {
 function App() {
   return (
     <div className="App">
-      <h1>Hello, World!</h1>
-      <DinnerList overview={test} />
+      <DinnerOverview overview={test}></DinnerOverview>
+      {/* <DinnerList overview={test} /> */}
     </div>
   );
 }
