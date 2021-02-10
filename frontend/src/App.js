@@ -1,7 +1,5 @@
 import "./App.css";
 import "./components/DinnerBox/DinnerBox";
-import DinnerBox from "./components/DinnerBox/DinnerBox";
-import DinnerList from "./components/DinnerList/DinnerList";
 import DinnerOverview from "./pages/DinnerOverview";
 
 const test = {
