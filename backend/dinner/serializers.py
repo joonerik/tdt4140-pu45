@@ -12,4 +12,4 @@ class DinnerSerializer(serializers.HyperlinkedModelSerializer):
 class AllergySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Allergy
-        fields = ['desc']
+        fields = ['description']
