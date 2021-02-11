@@ -6,7 +6,6 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import DinnerList from "../components/DinnerList/DinnerList";
-import NavBar from "../components/NavBar/NavBar";
 import Footer from "../components/Footer/Footer";
 
 const useStyles = makeStyles((theme) => ({
@@ -44,7 +43,6 @@ export default function DinnerOverview(props) {
   return (
     <React.Fragment>
       <CssBaseline />
-      <NavBar />
       <main>
         {/* Hero unit */}
         <div className={classes.heroContent}>
