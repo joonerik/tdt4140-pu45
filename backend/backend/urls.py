@@ -20,6 +20,7 @@ from dinner import views
 
 router = routers.DefaultRouter()
 router.register(r'dinners', views.DinnerViewSet)
+router.register(r'allergies', views.AllergiesViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
