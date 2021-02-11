@@ -1,0 +1,12 @@
+.box {
+    background-color: #3f51b5;
+    color: white;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    border-radius: 10px;
+    width: 50%;
+    height: 50%;
+    position: absolute;
+}

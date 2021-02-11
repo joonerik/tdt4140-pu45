@@ -23,8 +23,6 @@ export default class DinnerList extends React.Component {
       console.log("hola");
     });
   }
-
-
   
   render() {
     return (
@@ -50,6 +48,7 @@ export default class DinnerList extends React.Component {
                         onClick={() => {
                           this.setState(({isShowing: true}))
                           this.setState(({id: i}))
+                          console.log(i)
                         }}
                       >
                         See more
