@@ -6,7 +6,7 @@ from .models import Dinner, Allergy
 class DinnerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Dinner
-        fields = ['id', 'title', 'beskrivelse', 'food', 'location', 'host', 'capacity', 'allergies']
+        fields = ['id', 'title', 'description', 'host', 'contact', 'capacity', 'location', 'date_event', 'allergies', 'price', 'split_bill']
 
 
 class AllergySerializer(serializers.HyperlinkedModelSerializer):
