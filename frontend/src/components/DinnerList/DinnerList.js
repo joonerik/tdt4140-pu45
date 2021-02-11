@@ -7,11 +7,15 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import axios from "axios";
+import DinnerBox from "../DinnerBox/DinnerBox"
 
 export default class DinnerList extends React.Component {
   state = {
     events: [],
+    isShowing : false,
+    id : null,
   };
+
 
   componentDidMount() {
     axios.get("https://dinnerpool.herokuapp.com/dinners/").then((res) => {
@@ -19,6 +23,9 @@ export default class DinnerList extends React.Component {
       console.log("hola");
     });
   }
+
+
+  
   render() {
     return (
       <div>
@@ -41,7 +48,8 @@ export default class DinnerList extends React.Component {
                         size="small"
                         color="primary"
                         onClick={() => {
-                          console.log("Clicked " + card.title);
+                          this.setState(({isShowing: true}))
+                          this.setState(({id: i}))
                         }}
                       >
                         See more
@@ -50,6 +58,7 @@ export default class DinnerList extends React.Component {
                   </Card>
                 </Grid>
               ))}
+              {this.state.isShowing ? <DinnerBox card={this.state.events[this.state.id]}/> : null}
           </Grid>
         </Container>
       </div>
