@@ -1,17 +1,18 @@
-import React, {useState} from 'react'
+import React from 'react'
 import "./DinnerBox.css"
 
 function DinnerBox(props) {
 
-    // const handleClick = () => {
-    //     props.state = false
-    // }
     return (
         <div onClick={props.state} className="box">
-            <h1>hello</h1>
-            <h1>{props.card.title}</h1>
-            {console.log("DinnerBox is rendered")}
             <button onClick={props.state}>X</button>
+            <h1>{props.card.title.toUpperCase()}</h1>
+            <p>Descripton: {props.card.beskrivelse}</p>
+            <p>Food: {props.card.food}</p>
+            <p>Location: {props.card.location}</p>
+            <p>Host: {props.card.host}</p>
+            <p>Capacity: {props.card.capacity}</p>
+            {console.log("DinnerBox is rendered")}
         </div>
     )
 }
