@@ -11,6 +11,7 @@ function NavBar() {
       <Toolbar >
           <Link className="link" to="/">Dinnerpool</Link>
           <Link className="link" to="/login">Login</Link>
+          <Link className="link" to="/form">Create dinner event</Link>
       </Toolbar>
     </AppBar>
   );
