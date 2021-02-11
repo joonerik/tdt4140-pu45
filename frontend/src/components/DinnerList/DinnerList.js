@@ -15,6 +15,10 @@ export default class DinnerList extends React.Component {
     isShowing : false,
     id : null,
   };
+  
+  modifyState = () =>{
+    this.setState({isShowing: !this.state.isShowing})   
+}
 
 
   componentDidMount() {
@@ -46,9 +50,8 @@ export default class DinnerList extends React.Component {
                         size="small"
                         color="primary"
                         onClick={() => {
-                          this.setState(({isShowing: true}))
+                          this.modifyState()
                           this.setState(({id: i}))
-                          console.log(i)
                         }}
                       >
                         See more
@@ -57,7 +60,7 @@ export default class DinnerList extends React.Component {
                   </Card>
                 </Grid>
               ))}
-              {this.state.isShowing ? <DinnerBox card={this.state.events[this.state.id]}/> : null}
+              {this.state.isShowing ? <DinnerBox state={this.modifyState} card={this.state.events[this.state.id]}/> : null}
           </Grid>
         </Container>
       </div>
