@@ -125,6 +125,7 @@ GitHub.sublime-settings
 
 # testing
 /coverage
+coverage
 
 # production
 /build
