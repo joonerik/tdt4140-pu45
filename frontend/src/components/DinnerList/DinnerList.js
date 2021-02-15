@@ -6,6 +6,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
+import AddIcon from '@material-ui/icons/Add';
 import axios from "axios";
 import DinnerBox from "../DinnerBox/DinnerBox";
 import { Link } from "react-router-dom";
@@ -34,19 +35,16 @@ export default class DinnerList extends React.Component {
       <div>
         <Container maxWidth="md">
           {/* End hero unit */}
-          <Link to="/login">
-            <Card>
-              <Typography>
-                ++++++++++++++++++++++++++++++
-                ++++++++++++++++++++++++++++++
-                ++++++++++++++++++++++++++++++
-                ++++++++++++++++++++++++++++++
-                ++++++++++++++++++++++++++++++
-                ++++++++++++++++++++++++++++++
-              </Typography>
-            </Card>
-          </Link>
           <Grid container spacing={4}>
+            <Grid item xs={12} sm={6} md={4}>
+              <Link to="/login">
+                  <Card style={{ height: '100%' }}>
+                    <CardContent>
+                        <AddIcon style={{ color: "green", fontSize:"100px", paddingTop: "15px" }} ></AddIcon>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </Grid>
             {this.state.events.length > 0 &&
               // use event id as key instead
               this.state.events.map((card, i) => (
