@@ -11,7 +11,7 @@ class DinnerViewSet(viewsets.ModelViewSet):
 
 class CoursesViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows allergies to be viewed or edited.
+    API endpoint that allows courses to be viewed or edited.
     """
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
