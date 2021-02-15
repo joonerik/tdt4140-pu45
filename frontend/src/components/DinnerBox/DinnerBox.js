@@ -12,7 +12,6 @@ function DinnerBox(props) {
             <p>Location: {props.card.location}</p>
             <p>Host: {props.card.host}</p>
             <p>Capacity: {props.card.capacity}</p>
-            {console.log("DinnerBox is rendered")}
         </div>
     )
 }
