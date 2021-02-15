@@ -34,6 +34,18 @@ export default class DinnerList extends React.Component {
       <div>
         <Container maxWidth="md">
           {/* End hero unit */}
+          <Link to="/login">
+            <Card>
+              <Typography>
+                ++++++++++++++++++++++++++++++
+                ++++++++++++++++++++++++++++++
+                ++++++++++++++++++++++++++++++
+                ++++++++++++++++++++++++++++++
+                ++++++++++++++++++++++++++++++
+                ++++++++++++++++++++++++++++++
+              </Typography>
+            </Card>
+          </Link>
           <Grid container spacing={4}>
             {this.state.events.length > 0 &&
               // use event id as key instead
@@ -63,18 +75,6 @@ export default class DinnerList extends React.Component {
               ))}
               {this.state.isShowing ? <DinnerBox state={this.modifyState} card={this.state.events[this.state.id]}/> : null}
           </Grid>
-          <Link to="/login">
-            <Card>
-              <Typography>
-                ++++++++++++++++++++++++++++++
-                ++++++++++++++++++++++++++++++
-                ++++++++++++++++++++++++++++++
-                ++++++++++++++++++++++++++++++
-                ++++++++++++++++++++++++++++++
-                ++++++++++++++++++++++++++++++
-              </Typography>
-            </Card>
-          </Link>
         </Container>
       </div>
     );
