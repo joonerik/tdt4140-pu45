@@ -1,32 +1,44 @@
-import React from 'react'
+import React, {useState} from 'react'
 import "./DinnerBox.css"
 
 function DinnerBox(props) {
 
+    const [content, setContent] = useState(0);
+    var info = null;
+
+    if (content === 1) {
+        info = <div>
+            {props.card.location}
+        </div>
+    } else if (content === 2) {
+        info = <p>fuck</p>
+    } else if (content === 3) {
+        info = <p>f</p>
+    }
+
+
     return (
-        <div onClick={props.state} className="box">
+        <div className="box">
             <button onClick={props.state}>X</button>
             <h1>{props.card.title.toUpperCase()}</h1>
-            <p>Descripton: {props.card.beskrivelse}</p>
-            <p>Food: {props.card.food}</p>
+            <p>Ola Nordmann, 90129028</p>
+            <p>Bakklandet</p>
+            <p>01.01.21 kl: 1900</p>
             {/* <p>Location: {props.card.location}</p>
             <p>Host: {props.card.host}</p>
             <p>Capacity: {props.card.capacity}</p> */}
-            <div className="navigation">
-                <div onClick={() => {
-                    console.log("press desc")
-                }}>
-                    <h2>Description</h2>
-                </div>
-                <div onClick={() => {
-                    console.log("press desc")
-                }}>
-                    <h2>Participants</h2>
-                </div>
-                <div>
-                    <h2>Allergies</h2>
-                </div>
-            </div>
+            <ul id="navigation">
+                <li onClick={() => {
+                    setContent(1)
+                }}>Description</li>
+                <li onClick={() => {
+                    setContent(2)
+                }}>Participants</li>
+                <li onClick={() => {
+                    setContent(3)
+                }}>Allergies</li>
+            </ul>  
+            {info}
         
         </div>
     )
