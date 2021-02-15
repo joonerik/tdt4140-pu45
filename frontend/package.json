@@ -20,7 +20,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "CI=true react-scripts test --env=jsdom",
+    "test:watch": "react-scripts test",
     "test:coverage": "npm test -- --coverage --watchAll=false",
     "test:coverage:open": "npm test -- --coverage --watchAll=false & open coverage/lcov-report/index.html",
     "eject": "react-scripts eject"
