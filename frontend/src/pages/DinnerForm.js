@@ -6,7 +6,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextArea from '@material-ui/core/TextareaAutosize'
 import "./style/DinnerForm.css"
-
+import Button from '@material-ui/core/Button'
 
 export default function AddressForm() {
   return (
@@ -98,6 +98,10 @@ export default function AddressForm() {
             fullWidth
           />
         </Grid>
+        <Grid item xs={12}>
+          <Button variant="contained">Register</Button>
+        </Grid>
+        
         
       </Grid>
     </React.Fragment>
