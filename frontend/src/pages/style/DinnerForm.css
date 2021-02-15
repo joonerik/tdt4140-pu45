@@ -3,6 +3,5 @@
     margin: auto !important;
 }
 .MuiTypography-gutterBottom {
-    margin-bottom: 0.35em;
-    margin-top: 0.35em;
+    margin-top: 1em !important;
 }

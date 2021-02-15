@@ -4,21 +4,33 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import TextArea from '@material-ui/core/TextareaAutosize'
 import "./style/DinnerForm.css"
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 export default function AddressForm() {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
-        Shipping address
+        Register dinner
       </Typography>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12}>
           <TextField
             required
-            id="firstName"
-            name="firstName"
-            label="First name"
+            id="hostName"
+            name="hostName"
+            label="Host name"
+            fullWidth
+            autoComplete="given-name"
+          />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="email"
+            name="email"
+            label="Email"
             fullWidth
             autoComplete="given-name"
           />
@@ -26,71 +38,49 @@ export default function AddressForm() {
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="lastName"
-            name="lastName"
-            label="Last name"
+            id="phone"
+            name="phone"
+            label="Phone"
             fullWidth
-            autoComplete="family-name"
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="dinnerTitle"
+            name="dinnerTitle"
+            label="Dinner title"
+            fullWidth
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <input
+            type="date"
+            required
+            id="date"
+            name="date"
+            label="Date"
+            fullWidth
           />
         </Grid>
         <Grid item xs={12}>
-          <TextField
-            required
-            id="address1"
-            name="address1"
-            label="Address line 1"
-            fullWidth
-            autoComplete="shipping address-line1"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="address2"
-            name="address2"
-            label="Address line 2"
-            fullWidth
-            autoComplete="shipping address-line2"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="city"
-            name="city"
-            label="City"
-            fullWidth
-            autoComplete="shipping address-level2"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField id="state" name="state" label="State/Province/Region" fullWidth />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="zip"
-            name="zip"
-            label="Zip / Postal code"
-            fullWidth
-            autoComplete="shipping postal-code"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
+          <TextareaAutosize
             id="country"
             name="country"
             label="Country"
             fullWidth
-            autoComplete="shipping country"
           />
         </Grid>
         <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-            label="Use this address for payment details"
+          <TextField
+            required
+            id="location"
+            name="location"
+            label="Location"
+            fullWidth
           />
         </Grid>
+        
       </Grid>
     </React.Fragment>
   );
