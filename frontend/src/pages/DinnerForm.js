@@ -6,7 +6,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextArea from '@material-ui/core/TextareaAutosize'
 import "./style/DinnerForm.css"
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+
 
 export default function AddressForm() {
   return (
@@ -17,6 +17,7 @@ export default function AddressForm() {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <TextField
+            variant="outlined"
             required
             id="hostName"
             name="hostName"
@@ -27,6 +28,7 @@ export default function AddressForm() {
           </Grid>
           <Grid item xs={12} sm={6}>
           <TextField
+            variant="outlined"
             required
             id="email"
             name="email"
@@ -37,6 +39,7 @@ export default function AddressForm() {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            variant="outlined"
             required
             id="phone"
             name="phone"
@@ -46,6 +49,7 @@ export default function AddressForm() {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            variant="outlined"
             required
             id="dinnerTitle"
             name="dinnerTitle"
@@ -54,26 +58,28 @@ export default function AddressForm() {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <input
+        <TextField
+            variant="outlined"
             type="date"
-            required
             id="date"
             name="date"
-            label="Date"
-            fullWidth
-            style={{width: "100%", margin: "11px 0px 0px 0px", padding: "6px 0 7px", fontSize:"1rem"}}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextareaAutosize
-            id="country"
-            name="country"
-            label="Country"
             fullWidth
           />
         </Grid>
         <Grid item xs={12}>
           <TextField
+            variant="outlined"
+            id="description"
+            name="description"
+            label="Description"
+            fullWidth
+            multiline
+            rows={4}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            variant="outlined"
             required
             id="location"
             name="location"
@@ -84,6 +90,7 @@ export default function AddressForm() {
 
         <Grid item xs={12} sm={6}>
           <TextField
+            variant="outlined"
             required
             id="dinnerTitle"
             name="dinnerTitle"
