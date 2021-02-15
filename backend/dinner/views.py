@@ -1,6 +1,6 @@
-from .serializers import DinnerSerializer, AllergySerializer
+from .serializers import DinnerSerializer, CourseSerializer
 from rest_framework import viewsets
-from .models import Dinner, Allergy
+from .models import Dinner, Course
 
 class DinnerViewSet(viewsets.ModelViewSet):
     """
@@ -9,11 +9,11 @@ class DinnerViewSet(viewsets.ModelViewSet):
     queryset = Dinner.objects.all()
     serializer_class = DinnerSerializer
 
-class AllergiesViewSet(viewsets.ModelViewSet):
+class CoursesViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows allergies to be viewed or edited.
     """
-    queryset = Allergy.objects.all()
-    serializer_class = AllergySerializer
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
 
     
