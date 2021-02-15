@@ -17,3 +17,7 @@ button {
     top: 10px;
     right: 10px;
 }
+
+.navigation {
+    display: flex;
+}

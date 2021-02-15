@@ -46,20 +46,6 @@ export default function DinnerOverview(props) {
     <React.Fragment>
       <CssBaseline />
       <main>
-        {/* Hero unit */}
-        <div className={classes.heroContent}>
-          <Container maxWidth="sm">
-            <Typography
-              component="h1"
-              variant="h3"
-              align="center"
-              color="textPrimary"
-              gutterBottom
-            >
-              Heia aafk:))
-            </Typography>
-          </Container>
-        </div>
         <Box p={4}>
         <DinnerList />
         </Box>
