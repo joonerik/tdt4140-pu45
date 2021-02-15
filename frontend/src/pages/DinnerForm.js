@@ -61,6 +61,7 @@ export default function AddressForm() {
             name="date"
             label="Date"
             fullWidth
+            style={{width: "100%", margin: "11px 0px 0px 0px", padding: "6px 0 7px", fontSize:"1rem"}}
           />
         </Grid>
         <Grid item xs={12}>
@@ -77,6 +78,16 @@ export default function AddressForm() {
             id="location"
             name="location"
             label="Location"
+            fullWidth
+          />
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="dinnerTitle"
+            name="dinnerTitle"
+            label="Dinner title"
             fullWidth
           />
         </Grid>
