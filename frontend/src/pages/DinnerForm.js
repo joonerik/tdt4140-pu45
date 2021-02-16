@@ -7,6 +7,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import TextArea from '@material-ui/core/TextareaAutosize'
 import "./style/DinnerForm.css"
 import Button from '@material-ui/core/Button'
+import { Box } from '@material-ui/core';
 
 export default function AddressForm() {
   return (
@@ -59,6 +60,7 @@ export default function AddressForm() {
         </Grid>
         <Grid item xs={12} sm={6}>
         <TextField
+            required
             variant="outlined"
             type="date"
             id="date"
@@ -68,6 +70,7 @@ export default function AddressForm() {
         </Grid>
         <Grid item xs={12}>
           <TextField
+            required
             variant="outlined"
             id="description"
             name="description"
@@ -88,18 +91,72 @@ export default function AddressForm() {
           />
         </Grid>
 
-        <Grid item xs={12} sm={6}>
-          <TextField
-            variant="outlined"
-            required
-            id="dinnerTitle"
-            name="dinnerTitle"
-            label="Dinner title"
-            fullWidth
-          />
+        <Grid item xs={6}>
+            <TextField
+              required
+              variant="outlined"
+              id="mealInput"
+              name="mealInput"
+              label="Meal"
+              fullWidth
+            />
+        </Grid>
+        <Grid container direction="column" justify="flex-start" alignItems="flex-start" item xs={6}>
+          <Typography gutterBottom>
+            Allergies:
+          </Typography>
+          <FormControlLabel
+            control={
+              <Checkbox
+                name="checkAllergySoy"
+              />
+            }
+            label="Soy"
+            />
+          <FormControlLabel
+            control={
+              <Checkbox
+                name="checkAllergyGluten"
+              />
+            }
+            label="Gluten"
+            />
+          <FormControlLabel
+            control={
+              <Checkbox
+                name="checkAllergyLactose"
+              />
+            }
+            label="Lactose"
+            />
+            <Grid container direction="row" justify="flex-start" alignItems="center" style={{flexWrap:"nowrap"}}>
+              <Grid item>
+                <FormControlLabel
+                control={
+                  <Checkbox
+                    name="checkAllergyLactose"
+                  />
+                }
+                />
+              </Grid>
+              
+              <Grid item>
+                <TextField
+                  required
+                  variant="outlined"
+                  id="mealInput"
+                  name="mealInput"
+                  label="Meal"
+                  size="small"
+                />
+              </Grid>
+            </Grid>
+            
+
         </Grid>
         <Grid item xs={12}>
           <Button variant="contained">Register</Button>
+          
         </Grid>
         
         
