@@ -11,6 +11,12 @@ import axios from "axios";
 import DinnerBox from "../DinnerBox/DinnerBox";
 import { Link } from "react-router-dom";
 
+function convert(date) {
+  // const reg = "\d{4}-\d{2}-\d{2}"
+  return date.substring(0, 10) + " " + date.substring(11, 16)
+
+}
+
 export default class DinnerList extends React.Component {
   state = {
     events: [],
@@ -21,7 +27,6 @@ export default class DinnerList extends React.Component {
   modifyState = () =>{
     this.setState({isShowing: !this.state.isShowing})   
 }
-
 
   componentDidMount() {
     axios.get("https://dinnerpool.herokuapp.com/dinners/").then((res) => {
@@ -48,13 +53,14 @@ export default class DinnerList extends React.Component {
             {this.state.events.length > 0 &&
               // use event id as key instead
               this.state.events.map((card, i) => (
-                <Grid item key={i} xs={12} sm={6} md={4}>
+                <Grid item key={card.id} xs={12} sm={6} md={4}>
                   <Card>
                     <CardContent>
-                      <Typography gutterBottom variant="h5" component="h2">
+                      <Typography variant="subtitle2" align="left">{convert(card.date_event)}</Typography>
+                      <Typography align="left" gutterBottom variant="h4" component="h2">
                         {card.title}
                       </Typography>
-                      <Typography>{card.location}</Typography>
+                      <Typography variant="h6" align="left">{card.location}</Typography>
                     </CardContent>
                     <CardActions>
                       <Button
