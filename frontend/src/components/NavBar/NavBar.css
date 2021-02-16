@@ -9,7 +9,6 @@
     font-size: 40px;
     width: 100%;
     text-align: center;
-
 }
 
 #menuLink {
@@ -20,4 +19,8 @@
 #loginLink {
     width: 100%;
     text-align: right;
+}
+
+.appBar {
+    max-height: 120px;
 }

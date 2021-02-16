@@ -7,8 +7,8 @@ import "./NavBar.css" ;
 
 function NavBar() {
   return (
-    <AppBar position="relative">
-      <Toolbar >
+    <AppBar position="relative" className="appBar">
+      <Toolbar className="toolBar">
           <Link className="link" id="menuLink" to="/">MENU</Link>
           <Link className="link" id="mainLink" to="/">DINNERPOOL</Link>
           <Link className="link" id="loginLink" to="/login">LOGIN</Link>
