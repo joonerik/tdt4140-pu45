@@ -9,9 +9,9 @@ function NavBar() {
   return (
     <AppBar position="relative">
       <Toolbar >
-          <Link className="link" id="menuLink" to="/">Menu</Link>
-          <Link className="link" id="loginLink" to="/login">Login</Link>
-          <Link className="link" id="mainLink" to="/">Dinnerpool</Link>
+          <Link className="link" id="menuLink" to="/">MENU</Link>
+          <Link className="link" id="mainLink" to="/">DINNERPOOL</Link>
+          <Link className="link" id="loginLink" to="/login">LOGIN</Link>
       </Toolbar>
     </AppBar>
   );
