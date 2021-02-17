@@ -91,16 +91,31 @@ export default function AddressForm() {
           />
         </Grid>
 
-        <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              variant="outlined"
-              id="mealInput"
-              name="mealInput"
-              label="Meal"
-              fullWidth
-            />
+        <Grid container direction="column" justify="flex-start" alignItems="flex-start" item xs={12} sm={6}>
+          <Grid container item>
+            <Grid item container direction="row" alignItems="flex-start" justify="space-between">
+              <Grid item xs={10} sm={8}>
+                <TextField
+                  required
+                  variant="outlined"
+                  id="mealInput"
+                  name="mealInput"
+                  label="Meal"
+                  size="small"
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={2} sm={4}>
+                <Button variant="contained">Add</Button>
+              </Grid>
+            </Grid>
+            {/* INSERT LIST HERE */}
+          </Grid>
         </Grid>
+
+
+
+        
         <Grid container direction="column" justify="flex-start" alignItems="flex-start" item xs={12} sm={6}>
           <Typography gutterBottom>
             Allergies:
@@ -150,15 +165,11 @@ export default function AddressForm() {
                 />
               </Grid>
             </Grid>
-            
-
         </Grid>
         <Grid item xs={12}>
           <Button variant="contained">Register</Button>
           
         </Grid>
-        
-        
       </Grid>
     </React.Fragment>
   );
