@@ -1,5 +1,5 @@
 import React from 'react';
-import DinnerBox from '../DinnerBox/DinnerBox';
+import DinnerBox from "../../../components/DinnerBox/DinnerBox"
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 
