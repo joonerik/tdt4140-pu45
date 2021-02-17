@@ -8,6 +8,7 @@ import TextArea from '@material-ui/core/TextareaAutosize'
 import "./style/DinnerForm.css"
 import Button from '@material-ui/core/Button'
 import { Box } from '@material-ui/core';
+import Switch from '@material-ui/core/Switch';
 
 export default function AddressForm() {
   return (
@@ -169,20 +170,36 @@ export default function AddressForm() {
             </Grid>
            </Grid>
 
-          <Grid>
-            <label for="Capacity"
-              >Capacity:
-            </label>
-            <input
-              type="number" 
-              id="Capacity"
-              name="Capacity" 
-              Label="Capacity"
-              min="1" 
-              max="100"
-            >
-            </input>
-        </Grid>
+           <Grid item container direction="column" xs={6}>
+                      <Grid item xs={6}>
+                        <label for="Capacity"
+                          >Capacity:
+                        </label>
+                        <input
+                          type="number" 
+                          id="Capacity"
+                          name="Capacity" 
+                          Label="Capacity"
+                          min="1" 
+                          max="100"
+                        >
+                        </input>
+                    </Grid>
+                    
+                    <Grid item xs={6}>
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            name="splitBill"
+                            color="primary"
+                          />
+                        }
+                        label="Split bill"
+                      />
+                    </Grid>
+           </Grid>
+
+          
 
         <Grid item xs={12}>
           <Button variant="contained">Register</Button>
