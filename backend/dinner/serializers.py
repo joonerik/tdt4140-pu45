@@ -12,4 +12,4 @@ class DinnerSerializer(serializers.HyperlinkedModelSerializer):
 class CourseSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Course
-        fields = ['description']
+        fields = ['id', 'description']
