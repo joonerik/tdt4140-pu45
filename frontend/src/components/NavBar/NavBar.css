@@ -2,6 +2,7 @@
     position: relative;
     overflow: hidden;
     background-color: #3f51b5;
+    height: 10vh;
   }
   
 .topnav a {
@@ -11,22 +12,18 @@
     padding: 14px 16px;
     text-decoration: none;
     font-size: 20px;
+    line-height: 10vh;
 }
 
 .topnav a:hover {
-    background-color: #ddd;
+    background-color: #fafafa;
     color: black;
-}
-
-.topnav a.active {
-    background-color: #4CAF50;
-    color: white;
 }
 
 .topnav-centered a {
     float: none;
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
@@ -40,9 +37,13 @@
 }
 
 @media screen and (max-width: 600px) {
+    .topnav {
+        height: 50vh;
+    }
     .topnav a, .topnav-right {
       float: none;
       display: block;
+      line-height: 5vh;
     }
     
     .topnav-centered a {
