@@ -172,8 +172,8 @@ export default function AddressForm() {
 
            <Grid item container direction="column" xs={6}>
                       <Grid item xs={6}>
-                        <label for="Capacity"
-                          >Capacity:
+                        <label for="Capacity">
+                            Capacity: 
                         </label>
                         <input
                           type="number" 
@@ -195,6 +195,7 @@ export default function AddressForm() {
                           />
                         }
                         label="Split bill"
+                        labelPlacement="start"
                       />
                     </Grid>
            </Grid>
