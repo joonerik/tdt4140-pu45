@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -9,6 +9,7 @@ import "./style/DinnerForm.css"
 import Button from '@material-ui/core/Button'
 import { Box } from '@material-ui/core';
 import Switch from '@material-ui/core/Switch';
+
 
 let meals = [];
 
@@ -61,7 +62,10 @@ function loadMealList(){
 
 
 
+
+
 export default function AddressForm() {
+  const[input,setInput]=useState(false)
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -231,18 +235,15 @@ export default function AddressForm() {
 
            <Grid item container direction="column" xs={6}>
                       <Grid item xs={6}>
-                        <label for="Capacity">
-                            Capacity: 
-                        </label>
-                        <input
+                        <TextField
+                          variant="outlined"
                           type="number" 
                           id="Capacity"
                           name="Capacity" 
-                          Label="Capacity"
-                          min="1" 
-                          max="100"
+                          label="Capacity"
+                          size="small"   
                         >
-                        </input>
+                        </TextField>
                     </Grid>
                     
                     <Grid item xs={6}>
@@ -251,11 +252,27 @@ export default function AddressForm() {
                           <Switch
                             name="splitBill"
                             color="primary"
+
+                            onChange={()=>(
+                              setInput(value=>!value)
+                            )}
                           />
                         }
                         label="Split bill"
                         labelPlacement="start"
                       />
+                      {input ? 
+                         <TextField
+                            size="small"
+                            type="float"
+                            variant="outlined"
+                            id="price"
+                            name="price"
+                            label="Price"
+                          >
+                          </TextField>
+                        
+                      :null}
                     </Grid>
            </Grid>
 
