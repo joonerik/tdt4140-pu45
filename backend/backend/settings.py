@@ -84,12 +84,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-NOSE_ARGS = [
-    '--with-coverage',
-    '--cover-package=dinner',
-]
-
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
