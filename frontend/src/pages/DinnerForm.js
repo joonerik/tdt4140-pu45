@@ -10,6 +10,57 @@ import Button from '@material-ui/core/Button'
 import { Box } from '@material-ui/core';
 import Switch from '@material-ui/core/Switch';
 
+let meals = [];
+
+function addMeal(e) {
+  e.preventDefault();
+
+  let mealInput = document.getElementById("mealInput").value; // Get input from mealInput
+  let mealList = document.getElementById("mealList"); // Get mealList
+
+  /* Save list element as String object */
+  meals.push(mealInput)
+  
+  document.getElementById("mealInput").value = ""; // Empty input field
+  mealList.innerHTML = ""; // empty list
+
+  // Fill list with meals
+  meals.forEach((meal) => {
+    let node = document.createElement("LI");
+    let textnode = document.createTextNode(meal);
+    let buttonnode = document.createElement("BUTTON")
+    buttonnode.innerHTML = "X";
+    buttonnode.addEventListener('click', function(){
+      meals.splice(meals.indexOf(meal), 1);
+      loadMealList();
+    })
+    node.appendChild(textnode);
+    node.appendChild(buttonnode);
+    mealList.appendChild(node);
+  })
+
+}
+
+function loadMealList(){
+  let mealList = document.getElementById("mealList"); // Get mealList
+  mealList.innerHTML = "";
+  meals.forEach((meal) => {
+    let node = document.createElement("LI");
+    let textnode = document.createTextNode(meal);
+    let buttonnode = document.createElement("BUTTON")
+    buttonnode.innerHTML = "X";
+    buttonnode.addEventListener('click', function(){
+      meals.splice(meals.indexOf(meal), 1);
+      loadMealList();
+    })
+    node.appendChild(textnode);
+    node.appendChild(buttonnode);
+    mealList.appendChild(node);
+  })
+}
+
+
+
 export default function AddressForm() {
   return (
     <React.Fragment>
@@ -99,7 +150,6 @@ export default function AddressForm() {
             <Grid item container direction="row" alignItems="flex-start" justify="space-between">
               <Grid item xs={10} sm={8}>
                 <TextField
-                  required
                   variant="outlined"
                   id="mealInput"
                   name="mealInput"
@@ -109,10 +159,13 @@ export default function AddressForm() {
                 />
               </Grid>
               <Grid item xs={2} sm={4}>
-                <Button variant="contained">Add</Button>
+                <Button variant="contained" onClick={addMeal} >Add</Button>
               </Grid>
             </Grid>
             {/* INSERT LIST HERE */}
+            <ul id="mealList">
+
+            </ul>
           </Grid>
         </Grid>
 
