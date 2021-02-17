@@ -42,9 +42,9 @@ export default class DinnerList extends React.Component {
           <Grid container spacing={4}>
             <Grid item xs={12} sm={6} md={4}>
               <Link to="/login">
-                  <Card style={{ height: '100%' }}>
+                  <Card style={{ height: '200px' }} >
                     <CardContent>
-                        <AddIcon style={{ color: "green", fontSize:"100px", paddingTop: "15px" }} ></AddIcon>
+                        <AddIcon style={{ color: "green", fontSize:"100px", marginTop: "25px" }} ></AddIcon>
                     </CardContent>
                   </Card>
                 </Link>
@@ -53,7 +53,7 @@ export default class DinnerList extends React.Component {
               // use event id as key instead
               this.state.events.map((card, i) => (
                 <Grid item key={card.id} xs={12} sm={6} md={4}>
-                  <Card style={{ height: '100%' }}>
+                  <Card style={{ height: '200px', position: 'relative' }}>
                     <CardContent>
                       <Typography variant="subtitle2" align="left">{convert(card.date_event)}</Typography>
                       <Typography align="left" gutterBottom variant="h4" component="h2">
@@ -61,8 +61,9 @@ export default class DinnerList extends React.Component {
                       </Typography>
                       <Typography variant="h6" align="left">{card.location}</Typography>
                     </CardContent>
-                    <CardActions>
+                    <CardActions style={{ position: 'absolute', bottom: '0'}}>
                       <Button
+                        component={Link}
                         size="small"
                         color="primary"
                         onClick={() => {
