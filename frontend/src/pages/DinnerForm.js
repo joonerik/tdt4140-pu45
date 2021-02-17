@@ -35,7 +35,7 @@ export default function AddressForm() {
             name="email"
             label="Email"
             fullWidth
-            autoComplete="given-name"
+            autoComplete="email"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -45,6 +45,7 @@ export default function AddressForm() {
             id="phone"
             name="phone"
             label="Phone"
+            autoComplete="tel"
             fullWidth
           />
         </Grid>
@@ -87,6 +88,7 @@ export default function AddressForm() {
             id="location"
             name="location"
             label="Location"
+            location="adress-line"
             fullWidth
           />
         </Grid>
@@ -165,7 +167,23 @@ export default function AddressForm() {
                 />
               </Grid>
             </Grid>
+           </Grid>
+
+          <Grid>
+            <label for="Capacity"
+              >Capacity:
+            </label>
+            <input
+              type="number" 
+              id="Capacity"
+              name="Capacity" 
+              Label="Capacity"
+              min="1" 
+              max="100"
+            >
+            </input>
         </Grid>
+
         <Grid item xs={12}>
           <Button variant="contained">Register</Button>
           
