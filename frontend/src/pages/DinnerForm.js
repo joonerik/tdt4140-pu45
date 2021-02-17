@@ -91,7 +91,7 @@ export default function AddressForm() {
           />
         </Grid>
 
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6}>
             <TextField
               required
               variant="outlined"
@@ -101,7 +101,7 @@ export default function AddressForm() {
               fullWidth
             />
         </Grid>
-        <Grid container direction="column" justify="flex-start" alignItems="flex-start" item xs={6}>
+        <Grid container direction="column" justify="flex-start" alignItems="flex-start" item xs={12} sm={6}>
           <Typography gutterBottom>
             Allergies:
           </Typography>
@@ -142,11 +142,10 @@ export default function AddressForm() {
               
               <Grid item>
                 <TextField
-                  required
                   variant="outlined"
-                  id="mealInput"
-                  name="mealInput"
-                  label="Meal"
+                  id="otherAllergy"
+                  name="otherAllergy"
+                  label="Allergy"
                   size="small"
                 />
               </Grid>
