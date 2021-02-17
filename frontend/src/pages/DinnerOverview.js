@@ -50,7 +50,6 @@ export default function DinnerOverview(props) {
         <DinnerList />
         </Box>
       </main>
-      <Footer />
     </React.Fragment>
   );
 }
