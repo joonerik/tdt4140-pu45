@@ -53,7 +53,7 @@ export default class DinnerList extends React.Component {
               // use event id as key instead
               this.state.events.map((card, i) => (
                 <Grid item key={card.id} xs={12} sm={6} md={4}>
-                  <Card>
+                  <Card style={{ height: '100%' }}>
                     <CardContent>
                       <Typography variant="subtitle2" align="left">{convert(card.date_event)}</Typography>
                       <Typography align="left" gutterBottom variant="h4" component="h2">

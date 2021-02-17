@@ -5,7 +5,7 @@ import "./DinnerBox.css"
 function DinnerBox(props) {
 
     const [content, setContent] = useState(null);
-    const color = "lightblue"
+    const color = "#3f51b5"
     var info = null;
     
 
@@ -23,7 +23,7 @@ function DinnerBox(props) {
     if (content === 1) {
         info = <div className="dinnerDetails">
             <ul>
-                <li>Description: {props.card.description}</li>
+                <li>{props.card.description}</li>
                 {courses.map((course, count) => (
                     <li key={count}>{course}{console.log(course)}</li>
                 ))}
@@ -31,15 +31,16 @@ function DinnerBox(props) {
         </div>
     } else if (content === 2) {
         info = <div className="dinnerDetails">
-            <h3>Capacity: {props.card.capacity}</h3>
-            <h4>Participants: </h4>
+            <h5>Capacity: {props.card.capacity}</h5>
+            <p>Participants: </p>
         </div>
     } else if (content === 3) {
         info = <div className="dinnerDetails">
             <ul>
-                <li>{`${props.card.contains_gluten}`}</li>
-                <li>{String(props.card.contains_nut)}</li>
-                <li>{props.card.contains_gluten.toString()}</li>
+                <li>Gluten: {`${props.card.contains_gluten}`}</li>
+                <li>Lactose: {String(props.card.contains_lactose)}</li>
+                <li>Nuts: {props.card.contains_nut.toString()}</li>
+                <li>Shellfish: {props.card.contains_shellfish.toString()}</li>
                 <li>Other: {props.card.other_allergens}</li>
             </ul>
         </div>
@@ -50,22 +51,22 @@ function DinnerBox(props) {
         <div className="box">
             <button onClick={props.state}>X</button>
             <ul className="dinnerInfo">
-                <h1>{props.card.title.toUpperCase()}</h1>
-                <p>{props.card.host}, {props.card.phone}</p>
-                <p>{props.card.email}</p>
-                <p>{props.card.location}</p>
-                <p>{props.card.date_event}</p>
-                <p>Split bill: {String(props.card.split_bill)}</p>
-                <p>Price: {props.card.price}</p>
+                <h1>{props.card.title}</h1>
+                <p>HOST: {props.card.host}, {props.card.phone}</p>
+                <p>E-MAIL: {props.card.email}</p>
+                <p>LOCATION: {props.card.location}</p>
+                <p>TIME: {props.card.date_event}</p>
+                <p>SPLIT BILL: {String(props.card.split_bill)}</p>
+                <p>PRICE: {props.card.price}</p>
             </ul>
             <ul id="navigation">
-                <li onClick={() => {
+                <li className="navigationlink" onClick={() => {
                     setContent(1)
                 }} style={content === 1 ? {color} : null}>Description</li>
-                <li onClick={() => {
+                <li className="navigationlink" onClick={() => {
                     setContent(2)
                 }} style={content === 2 ? {color} : null}>Participants</li>
-                <li onClick={() => {
+                <li className="navigationlink" onClick={() => {
                     setContent(3)
                 }} style={content === 3 ? {color} : null} >Allergies</li>
             </ul>  
