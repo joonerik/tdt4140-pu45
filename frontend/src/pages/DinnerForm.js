@@ -147,7 +147,7 @@ export default function AddressForm() {
 
         <Grid container direction="column" justify="flex-start" alignItems="flex-start" item xs={12} sm={6}>
           <Grid container item>
-            <Grid item container direction="row" alignItems="flex-start" justify="space-between">
+            <Grid item container direction="row" alignItems="center" justify="flex-start">
               <Grid item xs={10} sm={8}>
                 <TextField
                   variant="outlined"
@@ -156,6 +156,12 @@ export default function AddressForm() {
                   label="Meal"
                   size="small"
                   fullWidth
+                  onKeyPress={(event) => {
+                    if (event.key === 'Enter') {
+                      event.preventDefault();
+                      addMeal(event);
+                    }
+                  }}
                 />
               </Grid>
               <Grid item xs={2} sm={4}>
