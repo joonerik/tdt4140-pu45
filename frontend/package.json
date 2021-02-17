@@ -14,8 +14,9 @@
     "web-vitals": "^1.1.0"
   },
   "jest": {
-    "coverageReporters": [
-      "text-summary"
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/index.js"
     ]
   },
   "scripts": {
