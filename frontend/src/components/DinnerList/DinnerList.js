@@ -31,7 +31,6 @@ export default class DinnerList extends React.Component {
   componentDidMount() {
     axios.get("https://dinnerpool.herokuapp.com/dinners/").then((res) => {
       this.setState({ events: res.data });
-      console.log("hola");
     });
   }
   

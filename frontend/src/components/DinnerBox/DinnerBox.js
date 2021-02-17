@@ -1,35 +1,32 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import axios from "axios";
 import "./DinnerBox.css"
 
 function DinnerBox(props) {
 
     const [content, setContent] = useState(null);
-    // const [course, setCourse] = useState(null);
     const color = "lightblue"
     var info = null;
     
-    async function findCourse(getUrl) {
-        await axios.get(getUrl).then((res) => {
-            console.log(res.data.description)
-            return res.data
-        })
 
-
-    //     axios.get(getUrl).then((res) => {
-    //         // setCourse(res.data.description)
-    //         console.log(res.data.description)
-    //         return res.data
-    // });
-    }
+    const [courses, setCourses] = useState([]);
+    useEffect(() => {
+        props.card.courses.map((url) => (
+            axios.get(url).then((res) => {
+                if (!courses.includes(res.data.description)) {
+                    setCourses([...courses, res.data.description])
+                }
+            })
+        ))
+    }, [courses])
 
     if (content === 1) {
         info = <div className="dinnerDetails">
             <ul>
                 <li>Description: {props.card.description}</li>
-                {props.card.courses.map((url, i) => 
-                    <li>Course: {findCourse(url).description}</li>
-                )}
+                {courses.map((course, count) => (
+                    <li key={count}>{course}{console.log(course)}</li>
+                ))}
             </ul>
         </div>
     } else if (content === 2) {
