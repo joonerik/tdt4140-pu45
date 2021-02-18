@@ -62,35 +62,49 @@ function loadMealList(){
   })
 }
 
+
 function submitCourse(){
-  
-  const course = {
-    description: 'potatoes'
+  const courseTest = {
+    description: 'mængdær med tester'
   }
-
-  axios.post('https://dinnerpool.herokuapp.com/courses/', course).then((res) => console.log(res.description))
-
+  const responsePromise = axios.post('http://iterasjon1.herokuapp.com/courses/', courseTest)
+  const returnPromise = responsePromise.then((res) => res.data)
+  return returnPromise
 }
+function testFunction() {
+  // const res = submitCourse.then((response) => {
+  //   return response.data.description
+  // })
 
+  // console.log(submitCourse.then(res) => (res.data.description))
+  submitCourse().then(data => {
+    return data
+  })
+}
 
 async function submitDinner(){
 
 
   console.log("Submit dinner");
-  let courseId = submitCourse();
-  console.log(courseId);
-  let data = collectInputData(courseId);
-  console.log(data);
-
-  await axios.post('https://iterasjon1.herokuapp.com/dinners/', data)
-  .then((response) => {
-    console.log(response);
-  }, (error) => {
-    console.log(error);
+  let courseId = await submitCourse().then(data => {
+    return data.id
   });
-
-
+  // let courseId = await testFunction()
+  if (typeof courseId === 'number') {
+    let data = collectInputData(courseId);
+    console.log(data);
+  
+    await axios.post('https://iterasjon1.herokuapp.com/dinners/', data)
+    .then((response) => {
+      console.log(response);
+    }, (error) => {
+      console.log(error.request);
+    });
+  } else {
+    console.log("fuck")
+  }
 }
+
 
 
 function collectInputData(coursesId){
@@ -125,7 +139,7 @@ function collectInputData(coursesId){
   }
 
   
-  return createJson(dinnerTitle, description, hostName, email, phone, capacity, location, date, coursesId, price, splitBill, gluten, lactose, nuts, shellfish, otherAllergy)
+  return createJson1(dinnerTitle, description, hostName, email, phone, capacity, location, date, coursesId, price, splitBill, gluten, lactose, nuts, shellfish, otherAllergy)
 }
 
 function createJson(title, description, host, email, phone, capacity, location, date_event, coursesId, price, splitBill, contains_gluten, contains_lactose, contains_nut, contains_shellfish, other_allergens){
@@ -147,6 +161,28 @@ function createJson(title, description, host, email, phone, capacity, location, 
           "contains_nut": contains_nut,
           "contains_shellfish": contains_shellfish,
           "other_allergens": other_allergens
+        }
+}
+
+function createJson1(t, d, h, em, tlf, cap, loc, date, id, p, s_b, c_g, c_l, c_n, c_s, other){
+  console.log("create json");
+  return{
+          title: t,
+          description: d,
+          host: h,
+          email: em,
+          phone: tlf,
+          capacity: Number(cap),
+          location: loc,
+          date_event: "2100-02-18T14:43:58Z",
+          courses: ["https://iterasjon1.herokuapp.com/courses/" + JSON.stringify(id) + "/"],
+          price: Number(p),
+          split_bill: Boolean(s_b),
+          contains_gluten: Boolean(c_g),
+          contains_lactose: Boolean(c_l),
+          contains_nut: Boolean(c_n),
+          contains_shellfish: Boolean(c_s),
+          other_allergens: other
         }
 }
 
@@ -249,10 +285,11 @@ export default function AddressForm() {
                   fullWidth
                   onKeyPress={(event) => {
                     if (event.key === 'Enter') {
-                      // event.preventDefault();
-                      // addMeal(event);
+                      event.preventDefault();
+                      addMeal(event);
                       console.log("add meal press enter")
-                      submitCourse()
+                      // submitCourse()
+                      // testFunction()
                     }
                   }}
                 />
@@ -388,7 +425,6 @@ export default function AddressForm() {
 
         <Grid item xs={12}>
           <Button onClick={() => {
-            console.log("onclick submitDinner/register")
             submitDinner()
           }} variant="contained">Register</Button>
           
