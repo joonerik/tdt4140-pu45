@@ -67,9 +67,9 @@ function submitCourse(){
   // this submitCourse to be looped for each meal in meals[] list with
   // some type of logic (concerned about possible errors in dinner POST after course POST)
   // ie. able to add courses in DB while no dinner
-  const course = {
-    description: 'mængdær med tester'
-  }
+  console.log(meals)
+  console.log(meals[0])
+  const course = meals[0]
   const promise = axios.post('http://iterasjon1.herokuapp.com/courses/', course)
   const dataPromise = promise.then((res) => res.data)
   return dataPromise
