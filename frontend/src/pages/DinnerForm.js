@@ -10,6 +10,8 @@ import Button from '@material-ui/core/Button'
 import { Box } from '@material-ui/core';
 import Switch from '@material-ui/core/Switch';
 
+import axios from "axios"
+
 
 let meals = [];
 
@@ -60,8 +62,97 @@ function loadMealList(){
   })
 }
 
+async function submitCourse(){
+  
+  let courses = {
+    "description": meals
+  }
+
+  let id = await axios.post("https://iterasjon1.herokuapp.com/courses/", courses).then((response) => {
+    console.log(response.data)
+    let id = response.data["id"];
+    return id
+  })
+  return id
+}
 
 
+async function submitDinner(){
+
+
+  console.log("Submit dinner");
+  let courseId = submitCourse();
+  console.log(courseId);
+  let data = collectInputData(courseId);
+  console.log(data);
+
+  await axios.post('https://iterasjon1.herokuapp.com/dinners/', data)
+  .then((response) => {
+    console.log(response);
+  }, (error) => {
+    console.log(error);
+  });
+
+
+}
+
+
+function collectInputData(coursesId){
+  console.log("collect data")
+  let hostName = document.getElementById("hostName").value;
+  let email = document.getElementById("email").value;
+  let phone = document.getElementById("phone").value;
+  let dinnerTitle = document.getElementById("dinnerTitle").value;
+  let date = document.getElementById("date").value;
+  let description = document.getElementById("description").value;
+  let location = document.getElementById("location").value;
+  let capacity = document.getElementById("capacity").value;
+  
+
+  let lactose = document.getElementById("checkAllergyLactose").checked;
+  let nuts = document.getElementById("checkAllergyNuts").checked;
+  let gluten = document.getElementById("checkAllergyGluten").checked;
+  let shellfish = document.getElementById("checkAllergyShellfish").checked;
+  let otherAllergy = "";
+
+  let otherAllergyCheckbox = document.getElementById("checkAllergyOther").checked;
+
+  if (otherAllergyCheckbox){
+    otherAllergy = document.getElementById("otherAllergy").value;
+  }
+  
+  let splitBill = document.getElementById("splitBill").checked;
+  let price = 0;
+  
+  if (splitBill){
+    price = document.getElementById("price").value;
+  }
+
+  
+  return createJson(dinnerTitle, description, hostName, email, phone, capacity, location, date, coursesId, price, splitBill, gluten, lactose, nuts, shellfish, otherAllergy)
+}
+
+function createJson(title, description, host, email, phone, capacity, location, date_event, coursesId, price, splitBill, contains_gluten, contains_lactose, contains_nut, contains_shellfish, other_allergens){
+  console.log("create json");
+  return{
+          "title": title,
+          "description": description,
+          "host": host,
+          "email": email,
+          "phone": phone,
+          "capacity": capacity,
+          "location": location,
+          "date_event": date_event,
+          "courses": "https://dinnerpool.herokuapp.com/courses/" + coursesId + "/",
+          "price": price,
+          "split_bill": splitBill,
+          "contains_gluten": contains_gluten,
+          "contains_lactose": contains_lactose,
+          "contains_nut": contains_nut,
+          "contains_shellfish": contains_shellfish,
+          "other_allergens": other_allergens
+        }
+}
 
 
 export default function AddressForm() {
@@ -189,15 +280,8 @@ export default function AddressForm() {
           <FormControlLabel
             control={
               <Checkbox
-                name="checkAllergySoy"
-              />
-            }
-            label="Soy"
-            />
-          <FormControlLabel
-            control={
-              <Checkbox
                 name="checkAllergyGluten"
+                id="checkAllergyGluten"
               />
             }
             label="Gluten"
@@ -205,17 +289,37 @@ export default function AddressForm() {
           <FormControlLabel
             control={
               <Checkbox
+                name="checkAllergyShellfish"
+                id="checkAllergyShellfish"
+              />
+            }
+            label="Shellfish"
+            />
+          <FormControlLabel
+            control={
+              <Checkbox
                 name="checkAllergyLactose"
+                id="checkAllergyLactose"
               />
             }
             label="Lactose"
+            />
+            <FormControlLabel
+            control={
+              <Checkbox
+                name="checkAllergyNuts"
+                id="checkAllergyNuts"
+              />
+            }
+            label="Nuts"
             />
             <Grid container direction="row" justify="flex-start" alignItems="center" style={{flexWrap:"nowrap"}}>
               <Grid item>
                 <FormControlLabel
                 control={
                   <Checkbox
-                    name="checkAllergyLactose"
+                    name="checkAllergyOther"
+                    id="checkAllergyOther"
                   />
                 }
                 />
@@ -239,7 +343,7 @@ export default function AddressForm() {
                         <TextField
                           variant="outlined"
                           type="number" 
-                          id="Capacity"
+                          id="capacity"
                           name="Capacity" 
                           label="Capacity"
                           size="small"   
@@ -267,6 +371,7 @@ export default function AddressForm() {
                         control={
                           <Switch
                             name="splitBill"
+                            id="splitBill"
                             color="primary"
 
                             onChange={()=>(
@@ -284,7 +389,7 @@ export default function AddressForm() {
            </Grid>
 
         <Grid item xs={12}>
-          <Button variant="contained">Register</Button>
+          <Button onClick={() => { submitDinner() }} variant="contained">Register</Button>
           
         </Grid>
       </Grid>
