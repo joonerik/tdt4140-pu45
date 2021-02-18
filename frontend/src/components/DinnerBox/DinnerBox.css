@@ -7,7 +7,7 @@
 
     width: 50%;
     height: 70%;
-    position: absolute;
+    position: fixed;
     border: 5px solid #3f51b5;
     padding-left: 50px;
     padding-top: 40px;
@@ -33,32 +33,39 @@ button:hover {
     padding-top: 4px;
 }
 
-.dinnerDetails {
-    margin-left: 40%;
-    bottom: 20%;
-    position: absolute;
-    display: block;
-}
-
-.dinnerDetails li {
-    list-style: none;
-}
-
-.dinnerDetails ul {
-    align-items: left;
+.subSection {
+    display: flex;
 }
 
 #navigation {
+    flex: 1;
     font-size: 24px;
-    padding-top: 30px;
-    text-align: left;
+    margin: 0;
 }
 
 .navigationlink {
     display: block;
     padding-right: 10%;
-    /* max-width: 160px; */
     width: fit-content;
+}
+
+.dinnerDetails {
+    flex: 1;
+}
+
+.dinnerDetails ul {
+    margin: 0;
+    padding: 0;
+    float: left;
+}
+
+.dinnerDetails ul li:first-child {
+    padding-top: 4px;
+}
+
+.dinnerDetails li {
+    list-style: none;
+    text-align: left;
 }
 
 #navigation li:hover {
@@ -70,7 +77,6 @@ button:hover {
     .box {
       width: 90%;
       height: 90%;
-      margin-top: 120px;
       z-index: 1;
     }
 
@@ -88,5 +94,9 @@ button:hover {
     .navigationlink {
         padding-top: 10px;
         display: block;
+    }
+
+    .dinnerDetails {
+        margin: 8px;
     }
   }

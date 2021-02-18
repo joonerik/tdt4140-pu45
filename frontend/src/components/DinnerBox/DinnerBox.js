@@ -23,6 +23,7 @@ function DinnerBox(props) {
     if (content === 1) {
         info = <div className="dinnerDetails">
             <ul>
+                <li style={{ fontWeight: 'bold' }}>Description: {props.card.capacity}</li>
                 <li>{props.card.description}</li>
                 {courses.map((course, count) => (
                     <li key={count}>{course}</li>
@@ -31,8 +32,10 @@ function DinnerBox(props) {
         </div>
     } else if (content === 2) {
         info = <div className="dinnerDetails">
-            <h5>Capacity: {props.card.capacity}</h5>
-            <p>Participants: </p>
+            <ul>
+                <li style={{ fontWeight: 'bold' }}>Capacity: {props.card.capacity}</li>
+                <li>Participants: <p style={{ fontStyle: 'italic' }}>None</p></li>
+            </ul>
         </div>
     } else if (content === 3) {
         info = <div className="dinnerDetails">
@@ -58,18 +61,20 @@ function DinnerBox(props) {
                 <li>TIME: {(props.card.date_event).substring(0, 10) + " " + (props.card.date_event).substring(11, 16)}</li>
                 <li>{props.card.split_bill === true ? <p>TOTAL PRICE: {props.card.price}</p> : <p>PRICE: Free</p>}</li>
             </ul>
-            <ul id="navigation">
-                <li className="navigationlink" onClick={() => {
-                    setContent(1)
-                }} style={content === 1 ? {color} : null}>Description</li>
-                <li className="navigationlink" onClick={() => {
-                    setContent(2)
-                }} style={content === 2 ? {color} : null}>Participants</li>
-                <li className="navigationlink" onClick={() => {
-                    setContent(3)
-                }} style={content === 3 ? {color} : null} >Allergies</li>
-            </ul>  
-            {info}
+            <div className="subSection">
+                <ul id="navigation">
+                    <li className="navigationlink" onClick={() => {
+                        setContent(1)
+                    }} style={content === 1 ? {color} : null}>Description</li>
+                    <li className="navigationlink" onClick={() => {
+                        setContent(2)
+                    }} style={content === 2 ? {color} : null}>Participants</li>
+                    <li className="navigationlink" onClick={() => {
+                        setContent(3)
+                    }} style={content === 3 ? {color} : null} >Allergies</li>
+                </ul>  
+                {info}
+            </div>
         
         </div>
     )
