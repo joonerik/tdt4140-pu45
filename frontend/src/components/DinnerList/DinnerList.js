@@ -12,9 +12,7 @@ import DinnerBox from "../DinnerBox/DinnerBox";
 import { Link } from "react-router-dom";
 
 function convert(date) {
-  // const reg = "\d{4}-\d{2}-\d{2}"
   return date.substring(0, 10) + " " + date.substring(11, 16)
-
 }
 
 export default class DinnerList extends React.Component {

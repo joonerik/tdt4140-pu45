@@ -57,10 +57,13 @@ button:hover {
 .navigationlink {
     display: block;
     padding-right: 10%;
+    /* max-width: 160px; */
+    width: fit-content;
 }
 
 #navigation li:hover {
     text-decoration: underline;
+    cursor: pointer;
 }
 
 @media only screen and (max-width: 960px) {
