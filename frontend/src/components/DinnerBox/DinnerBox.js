@@ -20,6 +20,8 @@ function DinnerBox(props) {
         ))
     }, [courses])
 
+    // const allergies = [(props.card.contains_lactose), String(props.card.contains_lactose)]
+
     if (content === 1) {
         info = <div className="dinnerDetails">
             <ul>
@@ -37,10 +39,11 @@ function DinnerBox(props) {
     } else if (content === 3) {
         info = <div className="dinnerDetails">
             <ul>
-                <li>Gluten: {`${props.card.contains_gluten}`}</li>
-                <li>Lactose: {String(props.card.contains_lactose)}</li>
-                <li>Nuts: {props.card.contains_nut.toString()}</li>
-                <li>Shellfish: {props.card.contains_shellfish.toString()}</li>
+                <li style={{ fontWeight: 'bold' }}>Allergies</li>
+                {props.card.contains_gluten === true ? <li>Gluten</li> : null}
+                {props.card.contains_lactose === true ? <li>Lactose</li> : null}
+                {props.card.contains_nut === true ? <li>Nuts</li> : null}
+                {props.card.contains_shellfish === true ? <li>Shellfish</li> : null}
                 <li>Other: {props.card.other_allergens}</li>
             </ul>
         </div>
