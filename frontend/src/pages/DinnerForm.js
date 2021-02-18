@@ -64,32 +64,23 @@ function loadMealList(){
 
 
 function submitCourse(){
-  const courseTest = {
+  // this submitCourse to be looped for each meal in meals[] list with
+  // some type of logic (concerned about possible errors in dinner POST after course POST)
+  // ie. able to add courses in DB while no dinner
+  const course = {
     description: 'mængdær med tester'
   }
-  const responsePromise = axios.post('http://iterasjon1.herokuapp.com/courses/', courseTest)
-  const returnPromise = responsePromise.then((res) => res.data)
-  return returnPromise
-}
-function testFunction() {
-  // const res = submitCourse.then((response) => {
-  //   return response.data.description
-  // })
-
-  // console.log(submitCourse.then(res) => (res.data.description))
-  submitCourse().then(data => {
-    return data
-  })
+  const promise = axios.post('http://iterasjon1.herokuapp.com/courses/', course)
+  const dataPromise = promise.then((res) => res.data)
+  return dataPromise
 }
 
-async function submitDinner(){
-
+async function submitDinner() {
 
   console.log("Submit dinner");
   let courseId = await submitCourse().then(data => {
     return data.id
   });
-  // let courseId = await testFunction()
   if (typeof courseId === 'number') {
     let data = collectInputData(courseId);
     console.log(data);
@@ -105,10 +96,7 @@ async function submitDinner(){
   }
 }
 
-
-
 function collectInputData(coursesId){
-  console.log("collect data")
   let hostName = document.getElementById("hostName").value;
   let email = document.getElementById("email").value;
   let phone = document.getElementById("phone").value;
@@ -138,10 +126,12 @@ function collectInputData(coursesId){
     price = document.getElementById("price").value;
   }
 
-  
   return createJson1(dinnerTitle, description, hostName, email, phone, capacity, location, date, coursesId, price, splitBill, gluten, lactose, nuts, shellfish, otherAllergy)
 }
 
+// I believe the fnutter have to be the other way around.
+// However, the input fields in the rest api is really strict, so some more things
+// has to be handled either frontend or backend. Eg. allergy field cant be empty, date format
 function createJson(title, description, host, email, phone, capacity, location, date_event, coursesId, price, splitBill, contains_gluten, contains_lactose, contains_nut, contains_shellfish, other_allergens){
   console.log("create json");
   return{
@@ -164,6 +154,7 @@ function createJson(title, description, host, email, phone, capacity, location, 
         }
 }
 
+// currently this is in use. Note the hard-coded date
 function createJson1(t, d, h, em, tlf, cap, loc, date, id, p, s_b, c_g, c_l, c_n, c_s, other){
   console.log("create json");
   return{
@@ -186,9 +177,10 @@ function createJson1(t, d, h, em, tlf, cap, loc, date, id, p, s_b, c_g, c_l, c_n
         }
 }
 
-
 export default function AddressForm() {
+
   const[input,setInput]=useState(false)
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -287,9 +279,6 @@ export default function AddressForm() {
                     if (event.key === 'Enter') {
                       event.preventDefault();
                       addMeal(event);
-                      console.log("add meal press enter")
-                      // submitCourse()
-                      // testFunction()
                     }
                   }}
                 />
@@ -304,8 +293,6 @@ export default function AddressForm() {
             </ul>
           </Grid>
         </Grid>
-
-
 
         
         <Grid container direction="column" justify="flex-start" alignItems="flex-start" item xs={12} sm={6}>
