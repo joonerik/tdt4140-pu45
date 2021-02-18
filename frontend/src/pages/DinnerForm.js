@@ -233,7 +233,8 @@ export default function AddressForm() {
             </Grid>
            </Grid>
 
-           <Grid item container direction="column" xs={6}>
+           <Grid item container direction="column" xs={12} sm={6}>
+                    <Grid item container xs={12} spacing={1}>
                       <Grid item xs={6}>
                         <TextField
                           variant="outlined"
@@ -245,7 +246,22 @@ export default function AddressForm() {
                         >
                         </TextField>
                     </Grid>
-                    
+
+                    <Grid item xs={6}>
+                    {input ? 
+                         <TextField
+                            size="small"
+                            type="float"
+                            variant="outlined"
+                            id="price"
+                            name="price"
+                            label="Price"
+                          >
+                          </TextField>
+                        
+                      :null}
+                    </Grid>
+                    </Grid>
                     <Grid item xs={6}>
                       <FormControlLabel
                         control={
@@ -261,22 +277,11 @@ export default function AddressForm() {
                         label="Split bill"
                         labelPlacement="start"
                       />
-                      {input ? 
-                         <TextField
-                            size="small"
-                            type="float"
-                            variant="outlined"
-                            id="price"
-                            name="price"
-                            label="Price"
-                          >
-                          </TextField>
-                        
-                      :null}
+                      
                     </Grid>
-           </Grid>
 
-          
+                    
+           </Grid>
 
         <Grid item xs={12}>
           <Button variant="contained">Register</Button>
