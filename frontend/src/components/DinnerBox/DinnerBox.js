@@ -20,14 +20,12 @@ function DinnerBox(props) {
         ))
     }, [courses])
 
-    // const allergies = [(props.card.contains_lactose), String(props.card.contains_lactose)]
-
     if (content === 1) {
         info = <div className="dinnerDetails">
             <ul>
                 <li>{props.card.description}</li>
                 {courses.map((course, count) => (
-                    <li key={count}>{course}{console.log(course)}</li>
+                    <li key={count}>{course}</li>
                 ))}
             </ul>
         </div>
@@ -49,18 +47,16 @@ function DinnerBox(props) {
         </div>
     }
 
-
     return (
         <div className="box">
             <button onClick={props.state}>X</button>
             <ul className="dinnerInfo">
                 <h1>{props.card.title}</h1>
-                <p>HOST: {props.card.host}, {props.card.phone}</p>
-                <p>E-MAIL: {props.card.email}</p>
-                <p>LOCATION: {props.card.location}</p>
-                <p>TIME: {props.card.date_event}</p>
-                <p>SPLIT BILL: {String(props.card.split_bill)}</p>
-                <p>PRICE: {props.card.price}</p>
+                <li>HOST: {props.card.host}, {props.card.phone}</li>
+                <li>E-MAIL: {props.card.email}</li>
+                <li>LOCATION: {props.card.location}</li>
+                <li>TIME: {(props.card.date_event).substring(0, 10) + " " + (props.card.date_event).substring(11, 16)}</li>
+                <li>{props.card.split_bill === true ? <p>TOTAL PRICE: {props.card.price}</p> : <p>PRICE: Free</p>}</li>
             </ul>
             <ul id="navigation">
                 <li className="navigationlink" onClick={() => {
