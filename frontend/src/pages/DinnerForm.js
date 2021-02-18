@@ -62,18 +62,14 @@ function loadMealList(){
   })
 }
 
-async function submitCourse(){
+function submitCourse(){
   
-  let courses = {
-    "description": meals
+  const course = {
+    description: 'potatoes'
   }
 
-  let id = await axios.post("https://iterasjon1.herokuapp.com/courses/", courses).then((response) => {
-    console.log(response.data)
-    let id = response.data["id"];
-    return id
-  })
-  return id
+  axios.post('https://dinnerpool.herokuapp.com/courses/', course).then((res) => console.log(res.description))
+
 }
 
 
@@ -253,8 +249,10 @@ export default function AddressForm() {
                   fullWidth
                   onKeyPress={(event) => {
                     if (event.key === 'Enter') {
-                      event.preventDefault();
-                      addMeal(event);
+                      // event.preventDefault();
+                      // addMeal(event);
+                      console.log("add meal press enter")
+                      submitCourse()
                     }
                   }}
                 />
@@ -389,7 +387,10 @@ export default function AddressForm() {
            </Grid>
 
         <Grid item xs={12}>
-          <Button onClick={() => { submitDinner() }} variant="contained">Register</Button>
+          <Button onClick={() => {
+            console.log("onclick submitDinner/register")
+            submitDinner()
+          }} variant="contained">Register</Button>
           
         </Grid>
       </Grid>
