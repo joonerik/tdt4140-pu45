@@ -7,8 +7,8 @@ import "./NavBar.css" ;
 
 function NavBar() {
   return (
-    <div class="topnav">
-      <div class="topnav-centered">
+    <div className="topnav">
+      <div className="topnav-centered">
         <Link className="link" id="mainLink" to="/">DINNERPOOL</Link>
       </div>
       <Link className="link" id="menuLink" to="/">MENU</Link>
