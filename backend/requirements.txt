@@ -12,3 +12,4 @@ pytz==2021.1
 sqlparse==0.4.1
 whitenoise==5.2.0
 coverage==5.4
+django-unixtimestampfield==0.4.0
