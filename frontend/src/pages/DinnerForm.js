@@ -23,6 +23,7 @@ function addMeal(e) {
 
   /* Save list element as String object */
   meals.push(mealInput)
+  console.log(meals)
   
   document.getElementById("mealInput").value = ""; // Empty input field
   mealList.innerHTML = ""; // empty list
@@ -62,43 +63,60 @@ function loadMealList(){
   })
 }
 
-async function submitCourse(){
-  
-  let courses = {
-    "description": meals
-  }
 
-  let id = await axios.post("https://iterasjon1.herokuapp.com/courses/", courses).then((response) => {
-    console.log(response.data)
-    let id = response.data["id"];
-    return id
-  })
-  return id
+function submitCourse(){
+  // this submitCourse to be looped for each meal in meals[] list with
+  // some type of logic (concerned about possible errors in dinner POST after course POST)
+  // ie. able to add courses in DB while no dinner
+  console.log(meals)
+  console.log(meals[0])
+  const jsonCourse = {"description": meals.toString()}
+  console.log(jsonCourse)
+  const promise = axios.post('http://iterasjon1.herokuapp.com/courses/', jsonCourse)
+  const dataPromise = promise.then((res) => res.data)
+  return dataPromise
 }
 
+function courseIsEmpty(){
+  if (meals.length() == 0){
+    console.log("empty course")
+    return true
+  }
+  return false
+}
 
-async function submitDinner(){
+function validateForm(e){
+  if (courseIsEmpty()){
+    console.log("Can't submit dinner without course")
+    e.preventDefault()
+  }
+  else {
+    submitDinner()
+  }
+}
 
+async function submitDinner() {
 
   console.log("Submit dinner");
-  let courseId = submitCourse();
-  console.log(courseId);
-  let data = collectInputData(courseId);
-  console.log(data);
-
-  await axios.post('https://iterasjon1.herokuapp.com/dinners/', data)
-  .then((response) => {
-    console.log(response);
-  }, (error) => {
-    console.log(error);
+  let courseId = await submitCourse().then(data => {
+    return data.id
   });
-
-
+  if (typeof courseId === 'number') {
+    let data = collectInputData(courseId);
+    console.log(data);
+  
+    await axios.post('https://iterasjon1.herokuapp.com/dinners/', data)
+    .then((response) => {
+      console.log(response);
+    }, (error) => {
+      console.log(error.request);
+    });
+  } else {
+    console.log("fuck")
+  }
 }
 
-
 function collectInputData(coursesId){
-  console.log("collect data")
   let hostName = document.getElementById("hostName").value;
   let email = document.getElementById("email").value;
   let phone = document.getElementById("phone").value;
@@ -128,10 +146,12 @@ function collectInputData(coursesId){
     price = document.getElementById("price").value;
   }
 
-  
-  return createJson(dinnerTitle, description, hostName, email, phone, capacity, location, date, coursesId, price, splitBill, gluten, lactose, nuts, shellfish, otherAllergy)
+  return createJson1(dinnerTitle, description, hostName, email, phone, capacity, location, date, coursesId, price, splitBill, gluten, lactose, nuts, shellfish, otherAllergy)
 }
 
+// I believe the fnutter have to be the other way around.
+// However, the input fields in the rest api is really strict, so some more things
+// has to be handled either frontend or backend. Eg. allergy field cant be empty, date format
 function createJson(title, description, host, email, phone, capacity, location, date_event, coursesId, price, splitBill, contains_gluten, contains_lactose, contains_nut, contains_shellfish, other_allergens){
   console.log("create json");
   return{
@@ -154,11 +174,36 @@ function createJson(title, description, host, email, phone, capacity, location, 
         }
 }
 
+// currently this is in use. Note the hard-coded date
+function createJson1(t, d, h, em, tlf, cap, loc, date, id, p, s_b, c_g, c_l, c_n, c_s, other){
+  console.log("create json");
+  return{
+          title: t,
+          description: d,
+          host: h,
+          email: em,
+          phone: tlf,
+          capacity: Number(cap),
+          location: loc,
+          date_event: "2100-02-18T14:43:58Z",
+          courses: ["https://iterasjon1.herokuapp.com/courses/" + JSON.stringify(id) + "/"],
+          price: Number(p),
+          split_bill: Boolean(s_b),
+          contains_gluten: Boolean(c_g),
+          contains_lactose: Boolean(c_l),
+          contains_nut: Boolean(c_n),
+          contains_shellfish: Boolean(c_s),
+          other_allergens: other
+        }
+}
 
 export default function AddressForm() {
+
   const[input,setInput]=useState(false)
+
   return (
     <React.Fragment>
+      <form>
       <Typography variant="h6" gutterBottom>
         Register dinner
       </Typography>
@@ -183,6 +228,7 @@ export default function AddressForm() {
             label="Email"
             fullWidth
             autoComplete="email"
+            type="email"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -193,6 +239,7 @@ export default function AddressForm() {
             name="phone"
             label="Phone"
             autoComplete="tel"
+            type="phone"
             fullWidth
           />
         </Grid>
@@ -235,6 +282,7 @@ export default function AddressForm() {
             id="location"
             name="location"
             label="Location"
+            type="address"
             location="adress-line"
             fullWidth
           />
@@ -269,8 +317,6 @@ export default function AddressForm() {
             </ul>
           </Grid>
         </Grid>
-
-
 
         
         <Grid container direction="column" justify="flex-start" alignItems="flex-start" item xs={12} sm={6}>
@@ -347,6 +393,7 @@ export default function AddressForm() {
                           name="Capacity" 
                           label="Capacity"
                           size="small"   
+                          required
                         >
                         </TextField>
                     </Grid>
@@ -389,10 +436,13 @@ export default function AddressForm() {
            </Grid>
 
         <Grid item xs={12}>
-          <Button onClick={() => { submitDinner() }} variant="contained">Register</Button>
+          <Button type={'submit'} onSubmit={() => {
+            validateForm()
+          }} variant="contained">Register</Button>
           
         </Grid>
       </Grid>
+      </form>
     </React.Fragment>
   );
 }
