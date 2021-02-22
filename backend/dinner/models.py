@@ -21,7 +21,7 @@ class Dinner(models.Model):
     capacity = models.IntegerField(default = 0)
     location = models.CharField(max_length = 50)
     date_created = models.DateTimeField(default=timezone.now)
-    date_event = UnixTimeStampField(default=timezone.now, use_numeric=True)
+    date_event = UnixTimeStampField(default=0.0)
     courses = models.ManyToManyField(Course)
     price = models.FloatField(default=0)
     split_bill = models.BooleanField(default = False)
