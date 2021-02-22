@@ -13,12 +13,24 @@ function App() {
           <Switch>
             <Route component={DinnerOverview} exact path="/" />
             <Route component={LoginPage} path="/login" />
-            <Route component={DinnerForm} path="/form"/>
+            <Route data-testid="elseLink" component={NoMatch} />
           </Switch>
+          <Footer/>
         </Router>
 
     </div>
   );
+}
+
+function NoMatch({ location }) {
+  return (
+    <div>
+      <br></br>
+      <h3>
+        404 - No match for <code>{location.pathname}</code>
+      </h3>
+    </div>
+  )
 }
 
 export default App;

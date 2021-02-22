@@ -1,17 +1,19 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import DinnerList from "../components/DinnerList/DinnerList";
 import Footer from "../components/Footer/Footer";
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
-    backgroundColor: theme.palette.background.paper,
+    // backgroundColor: theme.palette.info.light,
+    background: 'linear-gradient(0deg, #1976d2 20%, #FF8E53 90%)',
+    // boxShadow: '0 20px 2px 0 #a6d4fa',
     padding: theme.spacing(8, 0, 6),
+    spacing: 2,
   },
   heroButtons: {
     marginTop: theme.spacing(4),
@@ -44,47 +46,10 @@ export default function DinnerOverview(props) {
     <React.Fragment>
       <CssBaseline />
       <main>
-        {/* Hero unit */}
-        <div className={classes.heroContent}>
-          <Container maxWidth="sm">
-            <Typography
-              component="h1"
-              variant="h3"
-              align="center"
-              color="textPrimary"
-              gutterBottom
-            >
-              Event overview
-            </Typography>
-            <Typography
-              variant="h5"
-              align="center"
-              color="textSecondary"
-              paragraph
-            >
-              Something short and leading about the collection below—its
-              contents, the creator, etc. Make it short and sweet, but not too
-              short so folks don&apos;t simply skip over it entirely.
-            </Typography>
-            <div className={classes.heroButtons}>
-              <Grid container spacing={2} justify="center">
-                <Grid item>
-                  <Button variant="contained" color="primary">
-                    Take me back
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button variant="outlined" color="primary">
-                    Don't touch me
-                  </Button>
-                </Grid>
-              </Grid>
-            </div>
-          </Container>
-        </div>
+        <Box p={4}>
         <DinnerList />
+        </Box>
       </main>
-      <Footer />
     </React.Fragment>
   );
 }

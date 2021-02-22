@@ -92,9 +92,6 @@ export default function SignIn() {
           </Grid>
         </form>
       </div>
-      <Box mt={8}>
-        <Footer/>
-      </Box>
     </Container>
   );
 }

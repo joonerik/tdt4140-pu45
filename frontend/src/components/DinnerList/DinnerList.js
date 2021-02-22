@@ -6,42 +6,67 @@ import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
+import AddIcon from '@material-ui/icons/Add';
 import axios from "axios";
+import DinnerBox from "../DinnerBox/DinnerBox";
+import { Link } from "react-router-dom";
+
+function convert(date) {
+  return date.substring(0, 10) + " " + date.substring(11, 16)
+}
 
 export default class DinnerList extends React.Component {
   state = {
     events: [],
+    isShowing : false,
+    id : null,
   };
+  
+  modifyState = () =>{
+    this.setState({isShowing: !this.state.isShowing})   
+}
 
   componentDidMount() {
-    axios.get("https://dinnerpool.herokuapp.com/dinners/").then((res) => {
+    axios.get("http://iterasjon1.herokuapp.com/dinners/").then((res) => {
       this.setState({ events: res.data });
-      console.log("hola");
     });
   }
+  
   render() {
     return (
       <div>
         <Container maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
+            <Grid item xs={12} sm={6} md={4}>
+              <Link to="/login">
+                  <Card style={{ height: '200px' }} >
+                    <CardContent>
+                        <AddIcon style={{ color: "green", fontSize:"100px", marginTop: "25px" }} ></AddIcon>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </Grid>
             {this.state.events.length > 0 &&
               // use event id as key instead
               this.state.events.map((card, i) => (
-                <Grid item key={i} xs={12} sm={6} md={4}>
-                  <Card>
+                <Grid item key={card.id} xs={12} sm={6} md={4}>
+                  <Card style={{ height: '200px', position: 'relative' }}>
                     <CardContent>
-                      <Typography gutterBottom variant="h5" component="h2">
+                      <Typography variant="subtitle2" align="left">{new Date((card.date_event) * 1e3).toISOString().slice(-13, -5)}</Typography>
+                      <Typography align="left" gutterBottom variant="h4" component="h2">
                         {card.title}
                       </Typography>
-                      <Typography>{card.location}</Typography>
+                      <Typography variant="h6" align="left">{card.location}</Typography>
                     </CardContent>
-                    <CardActions>
+                    <CardActions style={{ position: 'absolute', bottom: '0'}}>
                       <Button
+                        component={Link}
                         size="small"
                         color="primary"
                         onClick={() => {
-                          console.log("Clicked " + card.title);
+                          this.modifyState()
+                          this.setState(({id: i}))
                         }}
                       >
                         See more
@@ -50,6 +75,7 @@ export default class DinnerList extends React.Component {
                   </Card>
                 </Grid>
               ))}
+              {this.state.isShowing ? <DinnerBox state={this.modifyState} card={this.state.events[this.state.id]}/> : null}
           </Grid>
         </Container>
       </div>
