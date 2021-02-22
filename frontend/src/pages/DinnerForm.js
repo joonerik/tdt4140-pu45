@@ -77,6 +77,24 @@ function submitCourse(){
   return dataPromise
 }
 
+function courseIsEmpty(){
+  if (meals.length() == 0){
+    console.log("empty course")
+    return true
+  }
+  return false
+}
+
+function validateForm(e){
+  if (courseIsEmpty()){
+    console.log("Can't submit dinner without course")
+    e.preventDefault()
+  }
+  else {
+    submitDinner()
+  }
+}
+
 async function submitDinner() {
 
   console.log("Submit dinner");
@@ -185,6 +203,7 @@ export default function AddressForm() {
 
   return (
     <React.Fragment>
+      <form>
       <Typography variant="h6" gutterBottom>
         Register dinner
       </Typography>
@@ -209,6 +228,7 @@ export default function AddressForm() {
             label="Email"
             fullWidth
             autoComplete="email"
+            type="email"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -219,6 +239,7 @@ export default function AddressForm() {
             name="phone"
             label="Phone"
             autoComplete="tel"
+            type="phone"
             fullWidth
           />
         </Grid>
@@ -261,6 +282,7 @@ export default function AddressForm() {
             id="location"
             name="location"
             label="Location"
+            type="address"
             location="adress-line"
             fullWidth
           />
@@ -371,6 +393,7 @@ export default function AddressForm() {
                           name="Capacity" 
                           label="Capacity"
                           size="small"   
+                          required
                         >
                         </TextField>
                     </Grid>
@@ -413,12 +436,13 @@ export default function AddressForm() {
            </Grid>
 
         <Grid item xs={12}>
-          <Button onClick={() => {
-            submitDinner()
+          <Button type={'submit'} onSubmit={() => {
+            validateForm()
           }} variant="contained">Register</Button>
           
         </Grid>
       </Grid>
+      </form>
     </React.Fragment>
   );
 }
