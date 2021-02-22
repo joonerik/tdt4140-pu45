@@ -23,6 +23,7 @@ function addMeal(e) {
 
   /* Save list element as String object */
   meals.push(mealInput)
+  console.log(meals)
   
   document.getElementById("mealInput").value = ""; // Empty input field
   mealList.innerHTML = ""; // empty list
@@ -69,8 +70,9 @@ function submitCourse(){
   // ie. able to add courses in DB while no dinner
   console.log(meals)
   console.log(meals[0])
-  const course = meals[0]
-  const promise = axios.post('http://iterasjon1.herokuapp.com/courses/', course)
+  const jsonCourse = {"description": meals.toString()}
+  console.log(jsonCourse)
+  const promise = axios.post('http://iterasjon1.herokuapp.com/courses/', jsonCourse)
   const dataPromise = promise.then((res) => res.data)
   return dataPromise
 }
