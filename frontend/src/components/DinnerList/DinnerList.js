@@ -27,7 +27,7 @@ export default class DinnerList extends React.Component {
 }
 
   componentDidMount() {
-    axios.get("https://dinnerpool.herokuapp.com/dinners/").then((res) => {
+    axios.get("http://iterasjon1.herokuapp.com/dinners/").then((res) => {
       this.setState({ events: res.data });
     });
   }
@@ -36,7 +36,6 @@ export default class DinnerList extends React.Component {
     return (
       <div>
         <Container maxWidth="md">
-          {/* End hero unit */}
           <Grid container spacing={4}>
             <Grid item xs={12} sm={6} md={4}>
               <Link to="/login">
@@ -48,7 +47,6 @@ export default class DinnerList extends React.Component {
                 </Link>
               </Grid>
             {this.state.events.length > 0 &&
-              // use event id as key instead
               this.state.events.map((card, i) => (
                 <Grid item key={card.id} xs={12} sm={6} md={4}>
                   <Card style={{ height: '200px', position: 'relative' }}>
