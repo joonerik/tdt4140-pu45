@@ -21,7 +21,6 @@ function addMeal(e) {
 
   /* Save list element as String object */
   meals.push(mealInput)
-  console.log(meals)
   
   document.getElementById("mealInput").value = ""; // Empty input field
   mealList.innerHTML = ""; // empty list
@@ -66,21 +65,16 @@ function submitCourse(){
   // this submitCourse to be looped for each meal in meals[] list with
   // some type of logic (concerned about possible errors in dinner POST after course POST)
   // ie. able to add courses in DB while no dinner
-  console.log(meals)
-  console.log(meals[0])
+  console.log("Meals list: " + meals)
   const jsonCourse = {"description": meals.toString()}
-  console.log(jsonCourse)
+  console.log("Meal: " + jsonCourse)
   const promise = axios.post('http://iterasjon1.herokuapp.com/courses/', jsonCourse)
   const dataPromise = promise.then((res) => res.data)
   return dataPromise
 }
 
 function courseIsEmpty(){
-  if (meals.length() === 0){
-    console.log("empty course")
-    return true
-  }
-  return false
+  return meals.length() === 0;
 }
 
 function validateForm(e){
@@ -110,7 +104,7 @@ async function submitDinner() {
       console.log(error.request);
     });
   } else {
-    console.log("fuck")
+    console.log("No valid courseID which currently is " + courseId)
   }
 }
 
@@ -149,7 +143,7 @@ function collectInputData(coursesId){
 
 // currently this is in use. Note the hard-coded date
 function createJson(t, d, h, em, tlf, cap, loc, date, id, p, s_b, c_g, c_l, c_n, c_s, other){
-  console.log("create json");
+  console.log("date");
   return{
           title: t,
           description: d,
@@ -158,7 +152,7 @@ function createJson(t, d, h, em, tlf, cap, loc, date, id, p, s_b, c_g, c_l, c_n,
           phone: tlf,
           capacity: Number(cap),
           location: loc,
-          date_event: "2100-02-18T14:43:58Z",
+          date_event: date.toString(),
           courses: ["https://iterasjon1.herokuapp.com/courses/" + JSON.stringify(id) + "/"],
           price: Number(p),
           split_bill: Boolean(s_b),
@@ -172,7 +166,7 @@ function createJson(t, d, h, em, tlf, cap, loc, date, id, p, s_b, c_g, c_l, c_n,
 
 export default function AddressForm() {
 
-  const[input,setInput]=useState(false)
+  const[input, setInput] = useState(false)
 
   return (
     <React.Fragment>
@@ -230,7 +224,7 @@ export default function AddressForm() {
         <TextField
             required
             variant="outlined"
-            type="date"
+            type="datetime-local"
             id="date"
             name="date"
             fullWidth
