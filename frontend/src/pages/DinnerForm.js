@@ -60,24 +60,7 @@ function loadMealList(){
   })
 }
 
-// function submitCourse(){
-//   // this submitCourse to be looped for each meal in meals[] list with
-//   // some type of logic (concerned about possible errors in dinner POST after course POST)
-//   // ie. able to add courses in DB while no dinner
-//   console.log("Meals list: " + meals)
-//   const jsonCourse = {"description": meals.toString()}
-//   console.log("Meal: " + jsonCourse)
-//   const promise = axios.post('http://iterasjon1.herokuapp.com/courses/', jsonCourse)
-//   const dataPromise = promise.then((res) => res.data)
-//   return dataPromise
-// }
-
 function submitCourse(meal){
-  // this submitCourse to be looped for each meal in meals[] list with
-  // some type of logic (concerned about possible errors in dinner POST after course POST)
-  // ie. able to add courses in DB while no dinner
-
-  // console.log("Meals list: " + meals)
   const mealJson = {"description": meal}
   const promise = axios.post('http://iterasjon1.herokuapp.com/courses/', mealJson)
   const dataPromise = promise.then((res) => res.data)
@@ -100,29 +83,26 @@ async function submitDinner() {
   
   let coursesID = []
   for (let i = 0; i < meals.length; i++) {
-    const element = meals[i];
-    let courseId = await submitCourse(element).then(data => {
+    const meal = meals[i];
+    let courseId = await submitCourse(meal).then(data => {
       return data.id
     });
     coursesID.push(courseId)
   }
-  // const coursesID = await Promise.all(promises)
-  
-  // let courseId = await submitCourse().then(data => {
-  //   return data.id
-  // });
-  // mapLoop()
+
   if (typeof coursesID[0] === 'number') {
     let data = collectInputData(...coursesID);
     if (data["other_allergens"] == null) {
       console.log("delete other field")
       delete data["other_allergens"]
     }
-    console.log(data);
   
     await axios.post('https://iterasjon1.herokuapp.com/dinners/', data)
     .then((response) => {
       console.log(response);
+      if (response.status == 201) {
+        window.location.reload();
+      }
     }, (error) => {
       console.log(error.request);
     });
@@ -132,7 +112,6 @@ async function submitDinner() {
 }
 
 function collectInputData(...coursesID){
-  console.log("coursesID: " + coursesID)
   let hostName = document.getElementById("hostName").value;
   let email = document.getElementById("email").value;
   let phone = document.getElementById("phone").value;
@@ -167,11 +146,10 @@ function collectInputData(...coursesID){
   return createJson(dinnerTitle, description, hostName, email, phone, capacity, location, date, coursesID, price, splitBill, gluten, lactose, nuts, shellfish, otherAllergy)
 }
 
-// currently this is in use. Note the hard-coded date
-function createJson(t, d, h, em, tlf, cap, loc, date, ids, p, s_b, c_g, c_l, c_n, c_s, other){
+function createJson(t, d, h, em, tlf, cap, loc, date, coursesID, p, s_b, c_g, c_l, c_n, c_s, other){
 
-  const courseList = []
-  ids.forEach(id => courseList.push("https://iterasjon1.herokuapp.com/courses/" + JSON.stringify(id) + "/")) 
+  const courses = []
+  coursesID.forEach(id => courses.push("https://iterasjon1.herokuapp.com/courses/" + JSON.stringify(id) + "/")) 
 
   return {
           title: t,
@@ -182,7 +160,7 @@ function createJson(t, d, h, em, tlf, cap, loc, date, ids, p, s_b, c_g, c_l, c_n
           capacity: Number(cap),
           location: loc,
           date_event: date.toString(),
-          courses: courseList,
+          courses: courses,
           price: Number(p),
           split_bill: Boolean(s_b),
           contains_gluten: Boolean(c_g),
