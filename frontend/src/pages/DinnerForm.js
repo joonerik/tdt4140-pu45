@@ -83,6 +83,7 @@ function validateForm(e){
     e.preventDefault()
   }
   else {
+    console.log("submitdinner")
     submitDinner()
   }
 }
@@ -95,6 +96,10 @@ async function submitDinner() {
   });
   if (typeof courseId === 'number') {
     let data = collectInputData(courseId);
+    if (data["other_allergens"] == null) {
+      console.log("delete other field")
+      delete data["other_allergens"]
+    }
     console.log(data);
   
     await axios.post('https://iterasjon1.herokuapp.com/dinners/', data)
@@ -123,12 +128,15 @@ function collectInputData(coursesId){
   let nuts = document.getElementById("checkAllergyNuts").checked;
   let gluten = document.getElementById("checkAllergyGluten").checked;
   let shellfish = document.getElementById("checkAllergyShellfish").checked;
-  let otherAllergy = "";
+  let otherAllergy = null;
 
   let otherAllergyCheckbox = document.getElementById("checkAllergyOther").checked;
 
   if (otherAllergyCheckbox){
     otherAllergy = document.getElementById("otherAllergy").value;
+    if (otherAllergy === "") {
+      otherAllergy = "none"
+    }
   }
   
   let splitBill = document.getElementById("splitBill").checked;
@@ -143,7 +151,6 @@ function collectInputData(coursesId){
 
 // currently this is in use. Note the hard-coded date
 function createJson(t, d, h, em, tlf, cap, loc, date, id, p, s_b, c_g, c_l, c_n, c_s, other){
-  console.log("date");
   return{
           title: t,
           description: d,
@@ -403,9 +410,11 @@ export default function AddressForm() {
            </Grid>
 
         <Grid item xs={12}>
-          <Button type={'submit'} onSubmit={() => {
-            validateForm()
+        <Button onClick={() => {
+            submitDinner()
+            console.log("submit button clicked")
           }} variant="contained">Register</Button>
+
           
         </Grid>
       </Grid>
