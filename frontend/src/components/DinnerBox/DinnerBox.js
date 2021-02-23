@@ -23,10 +23,10 @@ function DinnerBox(props) {
     if (content === 1) {
         info = <div className="dinnerDetails">
             <ul>
-                <li style={{ fontWeight: 'bold' }}>Description: {props.card.capacity}</li>
+                <li style={{ fontWeight: 'bold' }}>Description</li>
                 <li>{props.card.description}</li>
                 {courses.map((course, count) => (
-                    <li key={count}>{course}</li>
+                    <li style={{listStyle: 'circle', textIndent:'10px'}} key={count}>{course}</li>
                 ))}
             </ul>
         </div>
