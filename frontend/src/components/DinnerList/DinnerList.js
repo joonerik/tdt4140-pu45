@@ -27,7 +27,7 @@ export default class DinnerList extends React.Component {
 }
 
   componentDidMount() {
-    axios.get("http://iterasjon1.herokuapp.com/dinners/").then((res) => {
+    axios.get("https://dinnerpool.herokuapp.com/dinners/").then((res) => {
       this.setState({ events: res.data });
     });
   }
@@ -53,7 +53,7 @@ export default class DinnerList extends React.Component {
                 <Grid item key={card.id} xs={12} sm={6} md={4}>
                   <Card style={{ height: '200px', position: 'relative' }}>
                     <CardContent>
-                      <Typography variant="subtitle2" align="left">{new Date((card.date_event) * 1e3).toISOString().slice(-13, -5)}</Typography>
+                      <Typography variant="subtitle2" align="left">{convert(card.date_event)}</Typography>
                       <Typography align="left" gutterBottom variant="h4" component="h2">
                         {card.title}
                       </Typography>

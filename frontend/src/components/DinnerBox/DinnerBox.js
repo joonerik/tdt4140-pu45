@@ -58,7 +58,7 @@ function DinnerBox(props) {
                 <li>HOST: {props.card.host}, {props.card.phone}</li>
                 <li>E-MAIL: {props.card.email}</li>
                 <li>LOCATION: {props.card.location}</li>
-                <li>TIME: {new Date((props.card.date_event) * 1e3).toISOString().slice(-13, -5)}</li>
+                <li>TIME: {(props.card.date_event).substring(0, 10) + " " + (props.card.date_event).substring(11, 16)}</li>
                 <li>{props.card.split_bill === true ? <p>TOTAL PRICE: {props.card.price}</p> : <p>PRICE: Free</p>}</li>
             </ul>
             <div className="subSection">
