@@ -73,8 +73,9 @@ function submitCourse(){
   return dataPromise
 }
 
-function courseIsEmpty(){
-  return meals.length() === 0;
+function courseIsEmpty(currentMeals){
+  console.log("expression: " + meals.length == 0)
+  return currentMeals.length === 0;
 }
 
 function validateForm(e){
@@ -89,6 +90,13 @@ function validateForm(e){
 }
 
 async function submitDinner() {
+  console.log("Meals: " + meals)
+  console.log("Meals length: " + meals.length)
+  if (courseIsEmpty(meals)) {
+    alert("Course can't be empty!")
+    console.log("Course list is empty")
+    return;
+  }
 
   console.log("Submit dinner");
   let courseId = await submitCourse().then(data => {
