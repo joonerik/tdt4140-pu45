@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import DinnerOverview from "./pages/DinnerOverview";
 import LoginPage from "./pages/LoginPage";
 import NavBar from "./components/NavBar/NavBar";
-import Footer from "./components/Footer/Footer";
+import DinnerForm from "./pages/DinnerForm";
 
 function App() {
   return (
