@@ -18,7 +18,7 @@ function DinnerBox(props) {
                 }
             })
         ))
-    }, [courses])
+    }, [courses]) // eslint-disable-line react-hooks/exhaustive-deps
 
     if (content === 1) {
         info = <div className="dinnerDetails">

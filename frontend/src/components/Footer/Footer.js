@@ -1,16 +1,11 @@
 import React from "react";
-import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        ræva ->
-      </Link>{" "}
-      {new Date().getFullYear()} {" :(("}
+        TDT4140 - Group 45
     </Typography>
   );
 }
@@ -34,7 +29,7 @@ function Footer() {
         color="textSecondary"
         component="p"
       >
-        Klar for ny lockdown, vamos
+        Dinnerpool
       </Typography>
       <Copyright />
     </footer>

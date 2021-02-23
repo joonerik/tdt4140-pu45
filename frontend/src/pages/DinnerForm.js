@@ -4,10 +4,8 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import TextArea from '@material-ui/core/TextareaAutosize'
 import "./style/DinnerForm.css"
 import Button from '@material-ui/core/Button'
-import { Box } from '@material-ui/core';
 import Switch from '@material-ui/core/Switch';
 
 import axios from "axios"
@@ -78,7 +76,7 @@ function submitCourse(){
 }
 
 function courseIsEmpty(){
-  if (meals.length() == 0){
+  if (meals.length() === 0){
     console.log("empty course")
     return true
   }
@@ -146,36 +144,11 @@ function collectInputData(coursesId){
     price = document.getElementById("price").value;
   }
 
-  return createJson1(dinnerTitle, description, hostName, email, phone, capacity, location, date, coursesId, price, splitBill, gluten, lactose, nuts, shellfish, otherAllergy)
-}
-
-// I believe the fnutter have to be the other way around.
-// However, the input fields in the rest api is really strict, so some more things
-// has to be handled either frontend or backend. Eg. allergy field cant be empty, date format
-function createJson(title, description, host, email, phone, capacity, location, date_event, coursesId, price, splitBill, contains_gluten, contains_lactose, contains_nut, contains_shellfish, other_allergens){
-  console.log("create json");
-  return{
-          "title": title,
-          "description": description,
-          "host": host,
-          "email": email,
-          "phone": phone,
-          "capacity": capacity,
-          "location": location,
-          "date_event": date_event,
-          "courses": "https://dinnerpool.herokuapp.com/courses/" + coursesId + "/",
-          "price": price,
-          "split_bill": splitBill,
-          "contains_gluten": contains_gluten,
-          "contains_lactose": contains_lactose,
-          "contains_nut": contains_nut,
-          "contains_shellfish": contains_shellfish,
-          "other_allergens": other_allergens
-        }
+  return createJson(dinnerTitle, description, hostName, email, phone, capacity, location, date, coursesId, price, splitBill, gluten, lactose, nuts, shellfish, otherAllergy)
 }
 
 // currently this is in use. Note the hard-coded date
-function createJson1(t, d, h, em, tlf, cap, loc, date, id, p, s_b, c_g, c_l, c_n, c_s, other){
+function createJson(t, d, h, em, tlf, cap, loc, date, id, p, s_b, c_g, c_l, c_n, c_s, other){
   console.log("create json");
   return{
           title: t,
