@@ -10,7 +10,7 @@ function NavBar() {
         <Link className="link" id="mainLink" to="/">DINNERPOOL</Link>
       </div>
       <Link className="link" id="menuLink" to="/">MENU</Link>
-      <Link className="link" id="addLink" to="/">ADD</Link>
+      <Link className="link" id="addLink" to="/add">ADD</Link>
       
       <div class="topnav-right">
         <Link className="link" id="registerLink" to="/login">REGISTER</Link>

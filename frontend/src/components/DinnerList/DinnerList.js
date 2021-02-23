@@ -38,7 +38,7 @@ export default class DinnerList extends React.Component {
         <Container maxWidth="md">
           <Grid container spacing={4}>
             <Grid item xs={12} sm={6} md={4}>
-              <Link to="/login">
+              <Link to="/add">
                   <Card style={{ height: '200px' }} >
                     <CardContent>
                         <AddIcon style={{ color: "green", fontSize:"100px", marginTop: "25px" }} ></AddIcon>

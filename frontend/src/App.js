@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import DinnerOverview from "./pages/DinnerOverview";
 import LoginPage from "./pages/LoginPage";
 import NavBar from "./components/NavBar/NavBar";
+import Footer from "./components/Footer/Footer"
 import DinnerForm from "./pages/DinnerForm";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
           <Switch>
             <Route component={DinnerOverview} exact path="/" />
             <Route component={LoginPage} path="/login" />
+            <Route component={DinnerForm} path="/add" />
             <Route data-testid="elseLink" component={NoMatch} />
           </Switch>
           <Footer/>
