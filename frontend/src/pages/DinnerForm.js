@@ -60,33 +60,32 @@ function loadMealList(){
   })
 }
 
+// function submitCourse(){
+//   // this submitCourse to be looped for each meal in meals[] list with
+//   // some type of logic (concerned about possible errors in dinner POST after course POST)
+//   // ie. able to add courses in DB while no dinner
+//   console.log("Meals list: " + meals)
+//   const jsonCourse = {"description": meals.toString()}
+//   console.log("Meal: " + jsonCourse)
+//   const promise = axios.post('http://iterasjon1.herokuapp.com/courses/', jsonCourse)
+//   const dataPromise = promise.then((res) => res.data)
+//   return dataPromise
+// }
 
-function submitCourse(){
+function submitCourse(meal){
   // this submitCourse to be looped for each meal in meals[] list with
   // some type of logic (concerned about possible errors in dinner POST after course POST)
   // ie. able to add courses in DB while no dinner
-  console.log("Meals list: " + meals)
-  const jsonCourse = {"description": meals.toString()}
-  console.log("Meal: " + jsonCourse)
-  const promise = axios.post('http://iterasjon1.herokuapp.com/courses/', jsonCourse)
+
+  // console.log("Meals list: " + meals)
+  const mealJson = {"description": meal}
+  const promise = axios.post('http://iterasjon1.herokuapp.com/courses/', mealJson)
   const dataPromise = promise.then((res) => res.data)
   return dataPromise
 }
 
 function courseIsEmpty(currentMeals){
-  console.log("expression: " + meals.length == 0)
   return currentMeals.length === 0;
-}
-
-function validateForm(e){
-  if (courseIsEmpty()){
-    console.log("Can't submit dinner without course")
-    e.preventDefault()
-  }
-  else {
-    console.log("submitdinner")
-    submitDinner()
-  }
 }
 
 async function submitDinner() {
@@ -98,12 +97,23 @@ async function submitDinner() {
     return;
   }
 
-  console.log("Submit dinner");
-  let courseId = await submitCourse().then(data => {
-    return data.id
-  });
-  if (typeof courseId === 'number') {
-    let data = collectInputData(courseId);
+  
+  let coursesID = []
+  for (let i = 0; i < meals.length; i++) {
+    const element = meals[i];
+    let courseId = await submitCourse(element).then(data => {
+      return data.id
+    });
+    coursesID.push(courseId)
+  }
+  // const coursesID = await Promise.all(promises)
+  
+  // let courseId = await submitCourse().then(data => {
+  //   return data.id
+  // });
+  // mapLoop()
+  if (typeof coursesID[0] === 'number') {
+    let data = collectInputData(...coursesID);
     if (data["other_allergens"] == null) {
       console.log("delete other field")
       delete data["other_allergens"]
@@ -117,11 +127,12 @@ async function submitDinner() {
       console.log(error.request);
     });
   } else {
-    console.log("No valid courseID which currently is " + courseId)
+      console.log("No valid course(s)ID")
   }
 }
 
-function collectInputData(coursesId){
+function collectInputData(...coursesID){
+  console.log("coursesID: " + coursesID)
   let hostName = document.getElementById("hostName").value;
   let email = document.getElementById("email").value;
   let phone = document.getElementById("phone").value;
@@ -131,7 +142,6 @@ function collectInputData(coursesId){
   let location = document.getElementById("location").value;
   let capacity = document.getElementById("capacity").value;
   
-
   let lactose = document.getElementById("checkAllergyLactose").checked;
   let nuts = document.getElementById("checkAllergyNuts").checked;
   let gluten = document.getElementById("checkAllergyGluten").checked;
@@ -154,12 +164,16 @@ function collectInputData(coursesId){
     price = document.getElementById("price").value;
   }
 
-  return createJson(dinnerTitle, description, hostName, email, phone, capacity, location, date, coursesId, price, splitBill, gluten, lactose, nuts, shellfish, otherAllergy)
+  return createJson(dinnerTitle, description, hostName, email, phone, capacity, location, date, coursesID, price, splitBill, gluten, lactose, nuts, shellfish, otherAllergy)
 }
 
 // currently this is in use. Note the hard-coded date
-function createJson(t, d, h, em, tlf, cap, loc, date, id, p, s_b, c_g, c_l, c_n, c_s, other){
-  return{
+function createJson(t, d, h, em, tlf, cap, loc, date, ids, p, s_b, c_g, c_l, c_n, c_s, other){
+
+  const courseList = []
+  ids.forEach(id => courseList.push("https://iterasjon1.herokuapp.com/courses/" + JSON.stringify(id) + "/")) 
+
+  return {
           title: t,
           description: d,
           host: h,
@@ -168,7 +182,7 @@ function createJson(t, d, h, em, tlf, cap, loc, date, id, p, s_b, c_g, c_l, c_n,
           capacity: Number(cap),
           location: loc,
           date_event: date.toString(),
-          courses: ["https://iterasjon1.herokuapp.com/courses/" + JSON.stringify(id) + "/"],
+          courses: courseList,
           price: Number(p),
           split_bill: Boolean(s_b),
           contains_gluten: Boolean(c_g),
@@ -187,7 +201,7 @@ export default function AddressForm() {
     <React.Fragment>
       <form>
       <Typography variant="h6" gutterBottom>
-        Register dinner
+        Submit dinner
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12}>
@@ -420,8 +434,7 @@ export default function AddressForm() {
         <Grid item xs={12}>
         <Button onClick={() => {
             submitDinner()
-            console.log("submit button clicked")
-          }} variant="contained">Register</Button>
+          }} variant="contained">Submit</Button>
 
           
         </Grid>
