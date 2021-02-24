@@ -100,7 +100,7 @@ async function submitDinner() {
     await axios.post('https://iterasjon1.herokuapp.com/dinners/', data)
     .then((response) => {
       console.log(response);
-      if (response.status == 201) {
+      if (response.status === 201) {
         window.location.reload();
       }
     }, (error) => {
@@ -109,6 +109,23 @@ async function submitDinner() {
   } else {
       console.log("No valid course(s)ID")
   }
+}
+
+function validate() {
+  if (
+    document.getElementById('hostName').value !== '' &&
+    document.getElementById('email').value !== '' &&
+    document.getElementById('phone').value !== '' &&
+    document.getElementById('dinnerTitle').value !== '' &&
+    document.getElementById('date').value !== '' &&
+    document.getElementById('description').value !== '' &&
+    document.getElementById('location').value !== '' &&
+    document.getElementById('capacity').value !== ''
+    ) {
+      return true
+    } else {
+      return false
+    }
 }
 
 function collectInputData(...coursesID){
@@ -411,7 +428,11 @@ export default function AddressForm() {
 
         <Grid item xs={12}>
         <Button onClick={() => {
+          if (validate()) {
             submitDinner()
+          } else {
+            alert("Fields marked * can't be empty")
+          }
           }} variant="contained">Submit</Button>
 
           

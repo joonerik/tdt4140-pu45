@@ -52,7 +52,7 @@ export default class DinnerList extends React.Component {
                   <Card style={{ height: '200px', position: 'relative' }}>
                     <CardContent>
                       <Typography variant="subtitle2" align="left">{convert(card.date_event)}</Typography>
-                      <Typography align="left" gutterBottom variant="h4" component="h2">
+                      <Typography align="left" gutterBottom variant="h5" component="h2">
                         {card.title}
                       </Typography>
                       <Typography variant="h6" align="left">{card.location}</Typography>
