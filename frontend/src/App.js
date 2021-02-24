@@ -1,37 +1,38 @@
 import "./App.css";
-import "./components/DinnerBox/DinnerBox";
-import DinnerBox from "./components/DinnerBox/DinnerBox";
-import DinnerList from "./components/DinnerList/DinnerList";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import DinnerOverview from "./pages/DinnerOverview";
+import LoginPage from "./pages/LoginPage";
+import NavBar from "./components/NavBar/NavBar";
+import Footer from "./components/Footer/Footer"
+import DinnerForm from "./pages/DinnerForm";
 
-const test = {
-  overview: [
-    {
-      id: 1,
-      title: "tittel1",
-      description: "enjoy",
-      location: "Møllenberg",
-      course: "Pizza",
-      host: "Andrea",
-      capacity: 5,
-    },
-    {
-      id: 2,
-      title: "tittel2",
-      description: "hehe",
-      location: "Berg",
-      course: "Taco",
-      host: "Donny",
-      capacity: 5,
-    },
-  ],
-};
 function App() {
   return (
     <div className="App">
-      <h1>Hello, World!</h1>
-      <DinnerList overview={test} />
+        <Router>
+          <NavBar />
+          <Switch>
+            <Route component={DinnerOverview} exact path="/" />
+            <Route component={LoginPage} path="/login" />
+            <Route component={DinnerForm} path="/add" />
+            <Route data-testid="elseLink" component={NoMatch} />
+          </Switch>
+          <Footer/>
+        </Router>
+
     </div>
   );
+}
+
+function NoMatch({ location }) {
+  return (
+    <div>
+      <br></br>
+      <h3>
+        404 - No match for <code>{location.pathname}</code>
+      </h3>
+    </div>
+  )
 }
 
 export default App;

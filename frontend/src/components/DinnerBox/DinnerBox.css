@@ -1,0 +1,102 @@
+.box {
+    background-color: white;
+    color: black;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 50%;
+    height: 70%;
+    position: fixed;
+    border: 5px solid #3f51b5;
+    padding-left: 50px;
+    padding-top: 40px;
+}
+
+.exitButton {
+    font-size: 20px;
+    position:absolute;
+    top: 10px;
+    right: 10px;
+}
+
+button:hover {
+    background-color: #3f51b5;
+}
+
+.dinnerInfo {
+    text-align: left;
+    list-style: none;   
+}
+
+.dinnerInfo li {
+    padding-top: 4px;
+}
+
+.subSection {
+    display: flex;
+}
+
+#navigation {
+    flex: 1;
+    font-size: 24px;
+    margin: 0;
+}
+
+.navigationlink {
+    display: block;
+    padding-right: 10%;
+    width: fit-content;
+}
+
+.dinnerDetails {
+    flex: 1;
+}
+
+.dinnerDetails ul {
+    margin: 0;
+    padding: 0;
+    float: left;
+}
+
+.dinnerDetails ul li:first-child {
+    padding-top: 4px;
+}
+
+.dinnerDetails li {
+    list-style: none;
+    text-align: left;
+}
+
+#navigation li:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 960px) {
+    .box {
+      width: 90%;
+      height: 90%;
+      z-index: 1;
+    }
+
+    #navigation {
+      font-size: 20px;
+    }
+  }
+
+@media only screen and (max-width: 600px) {
+
+    .box {
+        padding-left: 10px;
+    }
+
+    .navigationlink {
+        padding-top: 10px;
+        display: block;
+    }
+
+    .dinnerDetails {
+        margin: 8px;
+    }
+  }

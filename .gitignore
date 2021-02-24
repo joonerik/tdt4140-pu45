@@ -124,6 +124,7 @@ GitHub.sublime-settings
 
 # testing
 /coverage
+coverage
 
 # production
 /build
@@ -138,3 +139,6 @@ GitHub.sublime-settings
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# top folder (root) only
+/package-lock.json
