@@ -52,7 +52,7 @@ function DinnerBox(props) {
 
     return (
         <div className="box">
-            <button onClick={props.state}>X</button>
+            <button className="exitButton" onClick={props.state}>X</button>
             <ul className="dinnerInfo">
                 <h1>{props.card.title}</h1>
                 <li>HOST: {props.card.host}, {props.card.phone}</li>

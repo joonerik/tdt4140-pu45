@@ -37,6 +37,7 @@ function addMeal(e) {
     })
     node.appendChild(textnode);
     node.appendChild(buttonnode);
+    buttonnode.style.cssText = "margin-left: 20px;"
     mealList.appendChild(node);
   })
 
