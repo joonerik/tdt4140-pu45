@@ -50,7 +50,7 @@ function DinnerBox(props) {
         <div className="box">
             <button onClick={props.state}>X</button>
             <ul className="dinnerInfo">
-                <h1>{props.card.title.toUpperCase()}</h1>
+                <h1>{props.card.title}</h1>
                 <p>{props.card.host}, {props.card.phone}</p>
                 <p>{props.card.email}</p>
                 <p>{props.card.location}</p>

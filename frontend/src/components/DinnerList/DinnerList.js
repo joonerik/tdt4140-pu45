@@ -17,7 +17,7 @@ function convert(date) {
 
 }
 
-function DinnerList {
+function DinnerList() {
   // state = {
   //   events: [],
   //   isShowing : false,
@@ -27,6 +27,10 @@ function DinnerList {
   const [events, setEvents] = useState([]);
   const [showing, setShowing] = useState(false);
   const [id, setId] = useState(null);
+
+  function handleShowing(event) {
+    setShowing(value => !value);
+  }
 
   // modifyState = () =>{
   //   this.setState({isShowing: !this.state.isShowing})   
@@ -38,12 +42,10 @@ function DinnerList {
   //   });
   // }
   useEffect(() => {
-    axios.get("https://dinnerpool.herokuapp.com/dinners/").then((res) => {
-      // this.setState({ events: res.data });
+    axios.get("http://iterasjon1.herokuapp.com/dinners/").then((res) => {
       setEvents(res.data)
     });
   }, [])
-  
   return (
     <div>
       <Container maxWidth="md">
@@ -61,7 +63,7 @@ function DinnerList {
           {events.length > 0 &&
             // use event id as key instead
             events.map((card, i) => (
-              <Grid item key={card.id} xs={12} sm={6} md={4}>
+              <Grid item key={i} xs={12} sm={6} md={4}>
                 <Card>
                   <CardContent>
                     <Typography variant="subtitle2" align="left">{convert(card.date_event)}</Typography>
@@ -75,10 +77,9 @@ function DinnerList {
                       size="small"
                       color="primary"
                       onClick={() => {
-                        // this.modifyState()
-                        // this.setState(({id: i}))
-                        setShowing(value => !value)
-                        setId({i})
+                        handleShowing()
+                        setId(i)
+                        console.log(i)
                       }}
                     >
                       See more
@@ -87,12 +88,11 @@ function DinnerList {
                 </Card>
               </Grid>
             ))}
-            {showing ? <DinnerBox state={setShowing(value => !value)} card={events[id]}/> : null}
+            {showing ? <DinnerBox state={handleShowing} card={events[id]}/> : null}
         </Grid>
       </Container>
     </div>
-  );
+  )
 }
 
 export default DinnerList
-
