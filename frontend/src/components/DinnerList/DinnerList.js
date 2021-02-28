@@ -12,18 +12,11 @@ import DinnerBox from "../DinnerBox/DinnerBox";
 import { Link } from "react-router-dom";
 
 function convert(date) {
-  // const reg = "\d{4}-\d{2}-\d{2}"
   return date.substring(0, 10) + " " + date.substring(11, 16)
 
 }
 
 function DinnerList() {
-  // state = {
-  //   events: [],
-  //   isShowing : false,
-  //   id : null,
-  // };
-
   const [events, setEvents] = useState([]);
   const [showing, setShowing] = useState(false);
   const [id, setId] = useState(null);
@@ -32,15 +25,6 @@ function DinnerList() {
     setShowing(value => !value);
   }
 
-  // modifyState = () =>{
-  //   this.setState({isShowing: !this.state.isShowing})   
-  // }
-
-  // componentDidMount() {
-  //   axios.get("https://dinnerpool.herokuapp.com/dinners/").then((res) => {
-  //     this.setState({ events: res.data });
-  //   });
-  // }
   useEffect(() => {
     axios.get("http://iterasjon1.herokuapp.com/dinners/").then((res) => {
       setEvents(res.data)
