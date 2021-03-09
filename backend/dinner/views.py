@@ -1,6 +1,17 @@
 from .serializers import DinnerSerializer, CourseSerializer
 from rest_framework import viewsets
 from .models import Dinner, Course
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+
+class HelloView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        content = {'message': 'Hello, I am a very protected view ;))'}
+        return Response(content)
+
 
 class DinnerViewSet(viewsets.ModelViewSet):
     """
