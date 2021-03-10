@@ -1,21 +1,20 @@
 .box {
     background-color: white;
-    /* background-color: #3f51b5; */
     color: black;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 
-    border-radius: 5px;
-    width: 70%;
+    width: 50%;
     height: 70%;
-    position: absolute;
+    position: fixed;
     border: 5px solid #3f51b5;
     padding-left: 50px;
     padding-top: 40px;
+    z-index: 1;
 }
 
-button {
+.exitButton {
     font-size: 20px;
     position:absolute;
     top: 10px;
@@ -28,41 +27,63 @@ button:hover {
 
 .dinnerInfo {
     text-align: left;
+    list-style: none;   
+}
+
+.dinnerInfo li {
+    padding-top: 4px;
+}
+
+.subSection {
+    display: flex;
 }
 
 #navigation {
+    flex: 1;
     font-size: 24px;
-    font-weight: bold;
-    padding-top: 30px;
-    text-align: left;
+    margin: 0;
 }
 
-li {
-    display: inline;
+.navigationlink {
+    display: block;
     padding-right: 10%;
-}
-
-li:hover {
-    text-decoration: underline;
+    width: fit-content;
 }
 
 .dinnerDetails {
-    padding-top: 30px;
+    flex: 1;
+}
+
+.dinnerDetails ul {
+    margin: 0;
+    padding: 0;
+    float: left;
+}
+
+.dinnerDetails ul li:first-child {
+    padding-top: 4px;
+}
+
+.dinnerDetails li {
+    list-style: none;
+    text-align: left;
+}
+
+#navigation li:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 @media only screen and (max-width: 960px) {
     .box {
       width: 90%;
       height: 90%;
-      margin-top: 120px;
       z-index: 1;
     }
 
     #navigation {
       font-size: 20px;
     }
-
-
   }
 
 @media only screen and (max-width: 600px) {
@@ -71,8 +92,12 @@ li:hover {
         padding-left: 10px;
     }
 
-    li {
+    .navigationlink {
         padding-top: 10px;
         display: block;
+    }
+
+    .dinnerDetails {
+        margin: 8px;
     }
   }

@@ -1,0 +1,7 @@
+.MuiGrid-spacing-xs-3 {
+    width: calc(80% + 24px) !important;
+    margin: auto !important;
+}
+.MuiTypography-gutterBottom {
+    margin-top: 1em !important;
+}

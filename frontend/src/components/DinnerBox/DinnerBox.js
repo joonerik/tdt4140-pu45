@@ -5,7 +5,7 @@ import "./DinnerBox.css"
 function DinnerBox(props) {
 
     const [content, setContent] = useState(null);
-    const color = "lightblue"
+    const color = "#3f51b5"
     var info = null;
     
 
@@ -23,53 +23,58 @@ function DinnerBox(props) {
     if (content === 1) {
         info = <div className="dinnerDetails">
             <ul>
-                <li>Description: {props.card.description}</li>
+                <li style={{ fontWeight: 'bold' }}>Description</li>
+                <li>{props.card.description}</li>
                 {courses.map((course, count) => (
-                    <li key={count}>{course}{console.log(course)}</li>
+                    <li style={{listStyle: 'circle', textIndent:'10px'}} key={count}>{course}</li>
                 ))}
             </ul>
         </div>
     } else if (content === 2) {
         info = <div className="dinnerDetails">
-            <h3>Capacity: {props.card.capacity}</h3>
-            <h4>Participants: </h4>
+            <ul>
+                <li style={{ fontWeight: 'bold' }}>Capacity: {props.card.capacity}</li>
+                <li>Participants: <p style={{ fontStyle: 'italic' }}>None</p></li>
+            </ul>
         </div>
     } else if (content === 3) {
         info = <div className="dinnerDetails">
             <ul>
-                <li>{`${props.card.contains_gluten}`}</li>
-                <li>{String(props.card.contains_nut)}</li>
-                <li>{props.card.contains_gluten.toString()}</li>
+                <li style={{ fontWeight: 'bold' }}>Allergies</li>
+                {props.card.contains_gluten === true ? <li>Gluten</li> : null}
+                {props.card.contains_lactose === true ? <li>Lactose</li> : null}
+                {props.card.contains_nut === true ? <li>Nuts</li> : null}
+                {props.card.contains_shellfish === true ? <li>Shellfish</li> : null}
                 <li>Other: {props.card.other_allergens}</li>
             </ul>
         </div>
     }
 
-
     return (
         <div className="box">
-            <button onClick={props.state}>X</button>
+            <button className="exitButton" onClick={props.state}>X</button>
             <ul className="dinnerInfo">
                 <h1>{props.card.title}</h1>
-                <p>{props.card.host}, {props.card.phone}</p>
-                <p>{props.card.email}</p>
-                <p>{props.card.location}</p>
-                <p>{props.card.date_event}</p>
-                <p>Split bill: {String(props.card.split_bill)}</p>
-                <p>Price: {props.card.price}</p>
+                <li>HOST: {props.card.host}, {props.card.phone}</li>
+                <li>E-MAIL: {props.card.email}</li>
+                <li>LOCATION: {props.card.location}</li>
+                <li>TIME: {(props.card.date_event).substring(0, 10) + " " + (props.card.date_event).substring(11, 16)}</li>
+                <li>{props.card.split_bill === true ? <p>TOTAL PRICE: {props.card.price}</p> : <p>PRICE: Free</p>}</li>
             </ul>
-            <ul id="navigation">
-                <li onClick={() => {
-                    setContent(1)
-                }} style={content === 1 ? {color} : null}>Description</li>
-                <li onClick={() => {
-                    setContent(2)
-                }} style={content === 2 ? {color} : null}>Participants</li>
-                <li onClick={() => {
-                    setContent(3)
-                }} style={content === 3 ? {color} : null} >Allergies</li>
-            </ul>  
-            {info}
+            <div className="subSection">
+                <ul id="navigation">
+                    <li className="navigationlink" onClick={() => {
+                        setContent(1)
+                    }} style={content === 1 ? {color} : null}>Description</li>
+                    <li className="navigationlink" onClick={() => {
+                        setContent(2)
+                    }} style={content === 2 ? {color} : null}>Participants</li>
+                    <li className="navigationlink" onClick={() => {
+                        setContent(3)
+                    }} style={content === 3 ? {color} : null} >Allergies</li>
+                </ul>  
+                {info}
+            </div>
         
         </div>
     )

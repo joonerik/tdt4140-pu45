@@ -1,6 +1,6 @@
-from .serializers import DinnerSerializer
+from .serializers import DinnerSerializer, CourseSerializer
 from rest_framework import viewsets
-from .models import Dinner
+from .models import Dinner, Course
 
 class DinnerViewSet(viewsets.ModelViewSet):
     """
@@ -8,3 +8,12 @@ class DinnerViewSet(viewsets.ModelViewSet):
     """
     queryset = Dinner.objects.all()
     serializer_class = DinnerSerializer
+
+class CoursesViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows courses to be viewed or edited.
+    """
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+
+    

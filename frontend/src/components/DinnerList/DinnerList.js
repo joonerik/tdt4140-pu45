@@ -13,7 +13,6 @@ import { Link } from "react-router-dom";
 
 function convert(date) {
   return date.substring(0, 10) + " " + date.substring(11, 16)
-
 }
 
 function DinnerList() {
