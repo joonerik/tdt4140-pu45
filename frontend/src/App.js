@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage";
 import NavBar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer/Footer"
 import DinnerForm from "./pages/DinnerForm";
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <Route component={DinnerOverview} exact path="/" />
             <Route component={LoginPage} path="/login" />
             <Route component={DinnerForm} path="/add" />
+            <Route component={RegisterPage} path="/register" />
             <Route data-testid="elseLink" component={NoMatch} />
           </Switch>
           <Footer/>
