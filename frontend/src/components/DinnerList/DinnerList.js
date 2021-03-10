@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -11,28 +11,27 @@ import axios from "axios";
 import DinnerBox from "../DinnerBox/DinnerBox";
 import { Link } from "react-router-dom";
 
+
 function convert(date) {
   return date.substring(0, 10) + " " + date.substring(11, 16)
 }
 
-export default class DinnerList extends React.Component {
-  state = {
-    events: [],
-    isShowing : false,
-    id : null,
-  };
-  
-  modifyState = () =>{
-    this.setState({isShowing: !this.state.isShowing})   
-}
+function DinnerList() {
+  const [events, setEvents] = useState([]);
+  const [showing, setShowing] = useState(false);
+  const [id, setId] = useState(null);
 
-  componentDidMount() {
-    axios.get("http://iterasjon1.herokuapp.com/dinners/").then((res) => {
-      this.setState({ events: res.data });
-    });
+  function handleShowing(event) {
+    setShowing(value => !value);
   }
+
+  useEffect(() => {
+    axios.get("http://iterasjon1.herokuapp.com/dinners/").then((res) => {
+      setEvents(res.data)
+    });
+  }, [])
+
   
-  render() {
     return (
       <div>
         <Container maxWidth="md">
@@ -46,8 +45,8 @@ export default class DinnerList extends React.Component {
                   </Card>
                 </Link>
               </Grid>
-            {this.state.events.length > 0 &&
-              this.state.events.map((card, i) => (
+            {events.length > 0 &&
+              events.map((card, i) => (
                 <Grid item key={card.id} xs={12} sm={6} md={4}>
                   <Card style={{ height: '200px', position: 'relative' }}>
                     <CardContent>
@@ -63,8 +62,8 @@ export default class DinnerList extends React.Component {
                         size="small"
                         color="primary"
                         onClick={() => {
-                          this.modifyState()
-                          this.setState(({id: i}))
+                          handleShowing()
+                          setId(i)
                         }}
                       >
                         See more
@@ -73,10 +72,11 @@ export default class DinnerList extends React.Component {
                   </Card>
                 </Grid>
               ))}
-              {this.state.isShowing ? <DinnerBox state={this.modifyState} card={this.state.events[this.state.id]}/> : null}
+              {showing ? <DinnerBox state={handleShowing} card={events[id]}/> : null}
           </Grid>
         </Container>
       </div>
     );
-  }
 }
+
+export default DinnerList
