@@ -58,7 +58,6 @@ function DinnerList() {
                     </CardContent>
                     <CardActions style={{ position: 'absolute', bottom: '0'}}>
                       <Button
-                        component={Link}
                         size="small"
                         color="primary"
                         onClick={() => {
