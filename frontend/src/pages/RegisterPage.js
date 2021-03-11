@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import PhoneInput from 'react-phone-number-input/input';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
+  const [value, setValue] = useState()
 
   return (
     <Container component="main" maxWidth="xs">
@@ -104,22 +106,11 @@ export default function SignUp() {
                 id="adresse"
               />
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                type="number"
-                required
-                fullWidth
-                id="tlfnr"
-                label="Telephonenumber"
-                name="tlfnr"
-                autoComplete="tlfnr"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
+            <Grid item xs={20}>
+              <PhoneInput
+                placeholder="Enter phone number"
+                value={value}
+                onChange={setValue} 
               />
             </Grid>
           </Grid>
