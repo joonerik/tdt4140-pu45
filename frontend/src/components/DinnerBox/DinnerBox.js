@@ -4,13 +4,21 @@ import "./DinnerBox.css";
 
 function DinnerBox(props) {
 
-    const [content, setContent] = useState(null);
+    // color for the content selectors when active
     const color = "#3f51b5"
-    
+
+    // states for content and courses
+    const [content, setContent] = useState(null);
     const [courses, setCourses] = useState([]);
+    
+    // the useEffect takes place when the component renders
     useEffect(() => {
+        // maps (for-loop) through the courses list to the dinner
         props.card.courses.map((url) => (
+            // a get request to the url found in the courses attribute list
             axios.get(url).then((res) => {
+                // when getting the res (result), the result, i.e., the name of the course
+                // is appended to the list iteratively because of the map function 
                 setCourses(previousCourses => [...previousCourses, res.data.description])
             })
         ))
@@ -18,16 +26,22 @@ function DinnerBox(props) {
 
     return (
         <div className="box">
+            {/* when the button is clicked, it changes the showing state in DinnerList.
+            It triggers the handleShowing function in DinnerList */}
             <button className="exitButton" onClick={props.state}>X</button>
+            {/* displays basic info for the dinner event  */}
             <ul className="dinnerInfo">
                 <h1>{props.card.title}</h1>
                 <li>HOST: {props.card.host}, {props.card.phone}</li>
                 <li>E-MAIL: {props.card.email}</li>
                 <li>LOCATION: {props.card.location}</li>
                 <li>TIME: {(props.card.date_event).substring(0, 10) + " " + (props.card.date_event).substring(11, 16)}</li>
+                {/* if the split_bill attribute is set to true, the total price is shown. Else, a default p tag is shown  */}
                 <li>{props.card.split_bill === true ? <p>TOTAL PRICE: {props.card.price}</p> : <p>PRICE: Free</p>}</li>
             </ul>
             <div className="subSection">
+                {/* this is the list for each selector. When pressed, it changes the state 
+                of content to a specific number, which ultimately decides what to show */}
                 <ul id="navigation">
                     <li className="navigationlink" onClick={() => {
                         setContent(1)
@@ -39,6 +53,7 @@ function DinnerBox(props) {
                         setContent(3)
                     }} style={content === 3 ? {color} : null} >Allergies</li>
                 </ul>  
+                {/* the state of content decided which component to display */}
                 {content === 1 ? <DescriptionBox list={courses} content={props}/> : 
                 content === 2 ? <ParticipantsBox content={props}/> :
                 content === 3 ? <AllergiesBox content={props}/> :
@@ -49,6 +64,7 @@ function DinnerBox(props) {
     )
 }
 
+// Below are the different types of boxes depending on the content selected or wanted
 function DescriptionBox(props) {
     return (
         <div className="dinnerDetails">
