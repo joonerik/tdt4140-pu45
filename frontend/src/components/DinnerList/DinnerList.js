@@ -11,7 +11,7 @@ import axios from "axios";
 import DinnerBox from "../DinnerBox/DinnerBox";
 import { Link } from "react-router-dom";
 
-
+// basic function which splits the ugly date format which is received from the backend
 function convert(date) {
   return date.substring(0, 10) + " " + date.substring(11, 16)
 }
@@ -21,12 +21,19 @@ function DinnerList() {
   const [showing, setShowing] = useState(false);
   const [id, setId] = useState(null);
 
-  function handleShowing(event) {
+  // triggers a change for the showing state. 
+  function handleShowing() {
     setShowing(value => !value);
   }
+  // equivalent syntax for this function is just plain: 
+  // setShowing(() => value => !value) - this means the function handleShowing itself is unnecessary,
+  // but good practice and convention
 
+  // runs when the component renders
   useEffect(() => {
     axios.get("http://iterasjon1.herokuapp.com/dinners/").then((res) => {
+      // sets the events array to all data found which corresponds to an array
+      // This is already a list - check out the url if unclear
       setEvents(res.data)
     });
   }, [])
@@ -36,6 +43,7 @@ function DinnerList() {
       <div>
         <Container maxWidth="md">
           <Grid container spacing={4}>
+            {/* this single item is the plus icon */}
             <Grid item xs={12} sm={6} md={4}>
               <Link className="link" to="/add">
                   <Card style={{ height: '200px' }} >
@@ -45,6 +53,7 @@ function DinnerList() {
                   </Card>
                 </Link>
               </Grid>
+              {/* loops through all dinners found */}
             {events.length > 0 &&
               events.map((card, i) => (
                 <Grid item key={card.id} xs={12} sm={6} md={4}>
@@ -61,6 +70,8 @@ function DinnerList() {
                         size="small"
                         color="primary"
                         onClick={() => {
+                          // when clicked, it triggers the handleShowing function
+                          // also, it sets the state id to the cards id
                           handleShowing()
                           setId(i)
                         }}
@@ -71,6 +82,7 @@ function DinnerList() {
                   </Card>
                 </Grid>
               ))}
+              {/* if showing is true, it returns (displays) the DinnerBox component, else nothing */}
               {showing ? <DinnerBox state={handleShowing} card={events[id]}/> : null}
           </Grid>
         </Container>
