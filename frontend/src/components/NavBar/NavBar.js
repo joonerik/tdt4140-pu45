@@ -12,8 +12,8 @@ function NavBar() {
       <Link className="link" id="menuLink" to="/">MENU</Link>
       <Link className="link" id="addLink" to="/add">ADD</Link>
       
-      <div class="topnav-right">
-        <Link className="link" id="registerLink" to="/register">REGISTER</Link>
+      <div className="topnav-right">
+        <Link className="link" id="registerLink" to="/login">REGISTER</Link>
         <Link className="link" id="loginLink" to="/login">LOGIN</Link>
       </div>
       
