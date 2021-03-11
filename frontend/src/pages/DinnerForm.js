@@ -7,8 +7,10 @@ import Checkbox from '@material-ui/core/Checkbox';
 import "./style/DinnerForm.css"
 import Button from '@material-ui/core/Button'
 import Switch from '@material-ui/core/Switch';
+import PhoneInput from 'react-phone-number-input/input';
 
 import axios from "axios"
+import { Input } from '@material-ui/core';
 
 
 let meals = [];
@@ -129,6 +131,13 @@ function validate() {
     }
 }
 
+function validateEmail(){
+  let pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+  if (!pattern.test(document.getElementById('email').value)) {
+    return false
+  } return true
+}
+
 function collectInputData(...coursesID){
   let hostName = document.getElementById("hostName").value;
   let email = document.getElementById("email").value;
@@ -192,6 +201,7 @@ function createJson(t, d, h, em, tlf, cap, loc, date, coursesID, p, s_b, c_g, c_
 export default function AddressForm() {
 
   const[input, setInput] = useState(false)
+  const [value, setValue] = useState()
 
   return (
     <React.Fragment>
@@ -212,28 +222,28 @@ export default function AddressForm() {
           />
           </Grid>
           <Grid item xs={12} sm={6}>
-          <TextField
-            variant="outlined"
-            required
-            id="email"
-            name="email"
-            label="Email"
-            fullWidth
-            autoComplete="email"
-            type="email"
-          />
+            <TextField
+              variant="outlined"
+              required
+              id="email"
+              name="email"
+              label="Email"
+              fullWidth
+              autoComplete="email"
+              type="email"
+            />
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            variant="outlined"
-            required
-            id="phone"
-            name="phone"
-            label="Phone"
-            autoComplete="tel"
-            type="phone"
-            fullWidth
-          />
+        <Grid item xs={20}>
+            <PhoneInput
+              variant="outlined"
+              required
+              id="phone"
+              label="PhoneNumber"
+              placeholder="Enter phone number"
+              value={value}
+              onChange={setValue} 
+              fullWidth
+            />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -422,24 +432,22 @@ export default function AddressForm() {
                         labelPlacement="start"
                       />
                       
-                    </Grid>
-
-                    
+                    </Grid> 
            </Grid>
 
         <Grid item xs={12}>
         <Button onClick={() => {
-          if (validate()) {
-            submitDinner()
-          } else {
+          if (!validate()) {
             alert("Fields marked * can't be empty")
+          } else if (!validateEmail()) {
+            alert("Please enter valid email address")
+          } else {
+            submitDinner()
           }
           }} variant="contained">Submit</Button>
-
-          
         </Grid>
       </Grid>
       </form>
     </React.Fragment>
   );
-}
+};
