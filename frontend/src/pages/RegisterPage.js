@@ -106,7 +106,7 @@ export default function SignUp() {
                 id="adresse"
               />
             </Grid>
-            <Grid item xs={20}>
+            <Grid item xs={12}>
               <PhoneInput
                 placeholder="Enter phone number"
                 value={value}
