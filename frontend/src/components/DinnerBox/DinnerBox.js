@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import axios from "axios";
-import "./DinnerBox.css"
+import "./DinnerBox.css";
 
 function DinnerBox(props) {
 
     const [content, setContent] = useState(null);
     const color = "#3f51b5"
-    var info = null;
+    
     const [courses, setCourses] = useState([]);
     useEffect(() => {
         props.card.courses.map((url) => (
@@ -15,36 +15,6 @@ function DinnerBox(props) {
             })
         ))
     }, [])
-
-    if (content === 1) {
-        info = <div className="dinnerDetails">
-            <ul>
-                <li style={{ fontWeight: 'bold' }}>Description</li>
-                <li>{props.card.description}</li>
-                {courses.map((course, count) => (
-                    <li style={{listStyle: 'circle', textIndent:'10px'}} key={count}>{course}</li>
-                ))}
-            </ul>
-        </div>
-    } else if (content === 2) {
-        info = <div className="dinnerDetails">
-            <ul>
-                <li style={{ fontWeight: 'bold' }}>Capacity: {props.card.capacity}</li>
-                <li>Participants: <p style={{ fontStyle: 'italic' }}>None</p></li>
-            </ul>
-        </div>
-    } else if (content === 3) {
-        info = <div className="dinnerDetails">
-            <ul>
-                <li style={{ fontWeight: 'bold' }}>Allergies</li>
-                {props.card.contains_gluten === true ? <li>Gluten</li> : null}
-                {props.card.contains_lactose === true ? <li>Lactose</li> : null}
-                {props.card.contains_nut === true ? <li>Nuts</li> : null}
-                {props.card.contains_shellfish === true ? <li>Shellfish</li> : null}
-                <li>Other: {props.card.other_allergens}</li>
-            </ul>
-        </div>
-    }
 
     return (
         <div className="box">
@@ -69,9 +39,52 @@ function DinnerBox(props) {
                         setContent(3)
                     }} style={content === 3 ? {color} : null} >Allergies</li>
                 </ul>  
-                {info}
+                {content === 1 ? <DescriptionBox list={courses} content={props}/> : 
+                content === 2 ? <ParticipantsBox content={props}/> :
+                content === 3 ? <AllergiesBox content={props}/> :
+                null}
             </div>
         
+        </div>
+    )
+}
+
+function DescriptionBox(props) {
+    return (
+        <div className="dinnerDetails">
+            <ul>
+                <li style={{ fontWeight: 'bold' }}>Description</li>
+                <li>{props.content.card.description}</li>
+                {props.list.map((course, count) => (
+                    <li style={{listStyle: 'circle', textIndent:'10px'}} key={count}>{course}</li>
+                ))}
+            </ul>
+        </div>
+    )
+}
+
+function ParticipantsBox(props) {
+    return (
+        <div className="dinnerDetails">
+            <ul>
+                <li style={{ fontWeight: 'bold' }}>Capacity: {props.content.card.capacity}</li>
+                <li>Participants: <p style={{ fontStyle: 'italic' }}>None</p></li>
+            </ul>
+        </div>
+    )
+}
+
+function AllergiesBox(props) {
+    return (
+        <div className="dinnerDetails">
+            <ul>
+                <li style={{ fontWeight: 'bold' }}>Allergies</li>
+                {props.content.card.contains_gluten === true ? <li>Gluten</li> : null}
+                {props.content.card.contains_lactose === true ? <li>Lactose</li> : null}
+                {props.content.card.contains_nut === true ? <li>Nuts</li> : null}
+                {props.content.card.contains_shellfish === true ? <li>Shellfish</li> : null}
+                <li>Other: {props.content.card.other_allergens}</li>
+            </ul>
         </div>
     )
 }
