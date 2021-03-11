@@ -7,18 +7,14 @@ function DinnerBox(props) {
     const [content, setContent] = useState(null);
     const color = "#3f51b5"
     var info = null;
-    
-
     const [courses, setCourses] = useState([]);
     useEffect(() => {
         props.card.courses.map((url) => (
             axios.get(url).then((res) => {
-                if (!courses.includes(res.data.description)) {
-                    setCourses([...courses, res.data.description])
-                }
+                setCourses(previousCourses => [...previousCourses, res.data.description])
             })
         ))
-    }, [courses])
+    }, [])
 
     if (content === 1) {
         info = <div className="dinnerDetails">
