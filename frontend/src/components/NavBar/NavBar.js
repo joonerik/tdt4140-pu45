@@ -1,9 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./NavBar.css" ;
+import { useAuth } from '../UserContext/auth'
 
 
 function NavBar() {
+
+  const { authTokens } = useAuth();
+
   return (
     <div className="topnav">
       <div className="topnav-centered">
@@ -13,8 +17,14 @@ function NavBar() {
       <Link className="link" id="addLink" to="/add">ADD</Link>
       
       <div className="topnav-right">
-        <Link className="link" id="registerLink" to="/register">REGISTER</Link>
-        <Link className="link" id="loginLink" to="/login">LOGIN</Link>
+        {authTokens 
+        ? <Link className="link" id="registerLink" to="/profile">Profile</Link>
+        : <div>
+            <Link className="link" id="registerLink" to="/register">REGISTER</Link>
+            <Link className="link" id="loginLink" to="/login">LOGIN</Link>
+          </div>
+        }
+        
       </div>
       
     </div>
