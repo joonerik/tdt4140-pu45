@@ -1,6 +1,14 @@
 import React from 'react'
+import { useAuth } from '../components/UserContext/auth'
 
 const Profile = () => {
+
+    const { setAuthTokens } = useAuth();
+
+    function logOut() {
+        setAuthTokens();
+    }
+
     return (
         <div className="box">
             <ul className="dinnerInfo">
@@ -9,6 +17,7 @@ const Profile = () => {
                 <li>E-MAIL:</li>
                 <li>LOCATION: </li>
             </ul>
+            <button onClick={logOut}>Log out</button>
         
         </div>
     )
