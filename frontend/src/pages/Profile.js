@@ -17,8 +17,8 @@ const Profile = () => {
             <p>First name:</p>
             <p>Last name:</p>
             <p>Phone number: </p>
-            <button>
-                <Link className="link" id="registerLink" to='/' onClick={logOut}>LOG OUT</Link>
+            <button className="logoutButton">
+                <Link className="logoutLink" id="registerLink" to='/' onClick={logOut}>LOG OUT</Link>
             </button>
         </div>
     )
