@@ -13,6 +13,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import PhoneInput from 'react-phone-number-input/input';
+import { useAuth } from '../components/UserContext/auth';
+import axios from 'axios'
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,9 +37,38 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
 export default function SignUp() {
   const classes = useStyles();
-  const [value, setValue] = useState()
+  const [firstName, setFirstName] = useState()
+  const [lastName, setLastName] = useState()
+  const [mail, setMail] = useState()
+  const [password, setPassword] = useState()
+  const [address, setAddress] = useState()
+  const [phone, setPhone] = useState()
+  const { setAuthTokens } = useAuth();
+
+  const API_URL = "http://iterasjon1.herokuapp.com/auth/register"
+
+  function postRegister() {
+    axios.post(API_URL, {
+      mail, password, firstName, lastName, address, phone
+    }).then(res => {
+      console.log('Response status: ' + res.status)
+      if (res.status === 200) {
+        setAuthTokens(res.data);
+        console.log('Data: ' + res.data)
+        // setLoggedIn(true);
+      } else {
+        // setIsError(true);
+      }
+    }).catch(error => {
+      // setIsError(true)
+      console.log(error)
+      console.log("catch block")
+    })
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -60,6 +92,9 @@ export default function SignUp() {
                 id="firstName"
                 label="First Name"
                 autoFocus
+                onChange={e => {
+                  setFirstName(e.target.value);
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -71,6 +106,9 @@ export default function SignUp() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
+                onChange={e => {
+                  setLastName(e.target.value);
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -82,6 +120,9 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                onChange={e => {
+                  setMail(e.target.value);
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -94,6 +135,9 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={e => {
+                  setPassword(e.target.value);
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -104,13 +148,17 @@ export default function SignUp() {
                 name="address"
                 label="Address"
                 id="adresse"
+                onChange={e => {
+                  setAddress(e.target.value);
+                }}
               />
             </Grid>
             <Grid item xs={12}>
               <PhoneInput
                 placeholder="Enter phone number"
-                value={value}
-                onChange={setValue} 
+                onChange={e => {
+                  setPhone(e.target.value);
+                }}
               />
             </Grid>
           </Grid>
@@ -120,7 +168,10 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => console.log("Hei hei")}
+            onClick={() => {
+              console.log("register submit")
+              postRegister()
+            }}
           >
             Sign Up
           </Button>
