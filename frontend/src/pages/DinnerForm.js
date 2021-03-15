@@ -1,4 +1,4 @@
-import React, { state, useState }  from 'react';
+import React, { useState }  from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -236,14 +236,13 @@ export default function AddressForm() {
         <Grid item xs={20}>
             <PhoneInput
               variant="outlined"
-              required
               id="phone"
               label="PhoneNumber"
               placeholder="Enter phone number"
-              customInput={TextField}
               value={value}
               onChange={setValue} 
               fullWidth
+              required
             />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -258,13 +257,17 @@ export default function AddressForm() {
         </Grid>
         <Grid item xs={12} sm={6}>
         <TextField
-            required
             variant="outlined"
             type="datetime-local"
             id="date"
             name="date"
             size="medium"
+            inputProps={{
+               min: new Date().toISOString()
+               .slice(0, 16)
+              }}
             fullWidth
+            required
           />
         </Grid>
         <Grid item xs={12}>
