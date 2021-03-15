@@ -1,7 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from .models import Dinner, Course
-
+from .models import Dinner, Course, DinnerpoolUser
 
 class DinnerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -13,3 +12,9 @@ class CourseSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Course
         fields = ['id', 'description']
+
+class UserRegistrationSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = DinnerpoolUser
+        fields = ['firstName', 'lastName', 'address', 'email', 'phone', 'password']
+

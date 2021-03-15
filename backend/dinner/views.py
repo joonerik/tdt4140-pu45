@@ -1,6 +1,6 @@
-from .serializers import DinnerSerializer, CourseSerializer
+from .serializers import DinnerSerializer, CourseSerializer, UserRegistrationSerializer
 from rest_framework import viewsets
-from .models import Dinner, Course
+from .models import Dinner, Course, DinnerpoolUser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -27,4 +27,6 @@ class CoursesViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
 
-    
+class CreateUserView(APIView):
+    queryset = DinnerpoolUser.objects.all()
+    serializer_class = UserRegistrationSerializer

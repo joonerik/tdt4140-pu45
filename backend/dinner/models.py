@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django import forms
+from django.contrib.auth.models import User
 
 class Course(models.Model):
 
@@ -31,3 +32,14 @@ class Dinner(models.Model):
 
     def __str__(self):
         return self.title
+
+class DinnerpoolUser(models.Model) extends User:
+    firstName = models.CharField(max_length = 30)
+    lastName = models.CharField(max_length = 30)
+    address = models.CharField(max_length = 30)
+    email = models.CharField(max_length = 50, default="ikke oppgitt")
+    phone = models.CharField(max_length = 15, default="ikke oppgitt")
+    password = models.CharField(max_length = 50)
+
+    def __str__(self):
+        return self.name
