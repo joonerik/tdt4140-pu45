@@ -7,8 +7,10 @@ import Checkbox from '@material-ui/core/Checkbox';
 import "./style/DinnerForm.css"
 import Button from '@material-ui/core/Button'
 import Switch from '@material-ui/core/Switch';
-import PhoneInput from 'react-phone-number-input/input';
 import NumberFormat from 'react-number-format';
+import ReactPhoneInput from 'react-phone-input-material-ui';
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
 import axios from "axios"
 
@@ -226,31 +228,29 @@ export default function AddressForm() {
               variant="outlined"
               required
               id="email"
-              name="email"
               label="Email"
               fullWidth
               autoComplete="email"
               type="email"
             />
         </Grid>
-        <Grid item xs={20}>
-            <PhoneInput
-              variant="outlined"
-              id="phone"
-              label="PhoneNumber"
-              placeholder="Enter phone number"
-              value={value}
-              onChange={setValue} 
-              fullWidth
-              required
-            />
+        <Grid item xs={12} sm={6}>
+        <NumberFormat
+          customInput={TextField}
+          id="phone"
+          label="PhoneNumber"
+          format="+47 ### ## ###"
+          size="medium"
+          variant="outlined"
+          required
+          fullWidth
+        />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             variant="outlined"
             required
             id="dinnerTitle"
-            name="dinnerTitle"
             label="Dinner title"
             fullWidth
           />
@@ -260,7 +260,6 @@ export default function AddressForm() {
             variant="outlined"
             type="datetime-local"
             id="date"
-            name="date"
             size="medium"
             inputProps={{
                min: new Date().toISOString()
@@ -275,7 +274,6 @@ export default function AddressForm() {
             required
             variant="outlined"
             id="description"
-            name="description"
             label="Description"
             fullWidth
             multiline
@@ -287,7 +285,6 @@ export default function AddressForm() {
             variant="outlined"
             required
             id="location"
-            name="location"
             label="Location"
             type="address"
             location="adress-line"
@@ -302,7 +299,6 @@ export default function AddressForm() {
                 <TextField
                   variant="outlined"
                   id="mealInput"
-                  name="mealInput"
                   label="Meal"
                   size="small"
                   fullWidth
@@ -396,8 +392,7 @@ export default function AddressForm() {
                         <NumberFormat
                           customInput={TextField}
                           format="###"
-                          id="capacity"
-                          name="Capacity" 
+                          id="capacity" 
                           label="Capacity"
                           size="small"
                           hintText="Capacity"
@@ -413,7 +408,6 @@ export default function AddressForm() {
                             type="float"
                             variant="outlined"
                             id="price"
-                            name="price"
                             label="Price"
                           >
                           </TextField>
@@ -425,10 +419,8 @@ export default function AddressForm() {
                       <FormControlLabel
                         control={
                           <Switch
-                            name="splitBill"
                             id="splitBill"
                             color="primary"
-
                             onChange={()=>(
                               setInput(value=>!value)
                             )}
