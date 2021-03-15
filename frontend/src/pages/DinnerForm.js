@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { state, useState }  from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -8,9 +8,9 @@ import "./style/DinnerForm.css"
 import Button from '@material-ui/core/Button'
 import Switch from '@material-ui/core/Switch';
 import PhoneInput from 'react-phone-number-input/input';
+import NumberFormat from 'react-number-format';
 
 import axios from "axios"
-import { Input } from '@material-ui/core';
 
 
 let meals = [];
@@ -114,7 +114,7 @@ async function submitDinner() {
   }
 }
 
-function validate() {
+function validateEmpty() {
   if (
     document.getElementById('hostName').value !== '' &&
     document.getElementById('email').value !== '' &&
@@ -240,6 +240,7 @@ export default function AddressForm() {
               id="phone"
               label="PhoneNumber"
               placeholder="Enter phone number"
+              customInput={TextField}
               value={value}
               onChange={setValue} 
               fullWidth
@@ -262,6 +263,7 @@ export default function AddressForm() {
             type="datetime-local"
             id="date"
             name="date"
+            size="medium"
             fullWidth
           />
         </Grid>
@@ -388,16 +390,17 @@ export default function AddressForm() {
            <Grid item container direction="column" xs={12} sm={6}>
                     <Grid item container xs={12} spacing={1}>
                       <Grid item xs={6}>
-                        <TextField
-                          variant="outlined"
-                          type="number" 
+                        <NumberFormat
+                          customInput={TextField}
+                          format="###"
                           id="capacity"
                           name="Capacity" 
                           label="Capacity"
-                          size="small"   
+                          size="small"
+                          hintText="Capacity"
+                          variant="outlined"
                           required
-                        >
-                        </TextField>
+                          />
                     </Grid>
 
                     <Grid item xs={6}>
@@ -437,7 +440,7 @@ export default function AddressForm() {
 
         <Grid item xs={12}>
         <Button onClick={() => {
-          if (!validate()) {
+          if (!validateEmpty()) {
             alert("Fields marked * can't be empty")
           } else if (!validateEmail()) {
             alert("Please enter valid email address")
