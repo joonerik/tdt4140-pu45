@@ -10,6 +10,8 @@ import AddIcon from '@material-ui/icons/Add';
 import axios from "axios";
 import DinnerBox from "../DinnerBox/DinnerBox";
 import { Link } from "react-router-dom";
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 // basic function which splits the ugly date format which is received from the backend
 function convert(date) {
@@ -20,6 +22,7 @@ function DinnerList() {
   const [events, setEvents] = useState([]);
   const [showing, setShowing] = useState(false);
   const [id, setId] = useState(null);
+  const[sortFree, setSortFree] = useState(false)
 
   // triggers a change for the showing state. 
   function handleShowing() {
@@ -41,6 +44,19 @@ function DinnerList() {
   
     return (
       <div>
+        <FormControlLabel
+                control={
+                  <Switch
+                    id="freeMeal"
+                    color="primary"
+                    onChange={()=>(
+                      setSortFree(value=>!value)
+                    )}
+                  />
+                }
+                label="Free Meal"
+                labelPlacement="start"
+              />
         <Container maxWidth="md">
           <Grid container spacing={4}>
             {/* this single item is the plus icon */}
