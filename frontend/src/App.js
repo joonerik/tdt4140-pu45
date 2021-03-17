@@ -13,7 +13,7 @@ import PrivateRoute from './PrivateRoute'
 
 function App(props) {
 
-  const [authTokens, setAuthTokens] = useState(true);
+  const [authTokens, setAuthTokens] = useState(false);
 
   const setTokens = (data) => {
     localStorage.setItem('tokens', JSON.stringify(data));
