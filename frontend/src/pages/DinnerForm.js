@@ -8,9 +8,6 @@ import "./style/DinnerForm.css"
 import Button from '@material-ui/core/Button'
 import Switch from '@material-ui/core/Switch';
 import NumberFormat from 'react-number-format';
-import ReactPhoneInput from 'react-phone-input-material-ui';
-import PhoneInput from 'react-phone-input-2'
-import 'react-phone-input-2/lib/style.css'
 
 import axios from "axios"
 

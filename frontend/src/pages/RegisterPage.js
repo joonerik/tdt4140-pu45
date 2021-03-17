@@ -9,7 +9,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import PhoneInput from 'react-phone-number-input/input';
 import { useAuth } from '../components/UserContext/auth';
 import axios from 'axios'
 
@@ -151,12 +150,12 @@ export default function SignUp() {
               />
             </Grid>
             <Grid item xs={12}>
-              <PhoneInput
+              {/* <PhoneInput
                 placeholder="Enter phone number"
                 onChange={e => {
                   setPhone(e.target.value);
                 }}
-              />
+              /> */}
             </Grid>
           </Grid>
           <Button

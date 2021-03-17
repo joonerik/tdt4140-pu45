@@ -11,13 +11,7 @@
     "react": "^17.0.1",
     "react-confirm-alert": "^2.7.0",
     "react-dom": "^17.0.1",
-<<<<<<< HEAD
     "react-number-format": "^4.4.4",
-    "react-phone-input-2": "^2.13.9",
-    "react-phone-input-material-ui": "^2.14.1",
-=======
->>>>>>> 7d201e37a29a3435777f01624668a557be22254d
-    "react-phone-number-input": "^3.1.17",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
     "web-vitals": "^1.1.0"
