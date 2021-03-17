@@ -39,7 +39,7 @@ export default function Login() {
 
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [mail, setMail] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setAuthTokens } = useAuth();
 
@@ -47,7 +47,7 @@ export default function Login() {
   
   function postLogin() {
     axios.post(API_URL, {
-      mail, password
+      email, password
     }).then(res => {
       console.log('Response status: ' + res.status)
       if (res.status === 200) {
@@ -81,14 +81,14 @@ export default function Login() {
             margin="normal"
             required
             fullWidth
-            id="mail"
+            id="email"
             label="Email Address"
-            name="mail"
-            autoComplete="mail"
+            name="email"
+            autoComplete="email"
             autoFocus
-            // value={mail}
+            // value={email}
             onChange={e => {
-              setMail(e.target.value);
+              setEmail(e.target.value);
             }}
           />
           <TextField
