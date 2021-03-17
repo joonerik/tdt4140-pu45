@@ -49,11 +49,11 @@ export default function SignUp() {
   const [phone, setPhone] = useState()
   const { setAuthTokens } = useAuth();
 
-  const API_URL = "http://iterasjon1.herokuapp.com/auth/register"
+  const API_URL = "http://iterasjon1.herokuapp.com/api/register"
 
   function postRegister() {
     axios.post(API_URL, {
-      mail, password, firstName, lastName, address, phone
+      firstName, lastName, password, mail, phone, address
     }).then(res => {
       console.log('Response status: ' + res.status)
       if (res.status === 200) {

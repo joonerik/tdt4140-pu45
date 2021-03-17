@@ -43,7 +43,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const { setAuthTokens } = useAuth();
 
-  const API_URL = "http://iterasjon1.herokuapp.com/auth/login"
+  const API_URL = "http://iterasjon1.herokuapp.com/api/token"
   
   function postLogin() {
     axios.post(API_URL, {
