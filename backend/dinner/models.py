@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django import forms
+from django.contrib.auth.models import User as Django_User
 
 class Course(models.Model):
 
@@ -31,3 +32,9 @@ class Dinner(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class User(Django_User):
+    name = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100)

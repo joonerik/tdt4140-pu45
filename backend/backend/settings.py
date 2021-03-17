@@ -29,7 +29,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['dinnerpool.herokuapp.com']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -44,7 +43,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
 
-     'corsheaders',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
