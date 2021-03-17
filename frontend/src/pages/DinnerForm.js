@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState }  from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -7,6 +7,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import "./style/DinnerForm.css"
 import Button from '@material-ui/core/Button'
 import Switch from '@material-ui/core/Switch';
+import NumberFormat from 'react-number-format';
 
 import axios from "axios"
 
@@ -112,7 +113,7 @@ async function submitDinner() {
   }
 }
 
-function validate() {
+function validateEmpty() {
   if (
     document.getElementById('hostName').value !== '' &&
     document.getElementById('email').value !== '' &&
@@ -127,6 +128,13 @@ function validate() {
     } else {
       return false
     }
+}
+
+function validateEmail(){
+  let pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+  if (!pattern.test(document.getElementById('email').value)) {
+    return false
+  } return true
 }
 
 function collectInputData(...coursesID){
@@ -192,6 +200,7 @@ function createJson(t, d, h, em, tlf, cap, loc, date, coursesID, p, s_b, c_g, c_
 export default function AddressForm() {
 
   const[input, setInput] = useState(false)
+  const [value, setValue] = useState()
 
   return (
     <React.Fragment>
@@ -212,47 +221,49 @@ export default function AddressForm() {
           />
           </Grid>
           <Grid item xs={12} sm={6}>
-          <TextField
-            variant="outlined"
-            required
-            id="email"
-            name="email"
-            label="Email"
-            fullWidth
-            autoComplete="email"
-            type="email"
-          />
+            <TextField
+              variant="outlined"
+              required
+              id="email"
+              label="Email"
+              fullWidth
+              autoComplete="email"
+              type="email"
+            />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            variant="outlined"
-            required
-            id="phone"
-            name="phone"
-            label="Phone"
-            autoComplete="tel"
-            type="phone"
-            fullWidth
-          />
+        <NumberFormat
+          customInput={TextField}
+          id="phone"
+          label="PhoneNumber"
+          format="+47 ### ## ###"
+          size="medium"
+          variant="outlined"
+          required
+          fullWidth
+        />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             variant="outlined"
             required
             id="dinnerTitle"
-            name="dinnerTitle"
             label="Dinner title"
             fullWidth
           />
         </Grid>
         <Grid item xs={12} sm={6}>
         <TextField
-            required
             variant="outlined"
             type="datetime-local"
             id="date"
-            name="date"
+            size="medium"
+            inputProps={{
+               min: new Date().toISOString()
+               .slice(0, 16)
+              }}
             fullWidth
+            required
           />
         </Grid>
         <Grid item xs={12}>
@@ -260,7 +271,6 @@ export default function AddressForm() {
             required
             variant="outlined"
             id="description"
-            name="description"
             label="Description"
             fullWidth
             multiline
@@ -272,7 +282,6 @@ export default function AddressForm() {
             variant="outlined"
             required
             id="location"
-            name="location"
             label="Location"
             type="address"
             location="adress-line"
@@ -287,7 +296,6 @@ export default function AddressForm() {
                 <TextField
                   variant="outlined"
                   id="mealInput"
-                  name="mealInput"
                   label="Meal"
                   size="small"
                   fullWidth
@@ -378,16 +386,16 @@ export default function AddressForm() {
            <Grid item container direction="column" xs={12} sm={6}>
                     <Grid item container xs={12} spacing={1}>
                       <Grid item xs={6}>
-                        <TextField
-                          variant="outlined"
-                          type="number" 
-                          id="capacity"
-                          name="Capacity" 
+                        <NumberFormat
+                          customInput={TextField}
+                          format="###"
+                          id="capacity" 
                           label="Capacity"
-                          size="small"   
+                          size="small"
+                          hintText="Capacity"
+                          variant="outlined"
                           required
-                        >
-                        </TextField>
+                          />
                     </Grid>
 
                     <Grid item xs={6}>
@@ -397,7 +405,6 @@ export default function AddressForm() {
                             type="float"
                             variant="outlined"
                             id="price"
-                            name="price"
                             label="Price"
                           >
                           </TextField>
@@ -409,10 +416,8 @@ export default function AddressForm() {
                       <FormControlLabel
                         control={
                           <Switch
-                            name="splitBill"
                             id="splitBill"
                             color="primary"
-
                             onChange={()=>(
                               setInput(value=>!value)
                             )}
@@ -422,24 +427,22 @@ export default function AddressForm() {
                         labelPlacement="start"
                       />
                       
-                    </Grid>
-
-                    
+                    </Grid> 
            </Grid>
 
         <Grid item xs={12}>
         <Button onClick={() => {
-          if (validate()) {
-            submitDinner()
-          } else {
+          if (!validateEmpty()) {
             alert("Fields marked * can't be empty")
+          } else if (!validateEmail()) {
+            alert("Please enter valid email address")
+          } else {
+            submitDinner()
           }
           }} variant="contained">Submit</Button>
-
-          
         </Grid>
       </Grid>
       </form>
     </React.Fragment>
   );
-}
+};

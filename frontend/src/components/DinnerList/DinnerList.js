@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -11,32 +11,39 @@ import axios from "axios";
 import DinnerBox from "../DinnerBox/DinnerBox";
 import { Link } from "react-router-dom";
 
+// basic function which splits the ugly date format which is received from the backend
 function convert(date) {
   return date.substring(0, 10) + " " + date.substring(11, 16)
 }
 
-export default class DinnerList extends React.Component {
-  state = {
-    events: [],
-    isShowing : false,
-    id : null,
-  };
-  
-  modifyState = () =>{
-    this.setState({isShowing: !this.state.isShowing})   
-}
+function DinnerList() {
+  const [events, setEvents] = useState([]);
+  const [showing, setShowing] = useState(false);
+  const [id, setId] = useState(null);
 
-  componentDidMount() {
-    axios.get("http://iterasjon1.herokuapp.com/dinners/").then((res) => {
-      this.setState({ events: res.data });
-    });
+  // triggers a change for the showing state. 
+  function handleShowing() {
+    setShowing(value => !value);
   }
+  // equivalent syntax for this function is just plain: 
+  // setShowing(() => value => !value) - this means the function handleShowing itself is unnecessary,
+  // but good practice and convention
+
+  // runs when the component renders
+  useEffect(() => {
+    axios.get("http://iterasjon1.herokuapp.com/dinners/").then((res) => {
+      // sets the events array to all data found which corresponds to an array
+      // This is already a list - check out the url if unclear
+      setEvents(res.data)
+    });
+  }, [])
+
   
-  render() {
     return (
       <div>
         <Container maxWidth="md">
           <Grid container spacing={4}>
+            {/* this single item is the plus icon */}
             <Grid item xs={12} sm={6} md={4}>
               <Link className="link" to="/add">
                   <Card style={{ height: '200px' }} >
@@ -46,8 +53,9 @@ export default class DinnerList extends React.Component {
                   </Card>
                 </Link>
               </Grid>
-            {this.state.events.length > 0 &&
-              this.state.events.map((card, i) => (
+              {/* loops through all dinners found */}
+            {events.length > 0 &&
+              events.map((card, i) => (
                 <Grid item key={card.id} xs={12} sm={6} md={4}>
                   <Card style={{ height: '200px', position: 'relative' }}>
                     <CardContent>
@@ -59,12 +67,13 @@ export default class DinnerList extends React.Component {
                     </CardContent>
                     <CardActions style={{ position: 'absolute', bottom: '0'}}>
                       <Button
-                        component={Link}
                         size="small"
                         color="primary"
                         onClick={() => {
-                          this.modifyState()
-                          this.setState(({id: i}))
+                          // when clicked, it triggers the handleShowing function
+                          // also, it sets the state id to the cards id
+                          handleShowing()
+                          setId(i)
                         }}
                       >
                         See more
@@ -73,10 +82,12 @@ export default class DinnerList extends React.Component {
                   </Card>
                 </Grid>
               ))}
-              {this.state.isShowing ? <DinnerBox state={this.modifyState} card={this.state.events[this.state.id]}/> : null}
+              {/* if showing is true, it returns (displays) the DinnerBox component, else nothing */}
+              {showing ? <DinnerBox state={handleShowing} card={events[id]}/> : null}
           </Grid>
         </Container>
       </div>
     );
-  }
 }
+
+export default DinnerList
