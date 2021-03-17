@@ -46,26 +46,55 @@ export default function SignUp() {
   const [phone, setPhone] = useState()
   const { setAuthTokens } = useAuth();
 
-  const API_URL = "http://iterasjon1.herokuapp.com/api/register"
+  const API_URL = "http://127.0.0.1:8000/api/register"
 
-  function postRegister() {
+  function postRegister(event) {
+    event.preventDefault()
+    const formData = new FormData(event.target)
+    console.log(formData.get("firstName"))
     axios.post(API_URL, {
-      firstName, lastName, password, mail, phone, address
-    }).then(res => {
-      console.log('Response status: ' + res.status)
-      if (res.status === 200) {
-        setAuthTokens(res.data);
-        console.log('Data: ' + res.data)
-        // setLoggedIn(true);
-      } else {
-        // setIsError(true);
-      }
-    }).catch(error => {
-      // setIsError(true)
-      console.log(error)
-      console.log("catch block")
-    })
+      'name': firstName, 
+      'password': password, 
+      'email': mail, 
+      'phone': phone, 
+      'address': address, 
+  }).then((res) => {
+    if (res.status === 200) {
+      console.log("Response: " + res.status)
+    } else {
+      console.log("Unknown error - Status: " + res.status)
+    }
+  }).catch((error) => {
+    if (error.response.status === 401) {
+      console.log("catch 401: Unauthorized -> wrong mail or password" )
+    } else if (error.response.status === 400) {
+      console.log("catch 400: Bad req -> missing fields etc" )
+    } else {
+      console.log("catch something else")
+      console.log(error.response)
+    }
+  });
   }
+
+
+  // function postRegister() {
+  //   axios.post(API_URL, {
+  //     firstName, lastName, password, mail, phone, address
+  //   }).then(res => {
+  //     console.log('Response status: ' + res.status)
+  //     if (res.status === 200) {
+  //       setAuthTokens(res.data);
+  //       console.log('Data: ' + res.data)
+  //       // setLoggedIn(true);
+  //     } else {
+  //       // setIsError(true);
+  //     }
+  //   }).catch(error => {
+  //     // setIsError(true)
+  //     console.log(error)
+  //     console.log("catch block")
+  //   })
+  // }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -77,7 +106,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={postRegister}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -94,7 +123,7 @@ export default function SignUp() {
                 }}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            {/* <Grid item xs={12} sm={6}>
               <TextField
                 variant="outlined"
                 required
@@ -107,7 +136,7 @@ export default function SignUp() {
                   setLastName(e.target.value);
                 }}
               />
-            </Grid>
+            </Grid> */}
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -172,10 +201,6 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => {
-              console.log("register submit")
-              postRegister()
-            }}
           >
             Sign Up
           </Button>
