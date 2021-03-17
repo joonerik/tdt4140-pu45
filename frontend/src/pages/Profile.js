@@ -1,6 +1,6 @@
-import React from 'react'
-import { useAuth } from '../components/UserContext/auth'
-import './Profile.css'
+import React from 'react';
+import { useAuth } from '../components/UserContext/auth';
+import './style/Profile.css';
 import { Link } from "react-router-dom";
 
 const Profile = () => {
