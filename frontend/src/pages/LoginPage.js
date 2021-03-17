@@ -43,30 +43,37 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const { setAuthTokens } = useAuth();
 
-  const API_URL = "http://iterasjon1.herokuapp.com/api/token"
-  
+  const API_URL = "http://127.0.0.1:8000/api/token/"
+
   function postLogin() {
     axios.post(API_URL, {
-      email, password
-    }).then(res => {
-      console.log('Response status: ' + res.status)
-      if (res.status === 200) {
-        setAuthTokens(res.data);
-        console.log('Data: ' + res.data)
-        setLoggedIn(true);
-      } else {
-        setIsError(true);
-      }
-    }).catch(error => {
+    'username': email, 
+    'password': password
+  }).then((res) => {
+    if (res.status === 200) {
+      console.log("Response: " + res.status)
+      setAuthTokens(res.data)
+      setLoggedIn(true)
+    } else {
+      console.log("Unknown error - Status: " + res.status)
       setIsError(true)
-      console.log(error)
-      console.log("catch block")
-    })
+    }
+  }).catch((error) => {
+    if (error.response.status === 401) {
+      setIsError(true)
+      console.log("catch 401: Unauthorized -> wrong mail or password" )
+    } else if (error.response.status === 400) {
+      console.log("catch 400: Bad req -> missing fields etc" )
+    } else {
+      console.log("catch something else")
+    }
+  });
   }
 
   if (isLoggedIn) {
     return <Redirect to='/' />
   }
+  
 
   return (
     <Container component="main" maxWidth="xs">
@@ -117,7 +124,8 @@ export default function Login() {
             color="primary"
             className={classes.submit}
             onClick={()=> {
-              postLogin()
+              // postLogin().then(console.log("posted"))
+              postLogin();
             }}
           >
             Sign In
