@@ -49,25 +49,25 @@ export default function Login() {
     axios.post(API_URL, {
     'username': email, 
     'password': password
-  }).then((res) => {
-    if (res.status === 200) {
-      console.log("Response: " + res.status)
-      setAuthTokens(res.data)
-      setLoggedIn(true)
-    } else {
-      console.log("Unknown error - Status: " + res.status)
-      setIsError(true)
-    }
-  }).catch((error) => {
-    if (error.response.status === 401) {
-      setIsError(true)
-      console.log("catch 401: Unauthorized -> wrong mail or password" )
-    } else if (error.response.status === 400) {
-      console.log("catch 400: Bad req -> missing fields etc" )
-    } else {
-      console.log("catch something else")
-    }
-  });
+    }).then((res) => {
+      if (res.status === 200) {
+        console.log("Response: " + res.status)
+        setAuthTokens(res.data)
+        setLoggedIn(true)
+      } else {
+        console.log("Unknown error - Status: " + res.status)
+        setIsError(true)
+      }
+    }).catch((error) => {
+      if (error.response.status === 401) {
+        setIsError(true)
+        console.log("catch 401: Unauthorized -> wrong mail or password" )
+      } else if (error.response.status === 400) {
+        console.log("catch 400: Bad req -> missing fields etc" )
+      } else {
+        console.log("catch something else")
+      }
+    });
   }
 
   if (isLoggedIn) {
