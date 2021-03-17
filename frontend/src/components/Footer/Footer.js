@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 function Advertiser() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      <a href="mailto: advertiser@dinnerpool.com" onClick=""> Adveriser?</a>
+      <a href="mailto: advertiser@dinnerpool.com" onClick=""> Advertiser</a>
     </Typography>
   );
 }
