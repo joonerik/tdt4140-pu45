@@ -37,11 +37,11 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
   const classes = useStyles();
 
-  const [isLoggedIn, setLoggedIn] = useState(false);
   const [isError, setIsError] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setAuthTokens } = useAuth();
+  const { authTokens } = useAuth();
 
   const API_URL = "http://127.0.0.1:8000/api/token/"
 
@@ -53,7 +53,6 @@ export default function Login() {
       if (res.status === 200) {
         console.log("Response: " + res.status)
         setAuthTokens(res.data)
-        setLoggedIn(true)
       } else {
         console.log("Unknown error - Status: " + res.status)
         setIsError(true)
@@ -70,7 +69,7 @@ export default function Login() {
     });
   }
 
-  if (isLoggedIn) {
+  if (authTokens) {
     return <Redirect to='/' />
   }
   

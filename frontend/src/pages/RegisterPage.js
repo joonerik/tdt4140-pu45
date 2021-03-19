@@ -12,7 +12,7 @@ import Container from '@material-ui/core/Container';
 import { useAuth } from '../components/UserContext/auth';
 import axios from 'axios';
 import NumberFormat from 'react-number-format';
-
+import { Redirect } from 'react-router';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -45,7 +45,10 @@ export default function SignUp() {
   const [password, setPassword] = useState()
   const [address, setAddress] = useState()
   const [phone, setPhone] = useState()
+  const [isLoggedIn, setLoggedIn] = useState(false);
   const { setAuthTokens } = useAuth();
+  const { authTokens } = useAuth();
+
 
   const API_URL = "http://127.0.0.1:8000/api/register/"
 
@@ -61,7 +64,9 @@ export default function SignUp() {
       'address': address, 
   }).then((res) => {
     if (res.status === 200) {
+      setAuthTokens(res.data)
       console.log("Response: " + res.status)
+      console.log(authTokens)
     } else {
       console.log("Unknown error - Status: " + res.status)
     }
@@ -75,6 +80,10 @@ export default function SignUp() {
       console.log(error.response)
     }
   });
+  }
+
+  if (authTokens) {
+    return <Redirect to='/' />
   }
 
 
