@@ -36,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
 export default function SignUp() {
   const classes = useStyles();
   const [firstName, setFirstName] = useState()
@@ -45,10 +44,8 @@ export default function SignUp() {
   const [password, setPassword] = useState()
   const [address, setAddress] = useState()
   const [phone, setPhone] = useState()
-  const [isLoggedIn, setLoggedIn] = useState(false);
   const { setAuthTokens } = useAuth();
   const { authTokens } = useAuth();
-
 
   const API_URL = "http://127.0.0.1:8000/api/register/"
 
@@ -85,26 +82,6 @@ export default function SignUp() {
   if (authTokens) {
     return <Redirect to='/' />
   }
-
-
-  // function postRegister() {
-  //   axios.post(API_URL, {
-  //     firstName, lastName, password, mail, phone, address
-  //   }).then(res => {
-  //     console.log('Response status: ' + res.status)
-  //     if (res.status === 200) {
-  //       setAuthTokens(res.data);
-  //       console.log('Data: ' + res.data)
-  //       // setLoggedIn(true);
-  //     } else {
-  //       // setIsError(true);
-  //     }
-  //   }).catch(error => {
-  //     // setIsError(true)
-  //     console.log(error)
-  //     console.log("catch block")
-  //   })
-  // }
 
   return (
     <Container component="main" maxWidth="xs">
