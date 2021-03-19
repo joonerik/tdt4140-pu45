@@ -53,9 +53,25 @@ export default function SignUp() {
       'address': formData.get("address"), 
     }).then((res) => {
       if (res.status === 200) {
-        setAuthTokens(res.data)
-        console.log(res)
-        console.log("Response: " + res.status)
+        // localStorage.setItem('user', true);
+        // localStorage.setItem('userData', JSON.stringify(res.data.user);
+        // console.log(res.data.user)
+        // setAuthTokens(res)
+        console.log("Register success")
+        // console.log("Response: " + res.status)
+        axios.post("http://127.0.0.1:8000/api/token/", {
+          'username': formData.get("email"), 
+          'password': formData.get("password")
+        }).then((resLog) => {
+          console.log("Login success")
+          console.log(res)
+          console.log(res.data)
+          localStorage.setItem('userData', JSON.stringify(res.data.user))
+          localStorage.setItem('user', true);
+          setAuthTokens(res.data)
+        }).catch((e) => {
+          console.log(e.res)
+        })
       } else {
         console.log("Unknown error - Status: " + res.status)
       }

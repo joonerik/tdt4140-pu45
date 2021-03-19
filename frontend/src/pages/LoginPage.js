@@ -53,6 +53,8 @@ export default function Login() {
       if (res.status === 200) {
         console.log("Response: " + res.status)
         console.log(res)
+        // should set localstorage userData here 
+        localStorage.setItem('user', true);
         setAuthTokens(res.data)
       } else {
         console.log("Unknown error - Status: " + res.status)
