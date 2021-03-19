@@ -18,8 +18,13 @@ const Profile = () => {
             <p>First name:</p>
             <p>Last name:</p>
             <p>Phone number: </p>
-            <p>{authTokens.refresh}</p>
-            <p>{authTokens.access}</p>
+            {localStorage.getItem('user')
+            ?   
+            <div><p>ID: {JSON.parse(localStorage.getItem('userData')).id}</p>
+                <p>Username: {JSON.parse(localStorage.getItem('userData')).username}</p>
+                <p>E-mail: {JSON.parse(localStorage.getItem('userData')).email}</p></div>
+            : null
+            }
             <button className="logoutButton">
                 <Link className="logoutLink" id="registerLink" to='/' onClick={logOut}>LOG OUT</Link>
             </button>
