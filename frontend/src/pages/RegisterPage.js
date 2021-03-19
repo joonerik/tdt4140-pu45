@@ -14,6 +14,7 @@ import axios from 'axios';
 import NumberFormat from 'react-number-format';
 
 
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -46,7 +47,7 @@ export default function SignUp() {
   const [phone, setPhone] = useState()
   const { setAuthTokens } = useAuth();
 
-  const API_URL = "http://127.0.0.1:8000/api/register"
+  const API_URL = "http://127.0.0.1:8000/api/register/"
 
   function postRegister(event) {
     event.preventDefault()
