@@ -17,6 +17,8 @@ function App(props) {
 
   const setTokens = (data) => {
     localStorage.setItem('tokens', JSON.stringify(data));
+    // console.log(JSON.stringify(data))
+    // console.log(data)
     setAuthTokens(data)
   }
 
@@ -30,8 +32,9 @@ function App(props) {
               <Route component={LoginPage} path="/login" />
               {/* <Route component={DinnerForm} path="/add" /> */}
               <Route component={RegisterPage} path="/register" />
-              <Route component={Profile} path="/profile" />
+              {/* <Route component={Profile} path="/profile" /> */}
               <PrivateRoute path="/add" component={DinnerForm} />
+              <PrivateRoute path="/profile" component={Profile} />
               <Route data-testid="elseLink" component={NoMatch} />
             </Switch>
             <Footer/>

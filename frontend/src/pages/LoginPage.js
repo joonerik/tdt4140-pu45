@@ -52,6 +52,7 @@ export default function Login() {
     }).then((res) => {
       if (res.status === 200) {
         console.log("Response: " + res.status)
+        console.log(res)
         setAuthTokens(res.data)
       } else {
         console.log("Unknown error - Status: " + res.status)

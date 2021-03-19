@@ -19,6 +19,7 @@ function NavBar() {
           label: 'Yes',
           onClick: () => {
             setAuthTokens()
+            console.log(localStorage.getItem('tokens'))
           }
         },
         {

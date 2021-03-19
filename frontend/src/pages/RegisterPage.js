@@ -54,6 +54,7 @@ export default function SignUp() {
     }).then((res) => {
       if (res.status === 200) {
         setAuthTokens(res.data)
+        console.log(res)
         console.log("Response: " + res.status)
       } else {
         console.log("Unknown error - Status: " + res.status)
