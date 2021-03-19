@@ -38,45 +38,36 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
-  const [firstName, setFirstName] = useState()
-  const [lastName, setLastName] = useState()
-  const [mail, setMail] = useState()
-  const [password, setPassword] = useState()
-  const [address, setAddress] = useState()
-  const [phone, setPhone] = useState()
   const { setAuthTokens } = useAuth();
   const { authTokens } = useAuth();
-
   const API_URL = "http://127.0.0.1:8000/api/register/"
 
   function postRegister(event) {
     event.preventDefault()
     const formData = new FormData(event.target)
-    console.log(formData.get("firstName"))
     axios.post(API_URL, {
-      'name': firstName, 
-      'password': password, 
-      'email': mail, 
-      'phone': phone, 
-      'address': address, 
-  }).then((res) => {
-    if (res.status === 200) {
-      setAuthTokens(res.data)
-      console.log("Response: " + res.status)
-      console.log(authTokens)
-    } else {
-      console.log("Unknown error - Status: " + res.status)
-    }
-  }).catch((error) => {
-    if (error.response.status === 401) {
-      console.log("catch 401: Unauthorized -> wrong mail or password" )
-    } else if (error.response.status === 400) {
-      console.log("catch 400: Bad req -> missing fields etc" )
-    } else {
-      console.log("catch something else")
-      console.log(error.response)
-    }
-  });
+      'name': formData.get("firstName"), 
+      'password': formData.get("password"), 
+      'email': formData.get("email"), 
+      'phone': formData.get("phone"), 
+      'address': formData.get("address"), 
+    }).then((res) => {
+      if (res.status === 200) {
+        setAuthTokens(res.data)
+        console.log("Response: " + res.status)
+      } else {
+        console.log("Unknown error - Status: " + res.status)
+      }
+    }).catch((error) => {
+      if (error.response.status === 401) {
+        console.log("catch 401: Unauthorized -> wrong mail or password" )
+      } else if (error.response.status === 400) {
+        console.log("catch 400: Bad req -> missing fields etc" )
+      } else {
+        console.log("catch something else")
+        console.log(error.response)
+      }
+    });
   }
 
   if (authTokens) {
@@ -105,9 +96,6 @@ export default function SignUp() {
                 id="firstName"
                 label="First Name"
                 autoFocus
-                onChange={e => {
-                  setFirstName(e.target.value);
-                }}
               />
             </Grid>
             {/* <Grid item xs={12} sm={6}>
@@ -133,9 +121,6 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                onChange={e => {
-                  setMail(e.target.value);
-                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -148,9 +133,6 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                onChange={e => {
-                  setPassword(e.target.value);
-                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -161,9 +143,6 @@ export default function SignUp() {
                 name="address"
                 label="Address"
                 id="adresse"
-                onChange={e => {
-                  setAddress(e.target.value);
-                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -174,9 +153,7 @@ export default function SignUp() {
                 format="+47 ### ## ###"
                 size="medium"
                 variant="outlined"
-                onChange={e => {
-                  setPhone(e.target.value);
-                }}
+                name="phone"
                 required
                 fullWidth
               />

@@ -38,17 +38,17 @@ export default function Login() {
   const classes = useStyles();
 
   const [isError, setIsError] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const { setAuthTokens } = useAuth();
   const { authTokens } = useAuth();
 
   const API_URL = "http://127.0.0.1:8000/api/token/"
 
-  function postLogin() {
+  function postLogin(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target)
     axios.post(API_URL, {
-    'username': email, 
-    'password': password
+    'username': formData.get("email"), 
+    'password': formData.get("password")
     }).then((res) => {
       if (res.status === 200) {
         console.log("Response: " + res.status)
@@ -73,7 +73,6 @@ export default function Login() {
     return <Redirect to='/' />
   }
   
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -81,7 +80,7 @@ export default function Login() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={postLogin}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -92,10 +91,6 @@ export default function Login() {
             name="email"
             autoComplete="email"
             autoFocus
-            // value={email}
-            onChange={e => {
-              setEmail(e.target.value);
-            }}
           />
           <TextField
             variant="outlined"
@@ -107,25 +102,17 @@ export default function Login() {
             type="password"
             id="password"
             autoComplete="current-password"
-            // value={password}
-            onChange={e => {
-              setPassword(e.target.value);
-            }}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
           <Button
-            // type="submit"
+            type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={()=> {
-              // postLogin().then(console.log("posted"))
-              postLogin();
-            }}
           >
             Sign In
           </Button>
