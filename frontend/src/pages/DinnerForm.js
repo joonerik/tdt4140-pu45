@@ -392,7 +392,6 @@ export default function AddressForm() {
                           id="capacity" 
                           label="Capacity"
                           size="small"
-                          hintText="Capacity"
                           variant="outlined"
                           required
                           />
