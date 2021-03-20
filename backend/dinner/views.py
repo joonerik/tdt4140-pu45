@@ -30,6 +30,13 @@ class HelloView(APIView):
         return Response(content)
 
 
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows dinners to be viewed or edited.
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
 class DinnerViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows dinners to be viewed or edited.
