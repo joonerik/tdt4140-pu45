@@ -13,13 +13,12 @@ import PrivateRoute from './PrivateRoute'
 
 function App(props) {
 
-  const [authTokens, setAuthTokens] = useState(false);
+  const [authTokens, setAuthTokens] = useState(localStorage.getItem('tokens'));
 
   const setTokens = (data) => {
     localStorage.setItem('tokens', JSON.stringify(data));
-    // console.log(JSON.stringify(data))
-    // console.log(data)
     setAuthTokens(data)
+    console.log(authTokens)
   }
 
   return (
@@ -30,9 +29,7 @@ function App(props) {
             <Switch>
               <Route component={DinnerOverview} exact path="/" />
               <Route component={LoginPage} path="/login" />
-              {/* <Route component={DinnerForm} path="/add" /> */}
               <Route component={RegisterPage} path="/register" />
-              {/* <Route component={Profile} path="/profile" /> */}
               <PrivateRoute path="/add" component={DinnerForm} />
               <PrivateRoute path="/profile" component={Profile} />
               <Route data-testid="elseLink" component={NoMatch} />

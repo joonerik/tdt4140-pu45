@@ -52,7 +52,6 @@ export default function Login() {
     }).then((res) => {
       if (res.status === 200) {
         console.log("Response: " + res.status)
-        console.log(res)
         // should set localstorage userData here 
         localStorage.setItem('user', true);
         setAuthTokens(res.data)

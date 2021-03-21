@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import "./NavBar.css" ;
 import { useAuth } from '../UserContext/auth'
@@ -19,7 +19,9 @@ function NavBar() {
           label: 'Yes',
           onClick: () => {
             setAuthTokens()
-            console.log(localStorage.getItem('tokens'))
+            localStorage.removeItem('userData')
+            localStorage.removeItem('tokens');
+            localStorage.setItem('user', false);
           }
         },
         {

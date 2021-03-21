@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -53,19 +53,12 @@ export default function SignUp() {
       'address': formData.get("address"), 
     }).then((res) => {
       if (res.status === 200) {
-        // localStorage.setItem('user', true);
-        // localStorage.setItem('userData', JSON.stringify(res.data.user);
-        // console.log(res.data.user)
-        // setAuthTokens(res)
         console.log("Register success")
-        // console.log("Response: " + res.status)
         axios.post("http://127.0.0.1:8000/api/token/", {
           'username': formData.get("email"), 
           'password': formData.get("password")
         }).then((resLog) => {
           console.log("Login success")
-          console.log(res)
-          console.log(res.data)
           localStorage.setItem('userData', JSON.stringify(res.data.user))
           localStorage.setItem('user', true);
           setAuthTokens(res.data)
