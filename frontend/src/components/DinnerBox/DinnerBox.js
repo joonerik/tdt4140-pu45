@@ -1,6 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import axios from "axios";
 import "./DinnerBox.css";
+import { Redirect } from 'react-router-dom';
+import { Link } from "react-router-dom";
+
 
 function DinnerBox(props) {
 
@@ -82,8 +85,16 @@ function DinnerBox(props) {
             {JSON.parse(localStorage.getItem('user')) ? 
                 JSON.parse(localStorage.getItem('userData')).email === props.card.email 
                 ? <div>
-                    <button className="" onClick={() => {editDinner()}}>Edit</button>
-                    <button className="" onClick={() => {deleteDinner(props.card.url)}}>delete</button>
+                    <button className="" onClick={() => {deleteDinner(props.card.url)}}>Delete</button>
+                    <Link className="link" to="/edit">
+                        <button className="" onClick={() => {
+                            localStorage.setItem('dinner', JSON.stringify(props.card))
+                            console.log(props.card)
+                            console.log("set localStorage")
+                            }}>
+                            Edit
+                        </button>
+                    </Link>
                 </div> 
                 :   (participants.includes(JSON.parse(localStorage.getItem('userData')).username) 
                     ? <button className="" onClick={() => {unjoinDinner(props.card.participants, props.card.url)}}>Leave</button>
