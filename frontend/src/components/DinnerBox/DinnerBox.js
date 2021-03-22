@@ -59,6 +59,20 @@ function DinnerBox(props) {
         })
     }
 
+    function deleteDinner(url) {
+        axios.delete(url).then((res) => {
+            console.log("delete success")
+            window.location.reload()
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+
+    function editDinner() {
+        console.log("edit")
+    }
+
+
     return (
         <div className="box">
             {/* when the button is clicked, it changes the showing state in DinnerList.
@@ -66,9 +80,14 @@ function DinnerBox(props) {
             <button className="exitButton" onClick={props.state}>X</button>
             {/* id is not an attributte in dinner, instead as of now the total url is sent instead */}
             {JSON.parse(localStorage.getItem('user')) ? 
-                participants.includes(JSON.parse(localStorage.getItem('userData')).username) 
-                ? <button className="" onClick={() => {unjoinDinner(props.card.participants, props.card.url)}}>Leave</button>
-                : <button className="" onClick={() => {joinDinner(props.card.participants, props.card.url)}}>Join</button>
+                JSON.parse(localStorage.getItem('userData')).email === props.card.email 
+                ? <div>
+                    <button className="" onClick={() => {editDinner()}}>Edit</button>
+                    <button className="" onClick={() => {deleteDinner(props.card.url)}}>delete</button>
+                </div> 
+                :   (participants.includes(JSON.parse(localStorage.getItem('userData')).username) 
+                    ? <button className="" onClick={() => {unjoinDinner(props.card.participants, props.card.url)}}>Leave</button>
+                    : <button className="" onClick={() => {joinDinner(props.card.participants, props.card.url)}}>Join</button>)
              : null}
             {/* displays basic info for the dinner event  */}
             <ul className="dinnerInfo">
