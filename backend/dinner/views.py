@@ -9,6 +9,7 @@ from rest_framework import generics, permissions, mixins
 from rest_framework.response import Response
 from .serializers import RegisterSerializer, UserSerializer
 from django.contrib.auth.models import User
+from django.forms.models import model_to_dict
 #Register API
 
 class RegisterApi(generics.GenericAPIView):
@@ -27,7 +28,10 @@ class HelloView(APIView):
 
     def get(self, request):
         content = {'message': 'Hello, I am a very protected view ;))'}
-        return Response(content)
+        profile = UserViewSet.queryset.get(user=request.user)
+        return Response({
+            "user": model_to_dict(profile)
+        })
 
 
 class UserViewSet(viewsets.ModelViewSet):
