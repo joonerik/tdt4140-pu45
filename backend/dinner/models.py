@@ -21,7 +21,7 @@ class Dinner(models.Model):
     host = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
     email = models.CharField(max_length = 50, default="ikke oppgitt")
     phone = models.CharField(max_length = 15, default="ikke oppgitt")
-    participants = models.ManyToManyField(User, related_name='participant+')
+    participants = models.ManyToManyField(User, related_name='participant+', blank=True)
     capacity = models.IntegerField(default = 0)
     location = models.CharField(max_length = 50)
     date_created = models.DateTimeField(default=timezone.now)
