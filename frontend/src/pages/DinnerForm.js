@@ -64,7 +64,7 @@ function loadMealList(){
 
 function submitCourse(meal){
   const mealJson = {"description": meal}
-  const promise = axios.post('http://iterasjon1.herokuapp.com/courses/', mealJson)
+  const promise = axios.post('http://127.0.0.1:8000/courses/', mealJson)
   const dataPromise = promise.then((res) => res.data)
   return dataPromise
 }
@@ -99,14 +99,14 @@ async function submitDinner() {
       delete data["other_allergens"]
     }
   
-    await axios.post('https://iterasjon1.herokuapp.com/dinners/', data)
+    await axios.post('http://127.0.0.1:8000/dinners/', data)
     .then((response) => {
       console.log(response);
       if (response.status === 201) {
         window.location.reload();
       }
     }, (error) => {
-      console.log(error.request);
+      console.log(error.response);
     });
   } else {
       console.log("No valid course(s)ID")
@@ -169,14 +169,14 @@ function collectInputData(...coursesID){
     price = document.getElementById("price").value;
   }
 
-  return createJson(dinnerTitle, description, hostName, email, phone, capacity, location, date, coursesID, price, splitBill, gluten, lactose, nuts, shellfish, otherAllergy)
+  return createJson(dinnerTitle, description, email, phone, capacity, location, date, coursesID, price, splitBill, gluten, lactose, nuts, shellfish, otherAllergy)
 }
 
-function createJson(t, d, h, em, tlf, cap, loc, date, coursesID, p, s_b, c_g, c_l, c_n, c_s, other){
+function createJson(t, d, em, tlf, cap, loc, date, coursesID, p, s_b, c_g, c_l, c_n, c_s, other){
 
   const courses = []
-  coursesID.forEach(id => courses.push("https://iterasjon1.herokuapp.com/courses/" + JSON.stringify(id) + "/")) 
-
+  coursesID.forEach(id => courses.push("http://127.0.0.1:8000/courses/" + JSON.stringify(id) + "/")) 
+  const h = 'http://localhost:8000/users/' + JSON.parse(localStorage.getItem('userData')).id + '/'
   return {
           title: t,
           description: d,
@@ -193,7 +193,8 @@ function createJson(t, d, h, em, tlf, cap, loc, date, coursesID, p, s_b, c_g, c_
           contains_lactose: Boolean(c_l),
           contains_nut: Boolean(c_n),
           contains_shellfish: Boolean(c_s),
-          other_allergens: other
+          other_allergens: other,
+          participants: []
         }
 }
 

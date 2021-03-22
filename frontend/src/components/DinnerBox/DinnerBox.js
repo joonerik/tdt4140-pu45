@@ -45,7 +45,7 @@ function DinnerBox(props) {
             {/* displays basic info for the dinner event  */}
             <ul className="dinnerInfo">
                 <h1>{props.card.title}</h1>
-                <li>HOST: {props.card.host}, {props.card.phone}</li>
+                <li>HOST: {props.card.email}, {props.card.phone}</li>
                 <li>E-MAIL: {props.card.email}</li>
                 <li>LOCATION: {props.card.location}</li>
                 <li>TIME: {(props.card.date_event).substring(0, 10) + " " + (props.card.date_event).substring(11, 16)}</li>
