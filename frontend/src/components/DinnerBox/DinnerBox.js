@@ -31,13 +31,16 @@ function DinnerBox(props) {
         ))
     }, [])
 
-    const API_URL = "http://localhost:8000/dinners/" + props.card.id + "/";
-
-    function joinDinner() {
-        axios.patch(API_URL, {
-            'participants': 'http://localhost:8000/users/3/'
-        }).then((res) => {
+    // const API_URL = "http://localhost:8000/dinners/" + props.card.id + "/";
+    // console.log(API_URL)
+    function joinDinner(previousParticipants, url) {
+        const participant = 'http://localhost:8000/users/' + JSON.parse(localStorage.getItem('userData')).id + '/'
+        previousParticipants.push(participant)
+        axios.patch(url, 
+            {'participants': previousParticipants}
+        ).then((res) => {
             console.log("join success: " + res)
+            window.location.reload()
         }).catch((error) => {
             console.log(error.response)
         })
@@ -48,7 +51,12 @@ function DinnerBox(props) {
             {/* when the button is clicked, it changes the showing state in DinnerList.
             It triggers the handleShowing function in DinnerList */}
             <button className="exitButton" onClick={props.state}>X</button>
-            <button className="" onClick={joinDinner}>Join</button>
+            {/* id is not an attributte in dinner, instead as of now the total url is sent instead */}
+            {JSON.parse(localStorage.getItem('user')) ? 
+                participants.includes(JSON.parse(localStorage.getItem('userData')).username) 
+                ? null
+                : <button className="" onClick={() => {joinDinner(props.card.participants, props.card.url)}}>Join</button>
+             : null}
             {/* displays basic info for the dinner event  */}
             <ul className="dinnerInfo">
                 <h1>{props.card.title}</h1>
