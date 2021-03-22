@@ -10,6 +10,7 @@ function DinnerBox(props) {
     // states for content and courses
     const [content, setContent] = useState(null);
     const [courses, setCourses] = useState([]);
+    const [participants, setParticipants] = useState([]);
     
     // the useEffect takes place when the component renders
     useEffect(() => {
@@ -20,6 +21,13 @@ function DinnerBox(props) {
                 // when getting the res (result), the result, i.e., the name of the course
                 // is appended to the list iteratively because of the map function 
                 setCourses(previousCourses => [...previousCourses, res.data.description])
+            })
+        ))
+
+        props.card.participants.map(url => (
+            axios.get(url).then(res => {
+                setParticipants(previusParticipants => [...previusParticipants, res.data.username])
+                console.log(res)
             })
         ))
     }, [])
@@ -68,7 +76,7 @@ function DinnerBox(props) {
                 </ul>  
                 {/* the state of content decided which component to display */}
                 {content === 1 ? <DescriptionBox list={courses} content={props}/> : 
-                content === 2 ? <ParticipantsBox content={props}/> :
+                content === 2 ? <ParticipantsBox list={participants} content={props}/> :
                 content === 3 ? <AllergiesBox content={props}/> :
                 null}
             </div>
@@ -96,12 +104,28 @@ function ParticipantsBox(props) {
     return (
         <div className="dinnerDetails">
             <ul>
-                <li style={{ fontWeight: 'bold' }}>Capacity: {props.content.card.capacity}</li>
-                <li>Participants: <p style={{ fontStyle: 'italic' }}>None</p></li>
+                <li style={{ fontWeight: 'bold' }}>Capacity: {props.content.card.participants.length}</li>
+                <ul>Participants: 
+                    {/* {props.content.card.participants.map((participant, number) => 
+                        axios.get(participant).then(res => {
+                            <li>{res.username}</li>
+                            console.log("log")
+                        })
+                    )} */}
+                    {props.list.map((participant, i) => (
+                        <li style={{listStyle: 'circle', textIndent:'10px'}} key={i}>{participant}</li>
+                    ))}
+                </ul>
             </ul>
         </div>
     )
 }
+
+// axios.get(url).then((res) => {
+//     // when getting the res (result), the result, i.e., the name of the course
+//     // is appended to the list iteratively because of the map function 
+//     setCourses(previousCourses => [...previousCourses, res.data.description])
+// }
 
 function AllergiesBox(props) {
     return (
