@@ -55,6 +55,13 @@ export default function Login() {
         // should set localstorage userData here 
         localStorage.setItem('user', true);
         setAuthTokens(res.data)
+        axios.get("http://localhost:8000/hello/", { headers: {"Authorization" : `Bearer ${res.data.access}`} }).then((r) => {
+          console.log(r)
+          localStorage.setItem('userData', JSON.stringify(r.data.user))
+        }).catch((e) => {
+            console.log(e)
+            console.log(e.response)
+        })
       } else {
         console.log("Unknown error - Status: " + res.status)
         setIsError(true)
