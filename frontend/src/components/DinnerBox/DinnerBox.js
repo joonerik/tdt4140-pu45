@@ -27,7 +27,6 @@ function DinnerBox(props) {
         props.card.participants.map(url => (
             axios.get(url).then(res => {
                 setParticipants(previusParticipants => [...previusParticipants, res.data.username])
-                console.log(res)
             })
         ))
     }, [])
@@ -104,14 +103,8 @@ function ParticipantsBox(props) {
     return (
         <div className="dinnerDetails">
             <ul>
-                <li style={{ fontWeight: 'bold' }}>Capacity: {props.content.card.participants.length}</li>
+                <li style={{ fontWeight: 'bold' }}>Remaining seats: {props.content.card.capacity - props.content.card.participants.length}</li>
                 <ul>Participants: 
-                    {/* {props.content.card.participants.map((participant, number) => 
-                        axios.get(participant).then(res => {
-                            <li>{res.username}</li>
-                            console.log("log")
-                        })
-                    )} */}
                     {props.list.map((participant, i) => (
                         <li style={{listStyle: 'circle', textIndent:'10px'}} key={i}>{participant}</li>
                     ))}
@@ -120,12 +113,6 @@ function ParticipantsBox(props) {
         </div>
     )
 }
-
-// axios.get(url).then((res) => {
-//     // when getting the res (result), the result, i.e., the name of the course
-//     // is appended to the list iteratively because of the map function 
-//     setCourses(previousCourses => [...previousCourses, res.data.description])
-// }
 
 function AllergiesBox(props) {
     return (
