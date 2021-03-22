@@ -23,9 +23,8 @@ function DinnerBox(props) {
             })
         ))
     }, [])
-    console.log(props.card.id)
-    console.log(props.card.title)
-    const API_URL = "http://localhost:8000/dinners/" + props.card.id;
+
+    const API_URL = "http://localhost:8000/dinners/" + props.card.id + "/";
 
     function joinDinner() {
         axios.patch(API_URL, {

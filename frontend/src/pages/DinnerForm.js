@@ -229,6 +229,7 @@ export default function AddressForm() {
               fullWidth
               autoComplete="email"
               type="email"
+              defaultValue={JSON.parse(localStorage.getItem('userData')).email}
             />
         </Grid>
         <Grid item xs={12} sm={6}>
