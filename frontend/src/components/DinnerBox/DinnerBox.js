@@ -23,12 +23,26 @@ function DinnerBox(props) {
             })
         ))
     }, [])
+    console.log(props.card.id)
+    console.log(props.card.title)
+    const API_URL = "http://localhost:8000/dinners/" + props.card.id;
+
+    function joinDinner() {
+        axios.patch(API_URL, {
+            'participants': 'http://localhost:8000/users/3/'
+        }).then((res) => {
+            console.log("join success: " + res)
+        }).catch((error) => {
+            console.log(error.response)
+        })
+    }
 
     return (
         <div className="box">
             {/* when the button is clicked, it changes the showing state in DinnerList.
             It triggers the handleShowing function in DinnerList */}
             <button className="exitButton" onClick={props.state}>X</button>
+            <button className="" onClick={joinDinner}>Join</button>
             {/* displays basic info for the dinner event  */}
             <ul className="dinnerInfo">
                 <h1>{props.card.title}</h1>

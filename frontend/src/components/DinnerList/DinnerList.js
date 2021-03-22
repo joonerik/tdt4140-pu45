@@ -31,7 +31,7 @@ function DinnerList() {
 
   // runs when the component renders
   useEffect(() => {
-    axios.get("http://iterasjon1.herokuapp.com/dinners/").then((res) => {
+    axios.get("http://127.0.0.1:8000/dinners/").then((res) => {
       // sets the events array to all data found which corresponds to an array
       // This is already a list - check out the url if unclear
       setEvents(res.data)
