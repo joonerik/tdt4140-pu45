@@ -34,12 +34,25 @@ function DinnerBox(props) {
     // const API_URL = "http://localhost:8000/dinners/" + props.card.id + "/";
     // console.log(API_URL)
     function joinDinner(previousParticipants, url) {
-        const participant = 'http://localhost:8000/users/' + JSON.parse(localStorage.getItem('userData')).id + '/'
+        const participant = 'http://127.0.0.1:8000/users/' + JSON.parse(localStorage.getItem('userData')).id + '/'
         previousParticipants.push(participant)
         axios.patch(url, 
             {'participants': previousParticipants}
         ).then((res) => {
             console.log("join success: " + res)
+            window.location.reload()
+        }).catch((error) => {
+            console.log(error.response)
+        })
+    }
+
+    function unjoinDinner(previousParticipants, url) {
+        const participant = 'http://127.0.0.1:8000/users/' + JSON.parse(localStorage.getItem('userData')).id + '/'
+        previousParticipants = previousParticipants.filter(p => p !== participant)
+        axios.patch(url, 
+            {'participants': previousParticipants}
+        ).then((res) => {
+            console.log("unjoin success: " + res)
             window.location.reload()
         }).catch((error) => {
             console.log(error.response)
@@ -54,7 +67,7 @@ function DinnerBox(props) {
             {/* id is not an attributte in dinner, instead as of now the total url is sent instead */}
             {JSON.parse(localStorage.getItem('user')) ? 
                 participants.includes(JSON.parse(localStorage.getItem('userData')).username) 
-                ? null
+                ? <button className="" onClick={() => {unjoinDinner(props.card.participants, props.card.url)}}>Leave</button>
                 : <button className="" onClick={() => {joinDinner(props.card.participants, props.card.url)}}>Join</button>
              : null}
             {/* displays basic info for the dinner event  */}
