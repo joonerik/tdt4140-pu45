@@ -19,6 +19,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function Advertiser() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      <a href="mailto: advertiser@dinnerpool.com"> Advertiser</a>
+    </Typography>
+  );
+}
+
 function Footer() {
   const classes = useStyles();
   return (
@@ -32,6 +40,7 @@ function Footer() {
         Dinnerpool
       </Typography>
       <Copyright />
+      <Advertiser />
     </footer>
   );
 }
