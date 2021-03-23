@@ -14,6 +14,7 @@ import { Redirect } from 'react-router';
 
 
 let meals = [];
+let mealsDisplayed = []
 
 function loadMeals() {
   if (JSON.parse(localStorage.getItem('user')) && localStorage.getItem('dinner').courses !== null) {
@@ -42,21 +43,25 @@ function addMeal(e) {
   
   document.getElementById("mealInput").value = ""; // Empty input field
   // mealList.innerHTML = ""; // empty list
-
   // Fill list with meals
   meals.forEach((meal) => {
-    let node = document.createElement("LI");
-    let textnode = document.createTextNode(meal);
-    let buttonnode = document.createElement("BUTTON")
-    buttonnode.innerHTML = "X";
-    buttonnode.addEventListener('click', function(){
-      meals.splice(meals.indexOf(meal), 1);
-      // loadMealList();
-    })
-    node.appendChild(textnode);
-    node.appendChild(buttonnode);
-    buttonnode.style.cssText = "margin-left: 20px;"
-    mealList.appendChild(node);
+    console.log("loop")
+    if (!mealsDisplayed.includes(meal)) {
+      console.log("this loop")
+      let node = document.createElement("LI");
+      let textnode = document.createTextNode(meal);
+      let buttonnode = document.createElement("BUTTON")
+      buttonnode.innerHTML = "X";
+      buttonnode.addEventListener('click', function(){
+        meals.splice(meals.indexOf(meal), 1);
+        // loadMealList();
+      })
+      node.appendChild(textnode);
+      node.appendChild(buttonnode);
+      buttonnode.style.cssText = "margin-left: 20px;"
+      mealList.appendChild(node);
+      mealsDisplayed.push(meal)
+    }
   })
 
 }
