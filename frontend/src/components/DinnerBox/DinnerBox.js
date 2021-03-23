@@ -89,7 +89,6 @@ function DinnerBox(props) {
                     <Link className="link" to="/edit">
                         <button className="" onClick={() => {
                             localStorage.setItem('dinner', JSON.stringify(props.card))
-                            console.log(props.card)
                             console.log("set localStorage")
                             }}>
                             Edit

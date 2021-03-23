@@ -10,17 +10,25 @@ import Switch from '@material-ui/core/Switch';
 import NumberFormat from 'react-number-format';
 
 import axios from "axios"
+import { Redirect } from 'react-router';
 
 
-window.onload = loadMeals();
 let meals = [];
 
 function loadMeals() {
-  const urlMeals =[JSON.parse(localStorage.getItem('dinner')).courses]
-  urlMeals.map((url) => (
-    axios.get(url).then(res => meals.push(res.data.description))
-  ))
+  if (JSON.parse(localStorage.getItem('user')) && localStorage.getItem('dinner').courses !== null) {
+    const urlMeals =[JSON.parse(localStorage.getItem('dinner')).courses]
+    const urls = urlMeals[0]
 
+    urls.map((url) => {
+      axios.get(url).then(res => {
+        if (!meals.includes(res.data.description)) {
+          meals.push(res.data.description)
+        }
+      })
+    })
+    
+  }
 }
 
 function addMeal(e) {
@@ -28,12 +36,12 @@ function addMeal(e) {
 
   let mealInput = document.getElementById("mealInput").value; // Get input from mealInput
   let mealList = document.getElementById("mealList"); // Get mealList
-
+  console.log(meals)
   /* Save list element as String object */
   meals.push(mealInput)
   
   document.getElementById("mealInput").value = ""; // Empty input field
-  mealList.innerHTML = ""; // empty list
+  // mealList.innerHTML = ""; // empty list
 
   // Fill list with meals
   meals.forEach((meal) => {
@@ -43,7 +51,7 @@ function addMeal(e) {
     buttonnode.innerHTML = "X";
     buttonnode.addEventListener('click', function(){
       meals.splice(meals.indexOf(meal), 1);
-      loadMealList();
+      // loadMealList();
     })
     node.appendChild(textnode);
     node.appendChild(buttonnode);
@@ -51,24 +59,6 @@ function addMeal(e) {
     mealList.appendChild(node);
   })
 
-}
-
-function loadMealList(){
-  let mealList = document.getElementById("mealList"); // Get mealList
-  mealList.innerHTML = "";
-  meals.forEach((meal) => {
-    let node = document.createElement("LI");
-    let textnode = document.createTextNode(meal);
-    let buttonnode = document.createElement("BUTTON")
-    buttonnode.innerHTML = "X";
-    buttonnode.addEventListener('click', function(){
-      meals.splice(meals.indexOf(meal), 1);
-      loadMealList();
-    })
-    node.appendChild(textnode);
-    node.appendChild(buttonnode);
-    mealList.appendChild(node);
-  })
 }
 
 function submitCourse(meal){
@@ -108,11 +98,13 @@ async function editDinner() {
       delete data["other_allergens"]
     }
     console.log(data)
-    await axios.patch(localStorage.getItem('dinner').url, data)
+    console.log(JSON.parse(localStorage.getItem('dinner')).url)
+    await axios.patch(JSON.parse(localStorage.getItem('dinner')).url, data)
     .then((response) => {
       console.log(response);
-      if (response.status === 201) {
-        window.location.reload();
+      if (response.status === 200) {
+        localStorage.removeItem('dinner')
+        window.location.href = "/"
       }
     }, (error) => {
       console.log(error);
@@ -210,7 +202,7 @@ function createJson(t, d, em, tlf, cap, loc, date, coursesID, p, s_b, c_g, c_l, 
 export default function AddressForm() {
 
   const[input, setInput] = useState(JSON.parse(localStorage.getItem('dinner')).split_bill)
-  const [value, setValue] = useState()
+  loadMeals()
 
   return (
     <React.Fragment>
@@ -278,7 +270,7 @@ export default function AddressForm() {
               }}
             fullWidth
             required
-            // defaultValue={JSON.parse(localStorage.getItem('dinner')).date_event}
+            defaultValue={JSON.parse(localStorage.getItem('dinner')).date_event.slice(0,-1)}
           />
         </Grid>
         <Grid item xs={12}>
