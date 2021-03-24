@@ -10,56 +10,58 @@ import Switch from '@material-ui/core/Switch';
 import NumberFormat from 'react-number-format';
 
 import axios from "axios"
+import { Redirect } from 'react-router';
 
 
 let meals = [];
+let mealsDisplayed = []
+
+function loadMeals() {
+  if (JSON.parse(localStorage.getItem('user')) && localStorage.getItem('dinner').courses !== null) {
+    const urlMeals =[JSON.parse(localStorage.getItem('dinner')).courses]
+    const urls = urlMeals[0]
+
+    urls.map((url) => {
+      axios.get(url).then(res => {
+        if (!meals.includes(res.data.description)) {
+          meals.push(res.data.description)
+        }
+      })
+    })
+    
+  }
+}
 
 function addMeal(e) {
   e.preventDefault();
 
   let mealInput = document.getElementById("mealInput").value; // Get input from mealInput
   let mealList = document.getElementById("mealList"); // Get mealList
-
+  console.log(meals)
   /* Save list element as String object */
   meals.push(mealInput)
   
   document.getElementById("mealInput").value = ""; // Empty input field
-  mealList.innerHTML = ""; // empty list
-
+  // mealList.innerHTML = ""; // empty list
   // Fill list with meals
   meals.forEach((meal) => {
-    let node = document.createElement("LI");
-    let textnode = document.createTextNode(meal);
-    let buttonnode = document.createElement("BUTTON")
-    buttonnode.innerHTML = "X";
-    buttonnode.addEventListener('click', function(){
-      meals.splice(meals.indexOf(meal), 1);
-      loadMealList();
-    })
-    node.appendChild(textnode);
-    node.appendChild(buttonnode);
-    buttonnode.style.cssText = "margin-left: 20px;"
-    mealList.appendChild(node);
+    if (!mealsDisplayed.includes(meal)) {
+      let node = document.createElement("LI");
+      let textnode = document.createTextNode(meal);
+      // let buttonnode = document.createElement("BUTTON")
+      // buttonnode.innerHTML = "X";
+      // buttonnode.addEventListener('click', function(){
+      //   meals.splice(meals.indexOf(meal), 1);
+      //   // loadMealList();
+      // })
+      node.appendChild(textnode);
+      // node.appendChild(buttonnode);
+      // buttonnode.style.cssText = "margin-left: 20px;"
+      mealList.appendChild(node);
+      mealsDisplayed.push(meal)
+    }
   })
 
-}
-
-function loadMealList(){
-  let mealList = document.getElementById("mealList"); // Get mealList
-  mealList.innerHTML = "";
-  meals.forEach((meal) => {
-    let node = document.createElement("LI");
-    let textnode = document.createTextNode(meal);
-    let buttonnode = document.createElement("BUTTON")
-    buttonnode.innerHTML = "X";
-    buttonnode.addEventListener('click', function(){
-      meals.splice(meals.indexOf(meal), 1);
-      loadMealList();
-    })
-    node.appendChild(textnode);
-    node.appendChild(buttonnode);
-    mealList.appendChild(node);
-  })
 }
 
 function submitCourse(meal){
@@ -73,7 +75,7 @@ function courseIsEmpty(currentMeals){
   return currentMeals.length === 0;
 }
 
-async function submitDinner() {
+async function editDinner() {
   console.log("Meals: " + meals)
   console.log("Meals length: " + meals.length)
   if (courseIsEmpty(meals)) {
@@ -98,15 +100,17 @@ async function submitDinner() {
       console.log("delete other field")
       delete data["other_allergens"]
     }
-  
-    await axios.post('http://127.0.0.1:8000/dinners/', data)
+    console.log(data)
+    console.log(JSON.parse(localStorage.getItem('dinner')).url)
+    await axios.patch(JSON.parse(localStorage.getItem('dinner')).url, data)
     .then((response) => {
       console.log(response);
-      if (response.status === 201) {
-        window.location.reload();
+      if (response.status === 200) {
+        localStorage.removeItem('dinner')
+        window.location.href = "/"
       }
     }, (error) => {
-      console.log(error.response);
+      console.log(error);
     });
   } else {
       console.log("No valid course(s)ID")
@@ -200,14 +204,14 @@ function createJson(t, d, em, tlf, cap, loc, date, coursesID, p, s_b, c_g, c_l, 
 
 export default function AddressForm() {
 
-  const[input, setInput] = useState(false)
-  const [value, setValue] = useState()
+  const[input, setInput] = useState(JSON.parse(localStorage.getItem('dinner')).split_bill)
+  loadMeals()
 
   return (
     <React.Fragment>
       <form>
       <Typography variant="h6" gutterBottom>
-        Submit dinner
+        Edit dinner
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12}>
@@ -219,6 +223,7 @@ export default function AddressForm() {
             label="Host name"
             fullWidth
             autoComplete="given-name"
+            defaultValue={(JSON.parse(localStorage.getItem('dinner')).email).substr(0, (JSON.parse(localStorage.getItem('dinner')).email).indexOf('@'))}
           />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -230,7 +235,7 @@ export default function AddressForm() {
               fullWidth
               autoComplete="email"
               type="email"
-              defaultValue={JSON.parse(localStorage.getItem('userData')).email}
+              defaultValue={JSON.parse(localStorage.getItem('dinner')).email}
             />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -243,6 +248,7 @@ export default function AddressForm() {
           variant="outlined"
           required
           fullWidth
+          defaultValue={JSON.parse(localStorage.getItem('dinner')).phone}
         />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -252,6 +258,7 @@ export default function AddressForm() {
             id="dinnerTitle"
             label="Dinner title"
             fullWidth
+            defaultValue={JSON.parse(localStorage.getItem('dinner')).title}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -266,6 +273,7 @@ export default function AddressForm() {
               }}
             fullWidth
             required
+            defaultValue={JSON.parse(localStorage.getItem('dinner')).date_event.slice(0,-1)}
           />
         </Grid>
         <Grid item xs={12}>
@@ -277,6 +285,7 @@ export default function AddressForm() {
             fullWidth
             multiline
             rows={4}
+            defaultValue={JSON.parse(localStorage.getItem('dinner')).description}
           />
         </Grid>
         <Grid item xs={12}>
@@ -288,6 +297,7 @@ export default function AddressForm() {
             type="address"
             location="adress-line"
             fullWidth
+            defaultValue={JSON.parse(localStorage.getItem('dinner')).location}
           />
         </Grid>
 
@@ -330,6 +340,7 @@ export default function AddressForm() {
               <Checkbox
                 name="checkAllergyGluten"
                 id="checkAllergyGluten"
+                defaultChecked={JSON.parse(localStorage.getItem('dinner')).contains_gluten}
               />
             }
             label="Gluten"
@@ -339,6 +350,7 @@ export default function AddressForm() {
               <Checkbox
                 name="checkAllergyShellfish"
                 id="checkAllergyShellfish"
+                defaultChecked={JSON.parse(localStorage.getItem('dinner')).contains_shellfish}
               />
             }
             label="Shellfish"
@@ -348,6 +360,7 @@ export default function AddressForm() {
               <Checkbox
                 name="checkAllergyLactose"
                 id="checkAllergyLactose"
+                defaultChecked={JSON.parse(localStorage.getItem('dinner')).contains_lactose}
               />
             }
             label="Lactose"
@@ -357,6 +370,7 @@ export default function AddressForm() {
               <Checkbox
                 name="checkAllergyNuts"
                 id="checkAllergyNuts"
+                defaultChecked={JSON.parse(localStorage.getItem('dinner')).contains_nuts}
               />
             }
             label="Nuts"
@@ -396,6 +410,7 @@ export default function AddressForm() {
                           size="small"
                           variant="outlined"
                           required
+                          defaultValue={JSON.parse(localStorage.getItem('dinner')).capacity}
                           />
                     </Grid>
 
@@ -407,6 +422,7 @@ export default function AddressForm() {
                             variant="outlined"
                             id="price"
                             label="Price"
+                            defaultValue={JSON.parse(localStorage.getItem('dinner')).price}
                           >
                           </TextField>
                         
@@ -422,6 +438,7 @@ export default function AddressForm() {
                             onChange={()=>(
                               setInput(value=>!value)
                             )}
+                            defaultChecked={JSON.parse(localStorage.getItem('dinner')).split_bill}
                           />
                         }
                         label="Split bill"
@@ -438,9 +455,9 @@ export default function AddressForm() {
           } else if (!validateEmail()) {
             alert("Please enter valid email address")
           } else {
-            submitDinner()
+            editDinner()
           }
-          }} variant="contained">Submit</Button>
+          }} variant="contained">Confirm</Button>
         </Grid>
       </Grid>
       </form>

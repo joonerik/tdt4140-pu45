@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import NavBar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer/Footer"
 import DinnerForm from "./pages/DinnerForm";
+import EditDinnerForm from "./pages/EditDinnerForm";
 import Profile from "./pages/Profile";
 import RegisterPage from "./pages/RegisterPage";
 import { AuthContext } from './components/UserContext/auth'
@@ -13,7 +14,7 @@ import PrivateRoute from './PrivateRoute'
 
 function App(props) {
 
-  const [authTokens, setAuthTokens] = useState(true);
+  const [authTokens, setAuthTokens] = useState(localStorage.getItem('tokens'));
 
   const setTokens = (data) => {
     localStorage.setItem('tokens', JSON.stringify(data));
@@ -28,10 +29,10 @@ function App(props) {
             <Switch>
               <Route component={DinnerOverview} exact path="/" />
               <Route component={LoginPage} path="/login" />
-              {/* <Route component={DinnerForm} path="/add" /> */}
               <Route component={RegisterPage} path="/register" />
-              <Route component={Profile} path="/profile" />
+              <PrivateRoute component={EditDinnerForm} path="/edit" />
               <PrivateRoute path="/add" component={DinnerForm} />
+              <PrivateRoute path="/profile" component={Profile} />
               <Route data-testid="elseLink" component={NoMatch} />
             </Switch>
             <Footer/>

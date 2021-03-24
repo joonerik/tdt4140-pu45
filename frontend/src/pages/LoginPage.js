@@ -37,37 +37,51 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
   const classes = useStyles();
 
-  const [isLoggedIn, setLoggedIn] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const { setAuthTokens } = useAuth();
+  const { authTokens } = useAuth();
 
-  const API_URL = "http://iterasjon1.herokuapp.com/api/token"
-  
-  function postLogin() {
+  const API_URL = "http://127.0.0.1:8000/api/token/"
+
+  function postLogin(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target)
     axios.post(API_URL, {
-      email, password
-    }).then(res => {
-      console.log('Response status: ' + res.status)
+    'username': formData.get("email"), 
+    'password': formData.get("password")
+    }).then((res) => {
       if (res.status === 200) {
-        setAuthTokens(res.data);
-        console.log('Data: ' + res.data)
-        setLoggedIn(true);
+        console.log("Response: " + res.status)
+        // should set localstorage userData here 
+        localStorage.setItem('user', true);
+        setAuthTokens(res.data)
+        axios.get("http://localhost:8000/hello/", { headers: {"Authorization" : `Bearer ${res.data.access}`} }).then((r) => {
+          console.log(r)
+          localStorage.setItem('userData', JSON.stringify(r.data.user))
+        }).catch((e) => {
+            console.log(e)
+            console.log(e.response)
+        })
       } else {
-        setIsError(true);
+        console.log("Unknown error - Status: " + res.status)
+        setIsError(true)
       }
-    }).catch(error => {
-      setIsError(true)
-      console.log(error)
-      console.log("catch block")
-    })
+    }).catch((error) => {
+      if (error.response.status === 401) {
+        setIsError(true)
+        console.log("catch 401: Unauthorized -> wrong mail or password" )
+      } else if (error.response.status === 400) {
+        console.log("catch 400: Bad req -> missing fields etc" )
+      } else {
+        console.log("catch something else")
+      }
+    });
   }
 
-  if (isLoggedIn) {
+  if (authTokens) {
     return <Redirect to='/' />
   }
-
+  
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -75,7 +89,7 @@ export default function Login() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={postLogin}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -86,10 +100,6 @@ export default function Login() {
             name="email"
             autoComplete="email"
             autoFocus
-            // value={email}
-            onChange={e => {
-              setEmail(e.target.value);
-            }}
           />
           <TextField
             variant="outlined"
@@ -101,24 +111,17 @@ export default function Login() {
             type="password"
             id="password"
             autoComplete="current-password"
-            // value={password}
-            onChange={e => {
-              setPassword(e.target.value);
-            }}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
           <Button
-            // type="submit"
+            type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={()=> {
-              postLogin()
-            }}
           >
             Sign In
           </Button>

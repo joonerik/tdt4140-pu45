@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,7 @@ import Container from '@material-ui/core/Container';
 import { useAuth } from '../components/UserContext/auth';
 import axios from 'axios';
 import NumberFormat from 'react-number-format';
+import { Redirect } from 'react-router';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,36 +36,52 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
 export default function SignUp() {
   const classes = useStyles();
-  const [firstName, setFirstName] = useState()
-  const [lastName, setLastName] = useState()
-  const [mail, setMail] = useState()
-  const [password, setPassword] = useState()
-  const [address, setAddress] = useState()
-  const [phone, setPhone] = useState()
   const { setAuthTokens } = useAuth();
+  const { authTokens } = useAuth();
+  const API_URL = "http://127.0.0.1:8000/api/register/"
 
-  const API_URL = "http://iterasjon1.herokuapp.com/api/register"
-
-  function postRegister() {
+  function postRegister(event) {
+    event.preventDefault()
+    const formData = new FormData(event.target)
     axios.post(API_URL, {
-      firstName, lastName, password, mail, phone, address
-    }).then(res => {
-      console.log('Response status: ' + res.status)
+      'name': formData.get("firstName"), 
+      'password': formData.get("password"), 
+      'email': formData.get("email"), 
+      'phone': formData.get("phone"), 
+      'address': formData.get("address"), 
+    }).then((res) => {
       if (res.status === 200) {
-        setAuthTokens(res.data);
-        console.log('Data: ' + res.data)
-        // setLoggedIn(true);
+        console.log("Register success")
+        axios.post("http://127.0.0.1:8000/api/token/", {
+          'username': formData.get("email"), 
+          'password': formData.get("password")
+        }).then((resLog) => {
+          console.log("Login success")
+          localStorage.setItem('userData', JSON.stringify(res.data.user))
+          localStorage.setItem('user', true);
+          setAuthTokens(res.data)
+        }).catch((e) => {
+          console.log(e.res)
+        })
       } else {
-        // setIsError(true);
+        console.log("Unknown error - Status: " + res.status)
       }
-    }).catch(error => {
-      // setIsError(true)
-      console.log(error)
-      console.log("catch block")
-    })
+    }).catch((error) => {
+      if (error.response.status === 401) {
+        console.log("catch 401: Unauthorized -> wrong mail or password" )
+      } else if (error.response.status === 400) {
+        console.log("catch 400: Bad req -> missing fields etc" )
+      } else {
+        console.log("catch something else")
+        console.log(error.response)
+      }
+    });
+  }
+
+  if (authTokens) {
+    return <Redirect to='/' />
   }
 
   return (
@@ -77,7 +94,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={postRegister}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -89,12 +106,9 @@ export default function SignUp() {
                 id="firstName"
                 label="First Name"
                 autoFocus
-                onChange={e => {
-                  setFirstName(e.target.value);
-                }}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            {/* <Grid item xs={12} sm={6}>
               <TextField
                 variant="outlined"
                 required
@@ -107,7 +121,7 @@ export default function SignUp() {
                   setLastName(e.target.value);
                 }}
               />
-            </Grid>
+            </Grid> */}
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -117,9 +131,6 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                onChange={e => {
-                  setMail(e.target.value);
-                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -132,9 +143,6 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                onChange={e => {
-                  setPassword(e.target.value);
-                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -145,9 +153,6 @@ export default function SignUp() {
                 name="address"
                 label="Address"
                 id="adresse"
-                onChange={e => {
-                  setAddress(e.target.value);
-                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -158,9 +163,7 @@ export default function SignUp() {
                 format="+47 ### ## ###"
                 size="medium"
                 variant="outlined"
-                onChange={e => {
-                  setPhone(e.target.value);
-                }}
+                name="phone"
                 required
                 fullWidth
               />
@@ -172,16 +175,12 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => {
-              console.log("register submit")
-              postRegister()
-            }}
           >
             Sign Up
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/login" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>

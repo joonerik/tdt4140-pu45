@@ -9,14 +9,20 @@ const Profile = () => {
 
     function logOut() {
         setAuthTokens();
+        localStorage.removeItem('userData');
+        localStorage.removeItem('tokens');
+        localStorage.setItem('user', false);
     }
 
     return (
         <div>
-            <h1>Hello, X</h1>
-            <p>First name:</p>
-            <p>Last name:</p>
-            <p>Phone number: </p>
+            {localStorage.getItem('user')
+            ?   
+                <div>
+                    <h1>Hello, {(JSON.parse(localStorage.getItem('dinner')).email).substr(0, (JSON.parse(localStorage.getItem('dinner')).email).indexOf('@'))}</h1>
+                    <p>E-mail: {JSON.parse(localStorage.getItem('userData')).email}</p>
+                </div>
+            : null }
             <button className="logoutButton">
                 <Link className="logoutLink" id="registerLink" to='/' onClick={logOut}>LOG OUT</Link>
             </button>
