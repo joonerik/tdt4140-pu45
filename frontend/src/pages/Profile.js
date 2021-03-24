@@ -16,17 +16,11 @@ const Profile = () => {
 
     return (
         <div>
-            <h1>Hello, X</h1>
-            <p>First name:</p>
-            <p>Last name:</p>
-            <p>Phone number: </p>
             {localStorage.getItem('user')
             ?   
                 <div>
-                    <p>ID: {JSON.parse(localStorage.getItem('userData')).id}</p>
-                    <p>Username: {JSON.parse(localStorage.getItem('userData')).username}</p>
+                    <h1>Hello, {(JSON.parse(localStorage.getItem('dinner')).email).substr(0, (JSON.parse(localStorage.getItem('dinner')).email).indexOf('@'))}</h1>
                     <p>E-mail: {JSON.parse(localStorage.getItem('userData')).email}</p>
-                    <p>Passord: {JSON.parse(localStorage.getItem('userData')).password}</p>
                 </div>
             : null }
             <button className="logoutButton">
