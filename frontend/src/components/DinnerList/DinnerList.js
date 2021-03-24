@@ -24,6 +24,7 @@ function DinnerList() {
   const [id, setId] = useState(null);
   const[sortFree, setSortFree] = useState(false)
 
+
   // triggers a change for the showing state. 
   function handleShowing() {
     setShowing(value => !value);
@@ -70,7 +71,39 @@ function DinnerList() {
                 </Link>
               </Grid>
               {/* loops through all dinners found */}
-            {events.length > 0 &&
+            {sortFree ? 
+            events.length > 0 &&
+              events.map((card, i) => ( 
+                <Grid item key={card.id} xs={12} sm={6} md={4}>
+                  {card.price === 0.0 ?
+                  <Card style={{ height: '200px', position: 'relative' }}>
+                    <CardContent>
+                      <Typography variant="subtitle2" align="left">{convert(card.date_event)}</Typography>
+                      <Typography align="left" gutterBottom variant="h5" component="h2">
+                        {card.title}
+                      </Typography>
+                      <Typography variant="h6" align="left">{card.location}</Typography>
+                    </CardContent>
+                    <CardActions style={{ position: 'absolute', bottom: '0'}}>
+                      <Button
+                        size="small"
+                        color="primary"
+                        onClick={() => {
+                          // when clicked, it triggers the handleShowing function
+                          // also, it sets the state id to the cards id
+                          handleShowing()
+                          setId(i)
+                        }}
+                      >
+                        See more
+                      </Button>
+                    </CardActions>
+                  </Card>
+                  : null }
+                </Grid> 
+                ))
+              :
+              events.length > 0 &&
               events.map((card, i) => (
                 <Grid item key={card.id} xs={12} sm={6} md={4}>
                   <Card style={{ height: '200px', position: 'relative' }}>
@@ -97,7 +130,7 @@ function DinnerList() {
                     </CardActions>
                   </Card>
                 </Grid>
-              ))}
+              )) }
               {/* if showing is true, it returns (displays) the DinnerBox component, else nothing */}
               {showing ? <DinnerBox state={handleShowing} card={events[id]}/> : null}
           </Grid>
