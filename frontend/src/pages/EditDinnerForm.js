@@ -45,20 +45,18 @@ function addMeal(e) {
   // mealList.innerHTML = ""; // empty list
   // Fill list with meals
   meals.forEach((meal) => {
-    console.log("loop")
     if (!mealsDisplayed.includes(meal)) {
-      console.log("this loop")
       let node = document.createElement("LI");
       let textnode = document.createTextNode(meal);
-      let buttonnode = document.createElement("BUTTON")
-      buttonnode.innerHTML = "X";
-      buttonnode.addEventListener('click', function(){
-        meals.splice(meals.indexOf(meal), 1);
-        // loadMealList();
-      })
+      // let buttonnode = document.createElement("BUTTON")
+      // buttonnode.innerHTML = "X";
+      // buttonnode.addEventListener('click', function(){
+      //   meals.splice(meals.indexOf(meal), 1);
+      //   // loadMealList();
+      // })
       node.appendChild(textnode);
-      node.appendChild(buttonnode);
-      buttonnode.style.cssText = "margin-left: 20px;"
+      // node.appendChild(buttonnode);
+      // buttonnode.style.cssText = "margin-left: 20px;"
       mealList.appendChild(node);
       mealsDisplayed.push(meal)
     }
