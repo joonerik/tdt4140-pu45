@@ -219,6 +219,7 @@ export default function AddressForm() {
             label="Host name"
             fullWidth
             autoComplete="given-name"
+            defaultValue={(JSON.parse(localStorage.getItem('dinner')).email).substr(0, (JSON.parse(localStorage.getItem('dinner')).email).indexOf('@'))}
           />
           </Grid>
           <Grid item xs={12} sm={6}>
