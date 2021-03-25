@@ -19,7 +19,7 @@ const Profile = () => {
             {localStorage.getItem('user')
             ?   
                 <div>
-                    <h1>Hello, {(JSON.parse(localStorage.getItem('userData')).email).substr(0, (JSON.parse(localStorage.getItem('dinner')).email).indexOf('@'))}</h1>
+                    <h1>Hello, {(JSON.parse(localStorage.getItem('userData')).email).substr(0, (JSON.parse(localStorage.getItem('userData')).email).indexOf('@'))}</h1>
                     <p>E-mail: {JSON.parse(localStorage.getItem('userData')).email}</p>
                 </div>
             : null }
